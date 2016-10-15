@@ -29,14 +29,11 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index');
 
-Auth::routes();
+Route::get('/collection', 'CollectionController@index');
+Route::post('/collection', 'CollectionController@store');
+Route::get('/collection/{aysem}', 'CollectionController@show');
 
-Route::get('/home', 'HomeController@index');
+Route::get('/requests', 'RequestsController@index');
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index');
+Route::get('/requests/{dept}/{aysem}', 'RequestsController@show');
+Route::post('/requests/{dept}/{aysem}', 'RequestsController@create');

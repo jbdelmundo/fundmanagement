@@ -19,7 +19,7 @@ class CreateMagazinesTable extends Migration
             $table->string('author');
             $table->string('publisher');
             $table->string('issn');
-            $table->boolean('isElectronic');
+            $table->boolean('iselectronic');
             $table->timestamps();
         });
     }

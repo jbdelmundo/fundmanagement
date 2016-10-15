@@ -61,7 +61,7 @@
     <script src="{{asset('js/sb-admin.js')}}"></script>
 
     <!-- Page-Level Demo Scripts - Dashboard - Use for reference -->
-    <script src="{{asset('js/demo/dashboard-demo.js')}}"></script>
+    
     
     <!-- Page-Level Plugin Scripts - Tables -->
     <script src="{{asset('js/plugins/dataTables/jquery.dataTables.js')}}"></script>
@@ -73,10 +73,9 @@
         $('#dataTables-example').dataTable();
     });
 
-    $(document).ready(function() {
-        alert('dayum');
-    });
+        
     </script>
+    @yield('page_script')
 </body>
 
 </html>

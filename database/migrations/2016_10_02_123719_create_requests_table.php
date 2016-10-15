@@ -18,11 +18,11 @@ class CreateRequestsTable extends Migration
             $table->integer('aysem');
             $table->unsignedInteger('department_id');
             $table->decimal('unit_quote_price',12,2);
-            $table->integer('quantity');
-            $table->integer('reserve_quantity');
+            $table->integer('quantity')->default(1);
+            $table->integer('reserve_quantity')->default(0);
             $table->string('remarks');
             $table->string('recommendedby');
-            $table->unsignedInteger('category_id');
+            $table->string('category_id',1);
             $table->unsignedInteger('item_id');
 
             $table->foreign('department_id')

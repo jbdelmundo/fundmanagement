@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEnroleeStatisticsTable extends Migration
+class CreateCollectionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,11 @@ class CreateEnroleeStatisticsTable extends Migration
      */
     public function up()
     {
-        Schema::create('enrolee_statistics', function (Blueprint $table) {
+        Schema::create('collections', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('aysem');
-            $table->unsignedInteger('department_id');
-            $table->unsignedInteger('undergraduate');
-            $table->unsignedInteger('graduate');
+            $table->decimal('amount',12,2);
 
-            $table->foreign('department_id')
-                ->references('id')->on('departments')
-                ->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -34,6 +29,6 @@ class CreateEnroleeStatisticsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('enrolee_statistics');
+        Schema::dropIfExists('collections');
     }
 }

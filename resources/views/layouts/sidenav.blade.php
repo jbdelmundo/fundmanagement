@@ -13,20 +13,20 @@
                 <!-- /input-group -->
             </li>
             <li>
-                <a href=""><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                <a href="{{url('dashboard')}}"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
             <li>
-                <a href=">"><i class="fa fa-table fa-fw"></i> Balance</a>
+                <a href="{{url('collection')}}"><i class="fa fa-table fa-fw"></i> Collection</a>
             </li>
             <li>
-                <a href=""><i class="fa fa-bar-chart-o fa-fw"></i> Purchases</a>
+                <a href="{{url('collection')}}"><i class="fa fa-bar-chart-o fa-fw"></i> Approval</a>
             </li>
             <li>
-                <a href=""><i class="fa fa-bar-chart-o fa-fw"></i> FRP Preparation</a>
+                <a href="{{url('requests')}}"><i class="fa fa-bar-chart-o fa-fw"></i> Requests</a>
             </li>
             
             <li>
-                <a href="forms.html"><i class="fa fa-edit fa-fw"></i> Approval</a>
+                <a href="{{url('approval')}}"><i class="fa fa-edit fa-fw"></i> Approval</a>
             </li>
             
             
