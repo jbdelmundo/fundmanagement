@@ -64,7 +64,21 @@ class Aysem extends Model
     }
 
     public static function current(){
-        return Aysem::where('aysem',20161)->first();
+        return Aysem::orderBy('aysem','desc')->first();
+    }
+
+    public  function previous(){
+        $aysem = intval($this->aysem);
+        $sem = $aysem%10;
+        $year = intval($aysem/10) ;
+
+        if($sem != 1){
+            $id = $year*10 + ($sem-1);
+            return Aysem::where('aysem',$id)->first();
+        }else{
+            $id = ($year-1)*10 + 3;
+            return Aysem::where('aysem',$id)->first();
+        }
     }
 
     public function getShortName(){

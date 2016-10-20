@@ -31,12 +31,26 @@ class DashboardController extends Controller
         if(is_null($user) || is_null($user->department_id)){abort(404);}
 
 
+
+        $records_to_fetch = 100;
         $department = Department::find($user->department_id);
         $current_aysem = Aysem::current();
 
         //balance history
-        $balance_history = AccountTransactions::where('department_id',$department->id)->orderBy('id','created_at')->take(20)->get();
+        $balance_history = AccountTransactions::where('department_id',$department->id)->orderBy('id','created_at')->take($records_to_fetch)->get();
 
+        $aysem_summary = [];
+        $loopsem = Aysem::current();
+        for ($i=0; $i < 6 && !is_null($loopsem); $i++) { 
+           
+            $aysem_summary[$loopsem->aysem] = AccountTransactions::aysemSummary($department,$loopsem);
+            $loopsem = $loopsem->previous();
+        }
+       
+        
+
+
+       
         $balance_chart = [];
 
         foreach($balance_history as $key => $history) {
@@ -66,16 +80,28 @@ class DashboardController extends Controller
         //total collections
         
 
-        //expenses
+        $summary_of_expenses = $this->summaryOfExpenses();
 
 
         
-        return view('dashboard.dashboard',compact('user','department', 'balance_history','balance_chart'));
+        return view('dashboard.dashboard',compact('user','department', 'balance_history','balance_chart' ,'aysem_summary'));
     }
 
-    public function balance()
+    public function balancehistory()
     {
         
         return view('balance');
+    }
+
+    public function summaryOfExpenses(){
+
+        $user = Auth::user();
+        if(is_null($user) || is_null($user->department_id)){abort(404);}
+
+
+
+        $records_to_fetch = 100;
+        $department = Department::find($user->department_id);
+        $current_aysem = Aysem::current();
     }
 }

@@ -30,7 +30,7 @@ class RandomContent extends Seeder
             for ($j=1; $j < 3; $j++) { 
             	$aysem = $i*10 +$j;
 
-            	$this->allocate($aysem, rand(100000,150000));
+            	$this->allocate($aysem, rand(800000,1000000));
             	$this->purchase($aysem,3);
             }
         }
@@ -56,7 +56,7 @@ class RandomContent extends Seeder
     function purchase($aysem,$times){
     	$aysem = Aysem::where('aysem','=',$aysem)->first();
 
-    	for ($i=0; $i < $times; $i++) { 
+    	for ($j=0; $j < $times; $j++) { 
 	    	$deductions=[];
 
 	    	for ($i=1; $i <=10 ; $i++) { 
@@ -70,12 +70,14 @@ class RandomContent extends Seeder
 				'department_id' => $dept_id,
 				'transaction_type_id' => AccountTransactions::PURCHASE(),
 				'amount' => $deduction,
-				'balance' => floatval( AccountTransactions::currentBalance($aysem->aysem,$dept_id) ) - floatval($deduction)
+				'balance' => floatval( AccountTransactions::currentBalance($aysem,Department::find($dept_id)) ) - floatval($deduction)
 
 			];
 		
 			AccountTransactions::create($input);
+        
 			}
+
     	}
     	
 
@@ -119,7 +121,7 @@ class RandomContent extends Seeder
 				'department_id' => $dept_id,
 				'transaction_type_id' => AccountTransactions::COLLECTION(),
 				'amount' => $allocation,
-				'balance' => floatval( AccountTransactions::currentBalance($aysem->aysem,$dept_id) ) + floatval($allocation)
+				'balance' => floatval( AccountTransactions::currentBalance($aysem,Department::find($dept_id) )) + floatval($allocation)
 
 			];
 		

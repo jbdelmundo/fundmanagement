@@ -10,9 +10,10 @@ class AccountTransactions extends Model
     //
     protected $fillable = ['aysem','department_id','transaction_type_id', 'amount','balance' , 'remarks','transaction_details_id'];
 
-    static function currentBalance($aysem,$department_id){
+    static function currentBalance(Aysem $aysem,Department $department){
     	$result =  DB::table('account_transactions')
-    			->where( [ 'department_id'=>$department_id] )
+    			->where( [ 'department_id'=>$department->id ] )
+                ->where('aysem', '<=',$aysem->aysem)
 				->orderBy('id','desc')
 				->take(1)
 				->pluck('balance')
@@ -21,6 +22,7 @@ class AccountTransactions extends Model
 
 		
 		if(count($result) == 0){	
+           
 			return 0.0;
 		}else{
 			return $result;
@@ -33,6 +35,64 @@ class AccountTransactions extends Model
                             ->pluck('balance','aysem')
                             ->get();
         return $balance_history;
+    }
+
+    static function totalTransactions(Department $department ,Aysem $aysem ){
+
+
+         $account_Summary = AccountTransactions::groupBy('aysem','department_id','transaction_type_id','transaction_type')
+                                                    ->selectRaw('aysem,department_id,transaction_type_id,transaction_type, sum(amount) as amount')
+                                                    ->join('transaction_types','transaction_type_id' , 'transaction_types.id')
+                                                    ->having('department_id' , '=',$department->id)
+                                                    ->having('aysem' , '=',$aysem->aysem)
+                                                    ->orderBy('transaction_type_id')->get();
+
+        return $account_Summary;
+    }
+
+    static function aysemSummary(Department $department ,Aysem $aysem ){
+        $transaction_summary = AccountTransactions::totalTransactions($department,$aysem);
+        
+
+        $summary = [];
+        foreach ($transaction_summary as $key => $transaction) {
+            $summary[$transaction->transaction_type]  = $transaction->amount;
+        }
+
+        $types = [
+            'COLLECTION', 'ADJUSTMENT','PURCHASE','REFUND'
+        ];
+
+        foreach ($types as $type) {
+           if(!isset($summary[$type])){
+                $summary[$type] = 0;
+           }
+        }
+
+
+
+        $summary['BALANCE'] = AccountTransactions::currentBalance($aysem,$department );
+        // dd($aysem);
+        if(!is_null($aysem->previous())){
+            $summary['PREV_BALANCE'] = AccountTransactions::currentBalance($aysem->previous(), $department );
+        }else{
+            $summary['PREV_BALANCE'] = 0;
+        }
+
+
+        return $summary;
+
+    }
+
+
+
+    static function summaryOfExpenses(Department $department ,Aysem $aysem ){
+        DB::table('requests')->where('transaction_type','ADJUSTMENT')
+                    ->selectRaw('aysem,department_id,transaction_type_id,transaction_type, sum(amount) as amount')
+                    ->join('transaction_types','transaction_type_id' , 'transaction_types.id')
+                    ->having('department_id' , '=',$department->id)
+                    ->having('aysem' , '=',$aysem->aysem)
+                    ->orderBy('transaction_type_id')->get();
     }
 
     

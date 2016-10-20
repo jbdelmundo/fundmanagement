@@ -20,8 +20,9 @@ class CreateRequestsTable extends Migration
             $table->decimal('unit_quote_price',12,2);
             $table->integer('quantity')->default(1);
             $table->integer('reserve_quantity')->default(0);
-            $table->string('remarks');
-            $table->string('recommendedby');
+            $table->string('pr_number')->nullable();
+            $table->string('remarks')->nullable();
+            $table->string('recommendedby')->nullable();
             $table->string('category_id',1);
             $table->unsignedInteger('item_id');
 
