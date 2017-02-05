@@ -1,0 +1,37 @@
+Documentation-Code
+
+
+This is a documentation regarding the terms and structure of the data
+
+
+Object Models:
+	AccountTransactions
+		- Accounting - What are the transactions of each department (debit and credit)
+	Aysem
+	Book
+	Collection
+		- Accounting - How much the library received per sem
+	CreditRequestDetails	
+		- Accounting - details on the deductions from the balance (linked to the requests, transaction)
+	Department
+	Enrollee Statistics
+		Number of students per sem per department
+	Eresource
+	Magazine
+	OtherMaterial
+	RefundDetails
+	RequestEndorsements
+		Requests approved by the LFC,  still subject for approval by the chair before deduction
+	Requests
+	User
+
+
+Controllers:
+	CollectonController
+		Module for adding funds through collection
+	DashboardController
+	HomeController
+	RequestApprovalController
+		Module for approval of request and crediting of balance
+	RequestsController
+		Module for creating a request

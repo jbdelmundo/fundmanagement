@@ -15,9 +15,15 @@ class CreateEresourcesTable extends Migration
     {
         Schema::create('eresources', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('request_id')->unsigned();
             $table->string('title');
             $table->string('publisher');
             $table->timestamps();
+
+            $table->foreign('request_id')
+                ->references('id')->on('requests')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

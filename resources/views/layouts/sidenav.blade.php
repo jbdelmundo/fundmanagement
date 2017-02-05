@@ -19,7 +19,7 @@
                 <a href="{{url('collection')}}"><i class="fa fa-table fa-fw"></i> Collection</a>
             </li>
             <li>
-                <a href="{{url('collection')}}"><i class="fa fa-bar-chart-o fa-fw"></i> Approval</a>
+                <a href="{{url('endorsement')}}"><i class="fa fa-bar-chart-o fa-fw"></i> Endorsement</a>
             </li>
             <li>
                 <a href="{{url('requests')}}"><i class="fa fa-bar-chart-o fa-fw"></i> Requests</a>

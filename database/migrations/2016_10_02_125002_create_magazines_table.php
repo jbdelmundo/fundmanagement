@@ -15,12 +15,18 @@ class CreateMagazinesTable extends Migration
     {
         Schema::create('magazines', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('request_id')->unsigned();
             $table->string('title');
             $table->string('author');
             $table->string('publisher');
             $table->string('issn');
             $table->boolean('iselectronic');
             $table->timestamps();
+
+            $table->foreign('request_id')
+                ->references('id')->on('requests')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

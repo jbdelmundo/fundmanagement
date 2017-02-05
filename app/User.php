@@ -34,6 +34,13 @@ class User extends Authenticatable
     }
 
     function department(){
-        return $this->belongsTo('App\Department');
+        if($this->isLibrarian() ){
+            return Department::all();
+        }else{
+            return $this->belongsTo('App\Department');
+        }
+
+
+        
     }
 }

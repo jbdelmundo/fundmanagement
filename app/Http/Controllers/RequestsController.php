@@ -143,7 +143,7 @@ class RequestsController extends Controller
                         'form_id' => 'equipment_form',
                         'form_title' => 'Request Equipment',
                         'form_path' => '_other_material_form',
-                        'category_id' => 'E'
+                        'category_id' => 'Q'
                     ],
                      [
                         'btn_caption' => 'Supplies',
@@ -163,37 +163,49 @@ class RequestsController extends Controller
                 return $forms;                               
     }
     function create(Department $dept,Aysem $aysem, Request $request){
+
+        // $request->is_reserved = isset($request->is_reserved); 
+        // dd($request);
         // abort(403,'Record not found');
+
+
+
         $categories = Requests::categories();
         $category_id = $request->category_id;
 
+        $dept_id = \Auth::user()->dept_id;
+
         //TODO: add validation 
-        //TODO: aysem, dept comes from form
+        //TODO: aysem, dept comes from form, NOT IN URL
+        $params = $request->all();
+        $request = Requests::create($params);
+        $params['request_id'] = $request->id;
 
         switch($category_id){
 
-            case 'B':
-            case 'E':
+            case 'B':   //Books
+            case 'E':   //Ebooks
 
-                $item = Book::create($request->all());
+
+                $item = Book::create($params);
                 break;
 
-            case 'J':
-            case 'M':
+            case 'J':   //journal
+            case 'M':   //magazine
 
-                $item = Magazine::create($request->all());
+                $item = Magazine::create($params);
                 break;
 
 
-            case 'R':
+            case 'R':   //resource
 
-                $item = Eresource::create($request->all());
+                $item = Eresource::create($params);
                 break;
 
-            case 'E':
-            case 'S':
-            case 'O':
-                $item = OtherMaterial::create($request->all());
+            case 'Q':   //equipment
+            case 'S':   //supplies
+            case 'O':   //other
+                $item = OtherMaterial::create($params);
                 break;
 
             //insert into requests
@@ -201,11 +213,11 @@ class RequestsController extends Controller
             //insert into individual tables
 
         }
-        $params = $request->all();
-        $params['item_id'] = $item->id;
-        Requests::create($params);
+        
+        $request->item_id = $item->id;
+        $request->save();
 
 
-        return redirect()->action('RequestsController@show',['dept'=>$dept->id , 'aysem'=>$aysem->aysem])->with('success', 'Collection recorded!');
+        return redirect()->action('RequestsController@show',['dept'=>$dept->id , 'aysem'=>$aysem->aysem])->with('success', 'Request recorded!');
     }
 }

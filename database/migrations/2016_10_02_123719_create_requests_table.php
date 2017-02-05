@@ -17,14 +17,12 @@ class CreateRequestsTable extends Migration
             $table->increments('id');
             $table->integer('aysem');
             $table->unsignedInteger('department_id');
-            $table->decimal('unit_quote_price',12,2);
-            $table->integer('quantity')->default(1);
-            $table->integer('reserve_quantity')->default(0);
-            $table->string('pr_number')->nullable();
+            $table->decimal('unit_quote_price',12,2);            
             $table->string('remarks')->nullable();
             $table->string('recommendedby')->nullable();
             $table->string('category_id',1);
-            $table->unsignedInteger('item_id');
+            $table->unsignedInteger('status')->default(0);
+            $table->unsignedInteger('item_id')->nullable();
 
             $table->foreign('department_id')
                 ->references('id')->on('departments')

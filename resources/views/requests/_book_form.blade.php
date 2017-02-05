@@ -46,13 +46,7 @@
     {!! Form::number('unit_quote_price', null,['class'=>'form-control' ]) !!}
 </div>
 
-<div class="form-group">
-    {!! Form::label('Quantity' ) !!}
-    {!! Form::number('quantity', null,['class'=>'form-control' ]) !!}
 
-    {!! Form::label( 'Quantity reserved' ) !!}
-    {!! Form::number('reserve_quantity', null,['class'=>'form-control' ]) !!}
-</div>
 
 <div class="form-group">
     {!! Form::label( 'Remarks') !!}

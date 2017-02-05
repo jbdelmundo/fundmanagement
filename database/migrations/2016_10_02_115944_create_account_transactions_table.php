@@ -31,9 +31,9 @@ class CreateAccountTransactionsTable extends Migration
                 ->references('id')->on('transaction_types')
                 ->onUpdate('cascade');
 
-            // $table->foreign('aysem')
-            //     ->references('aysem')->on('aysems')
-            //     ->onUpdate('cascade');
+            $table->foreign('aysem')
+                ->references('aysem')->on('aysems')
+                ->onUpdate('cascade');
 
             $table->timestamps();
             $table->index('created_at');

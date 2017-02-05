@@ -15,6 +15,7 @@ class CreateBooksTable extends Migration
     {
         Schema::create('books', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('request_id')->unsigned();
             $table->string('title');
             $table->string('author');
             $table->string('edition');
@@ -23,6 +24,11 @@ class CreateBooksTable extends Migration
             $table->string('isbn');
             $table->boolean('iselectronic');
             $table->timestamps();
+
+            $table->foreign('request_id')
+                ->references('id')->on('requests')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

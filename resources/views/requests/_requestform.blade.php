@@ -3,7 +3,7 @@
 		<div class="panel panel-default">
 		  <div class="panel-heading"><h3>New Collection for {{  \App\Aysem::shortName( $current_aysem->aysem ) }}<h3></div>
 		  <div class="panel-body">
-			{!! Form::open(['url' => 'requests' , 'class' => 'form-horizonta']) !!}
+			{!! Form::open(['url' => 'requests' , 'class' => 'form-horizontal']) !!}
 				
 
 				<div class="form-group">

@@ -18,6 +18,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TransactionTypeSeeder::class);
 
 
-        $this->call(RandomContent::class);
+        // $this->call(RandomContent::class);
     }
 }

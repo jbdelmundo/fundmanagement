@@ -37,3 +37,6 @@ Route::get('/requests', 'RequestsController@index');
 
 Route::get('/requests/{dept}/{aysem}', 'RequestsController@show');
 Route::post('/requests/{dept}/{aysem}', 'RequestsController@create');
+
+Route::get('/endorsement', 'RequestEndorsementController@index');
+Route::post('/endorsement', 'RequestEndorsementController@create');

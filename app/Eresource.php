@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class Eresource extends Model
 {
     //
-    protected $fillable = ['title','publisher'];
+    protected $fillable = ['title','publisher','request_id'];
 }

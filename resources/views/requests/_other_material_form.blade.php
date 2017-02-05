@@ -15,10 +15,7 @@
     {!! Form::number('unit_quote_price', null,['class'=>'form-control' ]) !!}
 </div>
 
-<div class="form-group">
-    {!! Form::label('quantity', 'Quantity' ) !!}
-    {!! Form::number('quantity', null,['class'=>'form-control' ]) !!}
-</div>
+
 
 
 <div class="form-group">

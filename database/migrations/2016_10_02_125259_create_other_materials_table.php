@@ -15,8 +15,14 @@ class CreateOtherMaterialsTable extends Migration
     {
         Schema::create('other_materials', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('request_id')->unsigned();
             $table->string('description');
             $table->timestamps();
+
+            $table->foreign('request_id')
+                ->references('id')->on('requests')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 

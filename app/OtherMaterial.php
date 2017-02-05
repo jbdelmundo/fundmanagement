@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class OtherMaterial extends Model
 {
-    protected $fillable = ['description'];
+    protected $fillable = ['description','request_id'];
 }

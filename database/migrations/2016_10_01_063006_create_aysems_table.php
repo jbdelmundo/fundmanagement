@@ -14,7 +14,7 @@ class CreateAysemsTable extends Migration
     public function up()
     {
         Schema::create('aysems', function (Blueprint $table) {
-            $table->integer('aysem')->primary();
+            $table->integer('aysem')->primary()->unsigned();
             $table->string('short_name');
             $table->string('full_name');
             $table->timestamps();
