@@ -18,6 +18,10 @@ class CreateEresourcesTable extends Migration
             $table->integer('request_id')->unsigned();
             $table->string('title');
             $table->string('publisher');
+            $table->boolean('issubscription');
+            $table->date('startdate');
+            $table->date('enddate');
+
             $table->timestamps();
 
             $table->foreign('request_id')

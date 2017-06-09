@@ -15,7 +15,20 @@ class CreateAccountsTable extends Migration
     {
         Schema::create('accounts', function (Blueprint $table) {
             $table->increments('id');
+            $table->unsignedInteger('department_id');
+            $table->unsignedInteger('aysem');
+            $table->decimal('begining_balance',12,2);
+            $table->decimal('ending_balance',12,2);
             $table->timestamps();
+
+            $table->foreign('department_id')
+                ->references('id')->on('departments')
+                ->onUpdate('cascade');
+
+            $table->foreign('aysem')
+                ->references('aysem')->on('aysems')
+                ->onUpdate('cascade');
+
         });
     }
 
