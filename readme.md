@@ -25,3 +25,30 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+
+
+# Developer's Guide
+
+## What to do after cloning:
+
+-Download libraries
+	navigate to directory
+	type "composer update"
+
+-Set up database backend
+	create MySQL database
+	create a .env file from .env.example
+
+Create tables and inital database contents
+	php artisan migrate
+	php artisan db:seed
+
+
+Create value in the APPLICATION KEY field in your .env file
+	php artisan key:generate
+
+
+
+# CODE CONVENTIONS
+
+	DATABASE NAMING

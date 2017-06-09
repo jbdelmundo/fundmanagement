@@ -27,7 +27,7 @@ Object Models:
 
 
 Controllers:
-	CollectonController
+	CollectionController
 		Module for adding funds through collection
 	DashboardController
 	HomeController

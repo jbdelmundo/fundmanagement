@@ -6,15 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Requests extends Model
 {
-    //
+    // based on TransactionTypes table
     const RECORDED = 0;                 //recorded and for approval of LFC
     const ENDORSED = 1;                 //for approval of chair
     const APPROVED = 2;                 //approved by chair, credited to balance, awaiting PR
     const FOR_PURCHASE = 3;             //PR issued
     const PURCHASED = 4;                //Awaiting delivery
     const DELIVERED = 5;
+    const REFUNDED = 6;
 
-
+    // based on RequestTypes table
     const BOOK = 'B';
     const EBOOK = 'E';
     const MAGAZINE = 'M';

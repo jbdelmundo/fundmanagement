@@ -22,10 +22,15 @@ class CreateRequestsTable extends Migration
             $table->string('recommendedby')->nullable();
             $table->string('category_id',1);
             $table->unsignedInteger('status')->default(0);
+            $table->string('pr_number')->nullable();
             $table->unsignedInteger('item_id')->nullable();
 
             $table->foreign('department_id')
                 ->references('id')->on('departments')
+                ->onUpdate('cascade');
+
+            $table->foreign('status')
+                ->references('id')->on('request_statuses')
                 ->onUpdate('cascade');
 
             $table->timestamps();

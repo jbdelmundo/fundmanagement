@@ -19,8 +19,8 @@ class CreateRequestEndorsementsTable extends Migration
             $table->integer('quantity')->default(1);
             $table->string('subject')->nullable();
             $table->integer('is_reserved')->default(0);
-            $table->string('pr_number')->nullable();
-            $table->integer('status')->default(0);
+            
+            
 
             $table->integer('endorsed_by')->unsigned()->nullable();
             $table->integer('approved_by')->unsigned()->nullable();
