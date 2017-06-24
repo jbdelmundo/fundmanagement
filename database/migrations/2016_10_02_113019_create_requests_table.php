@@ -17,7 +17,9 @@ class CreateRequestsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('aysem');
             $table->unsignedInteger('department_id');
-            $table->decimal('unit_quote_price',12,2);            
+            $table->decimal('unit_quote_price',12,2);
+            $table->decimal('total_quote_price',12,2);
+            $table->decimal('total_bid_price',12,2);            
             $table->string('remarks')->nullable();
             $table->string('recommendedby')->nullable();
             $table->string('category_id',1);
