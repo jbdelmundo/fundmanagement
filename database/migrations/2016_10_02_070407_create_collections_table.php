@@ -15,10 +15,15 @@ class CreateCollectionsTable extends Migration
     {
         Schema::create('collections', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('aysem');
+            $table->unsignedinteger('aysem');
             $table->decimal('amount',12,2);
 
             $table->timestamps();
+
+            $table->foreign('aysem')
+                ->references('aysem')->on('aysems')
+                ->onUpdate('cascade');
+
         });
     }
 

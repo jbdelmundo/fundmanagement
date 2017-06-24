@@ -58,18 +58,19 @@ class CollectionController extends Controller
     *	Creates a new collection
     */
     function store(Request $request){
-    	$validation_rules =  [
-	        'amount' => 'required'
-	    ];
+    	
 
     	
     	
     	$aysem = Aysem::current();
     	$amount = floatval( $request->amount) ;
-    	$statistics = $request->statistics;		//array statistics[deptid][undergraduate]
+    	$statistics = $request->statistics;		
 
-
-    	 $this->validate($request,$validation_rules);
+        //validation
+        $validation_rules =  [
+            'amount' => 'required'
+        ];
+    	$this->validate($request,$validation_rules);
 
 
     	//validate that this is the first entry in Collections table

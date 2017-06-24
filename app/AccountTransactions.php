@@ -20,6 +20,9 @@ class AccountTransactions extends Model
                 ->first()
                 ;
 
+        //get the starting balance of the sem,
+        
+
 		
 		if(count($result) == 0){	
            

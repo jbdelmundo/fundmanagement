@@ -15,7 +15,7 @@ class CreateRequestsTable extends Migration
     {
         Schema::create('requests', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('aysem');
+            $table->unsignedInteger('aysem');
             $table->unsignedInteger('department_id');
             $table->decimal('unit_quote_price',12,2);            
             $table->string('remarks')->nullable();
@@ -31,6 +31,10 @@ class CreateRequestsTable extends Migration
 
             $table->foreign('status')
                 ->references('id')->on('request_statuses')
+                ->onUpdate('cascade');
+
+            $table->foreign('aysem')
+                ->references('aysem')->on('aysems')
                 ->onUpdate('cascade');
 
             $table->timestamps();
