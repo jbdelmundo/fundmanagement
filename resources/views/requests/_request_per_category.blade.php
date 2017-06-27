@@ -92,7 +92,7 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-    Journals      
+    EBOOKS      
     </div>
     <div class="panel-body">
         @if(count($items)>0)
@@ -135,7 +135,7 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-    Journals      
+    Magazines      
     </div>
     <div class="panel-body">
         @if(count($items)>0)
@@ -178,7 +178,7 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-    Journals      
+    Equipment      
     </div>
     <div class="panel-body">
         @if(count($items)>0)
@@ -221,7 +221,7 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-    Journals      
+    Supplies      
     </div>
     <div class="panel-body">
         @if(count($items)>0)
