@@ -2,8 +2,8 @@
     <div class="panel-body">
     <select id='active_sem_selector' class="form-control">
         @foreach($aysems as $aysem)
-            <option value={{$aysem->aysem}}   @if($active_sem_id == $aysem->aysem) selected @endif >
-            	{{\App\Aysem::short_name($aysem)}}
+            <option value={{$aysem->aysem}}   @if($active_aysem == $aysem->aysem) selected @endif >
+            	{{\App\Aysem::shortName($aysem->aysem)}}
         	</option>
         @endforeach
     </select>
