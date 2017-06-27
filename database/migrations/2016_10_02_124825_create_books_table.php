@@ -13,6 +13,7 @@ class CreateBooksTable extends Migration
      */
     public function up()
     {
+	Schema::defaultStringLength(191);
         Schema::create('books', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('request_id')->unsigned();

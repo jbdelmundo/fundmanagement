@@ -13,6 +13,7 @@ class CreateEresourcesTable extends Migration
      */
     public function up()
     {
+	Schema::defaultStringLength(191);
         Schema::create('eresources', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('request_id')->unsigned();

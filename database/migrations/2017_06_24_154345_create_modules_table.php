@@ -13,6 +13,7 @@ class CreateModulesTable extends Migration
      */
     public function up()
     {
+	Schema::defaultStringLength(191);
         Schema::create('modules', function (Blueprint $table) {
             $table->increments('id');
             $table->string('module');
