@@ -19,9 +19,13 @@
 
 		@include('layouts.errors')
 
+        
+
+        
+
+        @include('_active_dept_selector',['active_department_id'=>$department->id])
+        
         @include('requests._request_per_category')
-
-
         
         
 	</div>

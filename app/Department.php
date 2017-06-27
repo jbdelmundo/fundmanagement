@@ -13,23 +13,26 @@ class Department extends Model
     //
     protected $fillable = ['initials','short_name','full_name','percent_allocation'];
 
-    function account_transactions(){
-    	return $this->hasMany(AccountTransactions);
+    /****  RELATIONSHIP FUNCTIONS  ****/
+
+    function accounts(){
+        return $this->hasMany('App\Account');
     }
 
-    function balance(){
-    	$result =  DB::table('account_transactions')
-    			->where( [ 'department_id'=>$this->id] )
-				->orderBy('created_at')
-				->take(1)
-				->pluck('amount')->first();
+    function account(Aysem $aysem){
+         return $this->hasMany('App\Account')->where('aysem',$aysem->aysem)->first();
+    }
 
-		
-		if(count($result) == 0){	
-			return 0.0;
-		}else{
-			return $result;
-		}
+    function account_transactions(){
+    	return $this->hasMany('App\AccountTransactions')
+            ->orderBy('aysem','desc');
+    }
+
+
+    /****  FUNCTIONS  ****/
+
+    function balance(Aysem $aysem){
+    	
     }
 
     function requestsForSem(Aysem $aysem){

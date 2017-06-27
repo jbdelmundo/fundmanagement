@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Aysem;
 use App\Department;
 use App\AccountTransactions;
+use App\Account;
 use Illuminate\Support\Facades\DB;
 
 
@@ -36,54 +37,13 @@ class DashboardController extends Controller
         $department = Department::find($user->department_id);
         $current_aysem = Aysem::current();
 
-        //balance history
-        $balance_history = AccountTransactions::where('department_id',$department->id)->orderBy('id','created_at')->take($records_to_fetch)->get();
-
-        $aysem_summary = [];
-        $loopsem = Aysem::current();
-        for ($i=0; $i < 6 && !is_null($loopsem); $i++) { 
-           
-            $aysem_summary[$loopsem->aysem] = AccountTransactions::aysemSummary($department,$loopsem);
-            $loopsem = $loopsem->previous();
-        }
-       
-        
 
 
-       
-        $balance_chart = [];
-
-        foreach($balance_history as $key => $history) {
-            if(!isset($balance_chart[$history->aysem] )){
-                $balance_chart[$history->aysem] =[];
-            }
-
-            if(!isset($balance_chart[$history->aysem]['income'] )){
-                $balance_chart[$history->aysem]['income']  = 0;
-            }
-
-            if(!isset($balance_chart[$history->aysem]['expenses'] )){
-                $balance_chart[$history->aysem]['expenses']  = 0;
-            }
-
-            if( $history->transaction_type_id == 'C' ){
-                $balance_chart[$history->aysem]['income'] += $history->amount;
-            }else{
-                $balance_chart[$history->aysem]['expenses'] += $history->amount;
-            }
-            $balance_chart[$history->aysem]['balance'] = $history->balance;
-        }
-
-        // dd($balance_chart);
-
-        // dd($balance_historyistory->toArray());
-        //total collections
-        
-
-        $summary_of_expenses = $this->summaryOfExpenses();
+        $currentbalance = $department->account($current_aysem)                                
+                                ->currentBalance();
 
 
-        
+                
         return view('dashboard.dashboard',compact('user','department', 'balance_history','balance_chart' ,'aysem_summary'));
     }
 

@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->nullable();
             $table->string('password');
             $table->unsignedInteger('department_id')->nullable();
+            $table->unsignedInteger('userrole_id');
             $table->rememberToken();
             
 
@@ -26,6 +27,12 @@ class CreateUsersTable extends Migration
                 ->references('id')->on('departments')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+
+            $table->foreign('userrole_id')
+                ->references('id')->on('user_roles')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
             $table->timestamps();
         });
     }

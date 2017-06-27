@@ -18,16 +18,19 @@ class UserSeeder extends Seeder
         	[
         		'username' => 'che',
         		'password' => 'wew',
-        		'department_id' => 1
+        		'department_id' => 1,
+                'userrole_id' => 1
         	],
         	[
         		'username' => 'ce',
         		'password' => 'wew',
-        		'department_id' => 2
+        		'department_id' => 2,
+                'userrole_id' => 1
         	],
         	[
         		'username' => 'lib',
-        		'password' => 'wew'
+        		'password' => 'wew',
+                'userrole_id' => 2
         	],
         ];
         foreach ($users as $key => $user) {

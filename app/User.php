@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'username', 'email', 'password','department_id',
+        'username', 'email', 'password','department_id','role_id'
     ];
 
     /**
@@ -30,7 +30,7 @@ class User extends Authenticatable
     ];
 
     function isLibrarian(){
-        return is_null($this->department_id);
+        return $this->userrole_id == 2;
     }
 
     function department(){

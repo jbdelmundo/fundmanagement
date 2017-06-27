@@ -7,3 +7,13 @@
         </ul>
     </div>
 @endif
+
+@if(session()->has('message'))
+	<div class="alert alert-success">
+        <ul>
+            @foreach (session()->get('message') as $success)
+                <li>{{ $success }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
