@@ -6,6 +6,7 @@
     {!! Form::text('title', null,['class'=>'form-control' ]) !!}
 </div>
 
+{!! Form::hidden('iselectronic', 0,['class'=>'form-control' ]) !!}
 
  <div class="form-group">
     {!! Form::label('Publisher' ) !!}

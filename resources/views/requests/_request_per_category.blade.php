@@ -86,4 +86,175 @@
     </div>
 </div>
 
+<?php 
+    $items = $requests_this_sem[Requests::EBOOK] ;
+ ?>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+    Journals      
+    </div>
+    <div class="panel-body">
+        @if(count($items)>0)
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Publisher</th>
+                        <th>Unit price</th>
+                                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($items as  $book)
+                    <tr>
+                        <td>{{$book->title}}</td>
+                        <td>{{$book->publisher}}</td>
+                        <td>{{$book->unit_quote_price}}</td>
+                       
+                    </tr>
+                    @endforeach
+                    
+                </tbody>
+            </table>
+           
+        </div>
+        @else
+            No items to show.
+        @endif
+   
+    </div>
+</div>
+
+
+<?php 
+    $items = $requests_this_sem[Requests::MAGAZINE] ;
+ ?>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+    Journals      
+    </div>
+    <div class="panel-body">
+        @if(count($items)>0)
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Publisher</th>
+                        <th>Unit price</th>
+                                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($items as  $book)
+                    <tr>
+                        <td>{{$book->title}}</td>
+                        <td>{{$book->publisher}}</td>
+                        <td>{{$book->unit_quote_price}}</td>
+                       
+                    </tr>
+                    @endforeach
+                    
+                </tbody>
+            </table>
+           
+        </div>
+        @else
+            No items to show.
+        @endif
+   
+    </div>
+</div>
+
+
+<?php 
+    $items = $requests_this_sem[Requests::EQUIPMENT] ;
+ ?>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+    Journals      
+    </div>
+    <div class="panel-body">
+        @if(count($items)>0)
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Publisher</th>
+                        <th>Unit price</th>
+                                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($items as  $book)
+                    <tr>
+                        <td>{{$book->title}}</td>
+                        <td>{{$book->publisher}}</td>
+                        <td>{{$book->unit_quote_price}}</td>
+                       
+                    </tr>
+                    @endforeach
+                    
+                </tbody>
+            </table>
+           
+        </div>
+        @else
+            No items to show.
+        @endif
+   
+    </div>
+</div>
+
+
+<?php 
+    $items = $requests_this_sem[Requests::SUPPLIES] ;
+ ?>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+    Journals      
+    </div>
+    <div class="panel-body">
+        @if(count($items)>0)
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Publisher</th>
+                        <th>Unit price</th>
+                                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($items as  $book)
+                    <tr>
+                        <td>{{$book->title}}</td>
+                        <td>{{$book->publisher}}</td>
+                        <td>{{$book->unit_quote_price}}</td>
+                       
+                    </tr>
+                    @endforeach
+                    
+                </tbody>
+            </table>
+           
+        </div>
+        @else
+            No items to show.
+        @endif
+   
+    </div>
+</div>
+
 
