@@ -15,7 +15,7 @@ class CreateEnrolleeStatisticsTable extends Migration
     {
         Schema::create('enrollee_statistics', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('aysem');
+            $table->unsignedInteger('aysem');
             $table->unsignedInteger('collection_id');
             $table->unsignedInteger('department_id');
             $table->unsignedInteger('undergraduate');
@@ -28,6 +28,11 @@ class CreateEnrolleeStatisticsTable extends Migration
                 ->references('id')->on('collections')
                 ->onUpdate('cascade');
             $table->timestamps();
+
+            $table->foreign('aysem')
+                ->references('aysem')->on('aysems')
+                ->onUpdate('cascade');
+                
         });
     }
 

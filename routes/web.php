@@ -34,11 +34,9 @@ Route::post('/collection', 'CollectionController@store');
 Route::get('/collection/{aysem}', 'CollectionController@show');
 
 Route::get('/requests', 'RequestsController@index');
-
-Route::get('/requests/{dept}/{aysem}', 'RequestsController@show');
-Route::post('/requests/{dept}/{aysem}', 'RequestsController@create');
+Route::post('/requests', 'RequestsController@create');
 
 Route::get('/endorsement', 'RequestEndorsementController@index');
 Route::post('/endorsement', 'RequestEndorsementController@create');
 
-
+Route::get('/switch_active_dept/{id}','SessionController@switch_active_dept');

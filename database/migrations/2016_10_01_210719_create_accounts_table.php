@@ -18,7 +18,7 @@ class CreateAccountsTable extends Migration
             $table->unsignedInteger('department_id');
             $table->unsignedInteger('aysem');
             $table->decimal('begining_balance',12,2);
-            $table->decimal('ending_balance',12,2);
+            $table->decimal('ending_balance',12,2)->default(null);
             $table->timestamps();
 
             $table->foreign('department_id')

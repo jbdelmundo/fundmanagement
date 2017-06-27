@@ -20,50 +20,31 @@ use Illuminate\Support\Facades\Auth;
 class RequestsController extends Controller
 {
     //
-    function index(){
+    
+    
 
-    	$user = Auth::user();
+    function index(Request $request){
+        $user = Auth::user(); 
 
-
-
-    	$user_dept = is_null($user)? null : $user->department_id;
-    	$departments = Department::all();
-    	$current_aysem = Aysem::current();
-
-    	if(!$user->isLibrarian()){
-             return redirect()->action('RequestsController@show',['dept'=>$user->id , 'aysem'=>$current_aysem->aysem]);
-    	}
-
-
-
-    	return view('requests.index', compact('department','current_aysem'));
-    }
-
-
-    /* Display form to create a new request*/
-   
-
-    function store(){
-
-    }
-
-    function show(Department $dept,Aysem $aysem){
-        // abort(403,'Record not found');
-        $user = Auth::user();
-        $department = $dept;
-        if(!is_null($user->department_id) && $user->department_id != $dept->id){
-            abort(403, 'Unauthorized to access to this department.');
+        if(!$user->isLibrarian()){
+             return redirect()->action('HomeController@index');
         }
+        
+        //get active_dept from session, use department_id = 1 as default
+        $department_id = $request->session()->get('active_dept_id',1 ) ;     
+        $department = Department::find($department_id);
+
+        $aysem = Aysem::current();
 
         $requests_this_sem = [
-            Requests::BOOK =>   $dept->bookRequestsForSem($aysem),
-            Requests::EBOOK =>   $dept->ebookRequestsForSem($aysem),
-            Requests::JOURNAL =>   $dept->journalRequestsForSem($aysem),
-            Requests::MAGAZINE =>   $dept->magazineRequestsForSem($aysem),
-            Requests::ERESOURCE =>   $dept->eresourceRequestsForSem($aysem),
-            Requests::SUPPLIES =>   $dept->suppliesRequestsForSem($aysem),
-            Requests::EQUIPMENT =>   $dept->equipmentRequestsForSem($aysem),
-            Requests::OTHER =>   $dept->otherRequestsForSem($aysem)
+            Requests::BOOK =>   $department->bookRequestsForSem($aysem),
+            Requests::EBOOK =>   $department->ebookRequestsForSem($aysem),
+            Requests::JOURNAL =>   $department->journalRequestsForSem($aysem),
+            Requests::MAGAZINE =>   $department->magazineRequestsForSem($aysem),
+            Requests::ERESOURCE =>   $department->eresourceRequestsForSem($aysem),
+            Requests::SUPPLIES =>   $department->suppliesRequestsForSem($aysem),
+            Requests::EQUIPMENT =>   $department->equipmentRequestsForSem($aysem),
+            Requests::OTHER =>   $department->otherRequestsForSem($aysem)
         ];
 
        
@@ -72,10 +53,11 @@ class RequestsController extends Controller
         $active_form = 'Books';         //match with btn_caption
 
 
-
+        $departments = Department::all();
         return view('requests.show', compact('user','departments','department','aysem','forms','active_form', 'requests_this_sem'
             ));
     }
+
 
 
     private function getForms(){
@@ -162,43 +144,51 @@ class RequestsController extends Controller
                 ];
                 return $forms;                               
     }
-    function create(Department $dept,Aysem $aysem, Request $request){
 
+
+    function create(Request $request){
+
+        
         // $request->is_reserved = isset($request->is_reserved); 
         // dd($request);
         // abort(403,'Record not found');
 
+        $department_id = $request->session()->get('active_dept_id',0 ) ;     
+        $department = Department::find($department_id);
 
+        $aysem = Aysem::current();
+
+        
 
         $categories = Requests::categories();
         $category_id = $request->category_id;
 
-        $dept_id = \Auth::user()->dept_id;
-
         //TODO: add validation 
-        //TODO: aysem, dept comes from form, NOT IN URL
+
+        //insert into requests
+        //insert into individual tables
+        
         $params = $request->all();
-        $request = Requests::create($params);
-        $params['request_id'] = $request->id;
+        $params['total_quote_price'] = 0;
+        $params['total_bid_price'] = 0;
+        // dd($params);
+        $request_obj = Requests::create($params);
+        $params['request_id'] = $request_obj->id;
 
         switch($category_id){
 
             case 'B':   //Books
             case 'E':   //Ebooks
-
-
                 $item = Book::create($params);
                 break;
 
             case 'J':   //journal
             case 'M':   //magazine
-
                 $item = Magazine::create($params);
                 break;
 
 
             case 'R':   //resource
-
                 $item = Eresource::create($params);
                 break;
 
@@ -207,17 +197,12 @@ class RequestsController extends Controller
             case 'O':   //other
                 $item = OtherMaterial::create($params);
                 break;
-
-            //insert into requests
-
-            //insert into individual tables
-
         }
         
-        $request->item_id = $item->id;
-        $request->save();
+        $request_obj->item_id = $item->id;
+        $request_obj->save();
 
 
-        return redirect()->action('RequestsController@show',['dept'=>$dept->id , 'aysem'=>$aysem->aysem])->with('success', 'Request recorded!');
+        return redirect()->action('RequestsController@index' )->with('success', 'Request recorded!');
     }
 }

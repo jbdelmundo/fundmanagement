@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCollectionsTable extends Migration
+class CreateUserRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,10 @@ class CreateCollectionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('collections', function (Blueprint $table) {
+        Schema::create('user_roles', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedinteger('aysem');
-            $table->decimal('amount',12,2);
-
+            $table->string('role');
             $table->timestamps();
-
-            $table->foreign('aysem')
-                ->references('aysem')->on('aysems')
-                ->onUpdate('cascade');
-
         });
     }
 
@@ -34,6 +27,6 @@ class CreateCollectionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('collections');
+        Schema::dropIfExists('user_roles');
     }
 }

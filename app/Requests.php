@@ -15,7 +15,7 @@ class Requests extends Model
     const DELIVERED = 5;
     const REFUNDED = 6;
 
-    // based on RequestTypes table
+    // based on Requests::categories()
     const BOOK = 'B';
     const EBOOK = 'E';
     const MAGAZINE = 'M';
@@ -25,7 +25,7 @@ class Requests extends Model
     const SUPPLIES = 'S';
     const OTHER = 'O';
 
-    protected $fillable = ['aysem','department_id','unit_quote_price','remarks','recommendedby','category_id','item_id'];
+    protected $fillable = ['aysem','department_id','unit_quote_price','remarks','recommendedby','category_id','item_id','total_quote_price','total_bid_price'];
 
     static function categories(){
 
