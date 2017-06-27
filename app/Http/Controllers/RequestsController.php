@@ -54,7 +54,8 @@ class RequestsController extends Controller
 
 
         $departments = Department::all();
-        return view('requests.show', compact('user','departments','department','aysem','forms','active_form', 'requests_this_sem'
+        $aysems = Aysem::all();
+        return view('requests.show', compact('user','departments','department','aysem','forms','active_form', 'requests_this_sem','aysems'
             ));
     }
 

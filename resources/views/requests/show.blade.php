@@ -24,6 +24,7 @@
         
 
         @include('_active_dept_selector',['active_department_id'=>$department->id])
+        @include('_active_sem_selector',['active_aysem'=>$aysem->aysem])
         
         @include('requests._request_per_category')
         
