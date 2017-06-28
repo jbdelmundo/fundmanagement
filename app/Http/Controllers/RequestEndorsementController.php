@@ -102,4 +102,17 @@ class RequestEndorsementController extends Controller
         
         return redirect('endorsement');
     }
+	
+	function remove($request_id){
+		
+		
+        //update the status to endorsed
+		$request = Requests::find($request_id);
+        $request->status = Requests::RECORDED;
+        $request->total_quote_price = 0;
+        $request->save();
+		
+		$endorsement = RequestEndorsement::where('request_id', $request_id)->delete();
+		return redirect(url('endorsement'));
+	}
 }

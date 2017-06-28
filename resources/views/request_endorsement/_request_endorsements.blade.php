@@ -17,6 +17,7 @@
 						<th style='width:5%'>Unit price</th>
 						<th style='width:10%'>Subtotal</th> 
 						<th style='width:5%'>Remarks</th>
+						<th style='width:5%'>Action</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -31,6 +32,7 @@
 						<td>{{$request->unit_quote_price}}</td>
 						<td>{{$request->total_quote_price}}</td>
 						<td>{{$request->remarks}}</td>
+						<td><a href='{{ url("endorsement/remove/". $request->request_id)}}'>Remove</a></td>
 
 					</tr>
 					@endforeach
