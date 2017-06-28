@@ -22,12 +22,9 @@ class RequestEndorsementController extends Controller
     function index(){
 
     	$user = Auth::user();
-
-
-
     	$aysem = Aysem::current();
 
-        $dept = $user->department()->first();
+        $dept = $user->department()->first(); //default lang
         $department = $dept;
 
         if(!is_null($user->department_id) && $user->department_id != $dept->id){

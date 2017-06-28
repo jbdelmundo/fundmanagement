@@ -202,7 +202,6 @@ class RequestsController extends Controller
         $request_obj->item_id = $item->id;
         $request_obj->save();
 
-
         return redirect()->action('RequestsController@index' )->with('success', 'Request recorded!');
     }
 }

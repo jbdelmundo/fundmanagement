@@ -30,7 +30,8 @@
                         <td>{{$item->author}}</td>
                         <td>{{$item->publisher}}</td>
                         <td>{{$item->copyright_date}}</td>
-                        <td>{{$item->unit_quote_price}}</td>                
+                        <td>{{$item->unit_quote_price}}</td>  
+                        <form action="/endorsements"><td> <button type="submit">Endorse </button></td></form>       
                     </tr>
                     @endforeach
                     
@@ -71,7 +72,7 @@
                         <td>{{$book->title}}</td>
                         <td>{{$book->author}}</td>
                         <td>{{$book->unit_quote_price}}</td>
-                       
+                        <form action="/endorsements"><td> <button type="submit">Endorse </button></td></form>
                     </tr>
                     @endforeach
                     
@@ -108,7 +109,7 @@
                         <th>Publisher</th>
                         <th>Year</th>
                         <th>Unit price</th>
-                       
+                        
                      
                     </tr>
                 </thead>
@@ -119,7 +120,8 @@
                         <td>{{$item->author}}</td>
                         <td>{{$item->publisher}}</td>
                         <td>{{$item->copyright_date}}</td>
-                        <td>{{$item->unit_quote_price}}</td>                
+                        <td>{{$item->unit_quote_price}}</td>   
+                        <form action="/endorsements"><td> <button type="submit">Endorse </button></td></form>             
                     </tr>
                     @endforeach
                     
@@ -151,10 +153,7 @@
                         <th>Title</th>
                         <th>Author</th>
                         <th>Publisher</th>
-                        
                         <th>Unit price</th>
-                       
-                     
                     </tr>
                 </thead>
                 <tbody>
@@ -163,8 +162,8 @@
                         <td>{{$item->title}}</td>
                         <td>{{$item->author}}</td>
                         <td>{{$item->publisher}}</td>
-                        
-                        <td>{{$item->unit_quote_price}}</td>                
+                        <td>{{$item->unit_quote_price}}</td>  
+                        <form action="/endorsements"><td> <button type="submit">Endorse </button></td></form>              
                     </tr>
                     @endforeach
                     
@@ -204,7 +203,7 @@
                         <td>{{$book->title}}</td>
                         <td>{{$book->publisher}}</td>
                         <td>{{$book->unit_quote_price}}</td>
-                       
+                       <form action="/endorsements"><td> <button type="submit">Endorse </button></td></form>
                     </tr>
                     @endforeach
                     
@@ -245,7 +244,7 @@
                         <td>{{$book->description}}</td>
                         <td>{{$book->remarks}}</td>
                         <td>{{$book->unit_quote_price}}</td>
-                       
+                       <form action="/endorsements"><td> <button type="submit">Endorse </button></td></form>
                     </tr>
                     @endforeach
                     
@@ -286,7 +285,7 @@
                         <td>{{$book->description}}</td>
                         <td>{{$book->remarks}}</td>
                         <td>{{$book->unit_quote_price}}</td>
-                       
+                       <form action="/endorsements"><td> <button type="submit">Endorse </button></td></form>
                     </tr>
                     @endforeach
                     
@@ -328,7 +327,7 @@
                         <td>{{$book->description}}</td>
                         <td>{{$book->remarks}}</td>
                         <td>{{$book->unit_quote_price}}</td>
-                       
+                       <form action="/endorsements"><td> <button type="submit">Endorse </button></td></form>
                     </tr>
                     @endforeach
                     
