@@ -54,8 +54,6 @@ class RequestEndorsementController extends Controller
         foreach ($all_requests_this_sem as $key => $value) {
             $endorsements[$key] = $value->where('status',Requests::ENDORSED);   //filter only those that are endorsed
         }
-        
-
     	return view('request_endorsement.index',compact('user','departments','department','aysem', 'requests_this_sem','endorsements'
             ));
     }
@@ -66,8 +64,6 @@ class RequestEndorsementController extends Controller
         $request = Requests::findOrFail($formrequest->request_id);
 
         $category = $request->category_id;
-
-
         
 
         switch ($category) {
@@ -80,15 +76,17 @@ class RequestEndorsementController extends Controller
                 break;
 
             case Requests::EBOOK:
-                
-                $validation_rules = ['subject'=>'required' ];
+                $validation_rules = ['subject'=>'required' , 'quantity'=>'required|min:1'];
                 $this->validate($formrequest,$validation_rules);
                 $request_endorsement = \App\RequestEndorsement::create($formrequest->toArray());                           
-                $request_endorsement->quantity = 1;                           
 
                 break;
             
             default:
+                
+                $validation_rules = ['quantity'=>'required|min:1'];
+                $this->validate($formrequest,$validation_rules);
+                $request_endorsement = \App\RequestEndorsement::create($formrequest->toArray()); 
                 # code...
                 break;
         }
@@ -98,6 +96,7 @@ class RequestEndorsementController extends Controller
 
         //update the status to endorsed
         $request->status = Requests::ENDORSED;
+        $request->total_quote_price = $formrequest->quantity * $request->unit_quote_price;
         $request->save();
 
         

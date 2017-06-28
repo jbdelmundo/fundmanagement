@@ -112,12 +112,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($items as  $book)
+                    @foreach($items as  $item)
                     <tr>
-                        <td>{{$book->title}}</td>
-                        <td>{{$book->author}}</td>
-                        <td>{{$book->publisher}}</td>
-                        <td>{{$book->unit_quote_price}}</td>
+                        <td>{{$item->title}}</td>
+                        <td>{{$item->author}}</td>
+                        <td>{{$item->publisher}}</td>
+                        <td>{{$item->unit_quote_price}}</td>
                        
                     </tr>
                     @endforeach
@@ -155,12 +155,12 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($items as  $book)
+                    @foreach($items as $item)
                     <tr>
-                        <td>{{$book->title}}</td>
-                        <td>{{$book->author}}</td>
-                        <td>{{$book->publisher}}</td>
-                        <td>{{$book->unit_quote_price}}</td>
+                        <td>{{$item->title}}</td>
+                        <td>{{$item->author}}</td>
+                        <td>{{$item->publisher}}</td>
+                        <td>{{$item->unit_quote_price}}</td>
                        
                     </tr>
                     @endforeach
@@ -199,11 +199,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($items as  $book)
+                    @foreach($items as $item)
                     <tr>
-                        <td>{{$book->title}}</td>
-                        <td>{{$book->publisher}}</td>
-                        <td>{{$book->unit_quote_price}}</td>
+                        <td>{{$item->title}}</td>
+                        <td>{{$item->publisher}}</td>
+                        <td>{{$item->unit_quote_price}}</td>
                        
                     </tr>
                     @endforeach
@@ -242,11 +242,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($items as  $book)
+                    @foreach($items as $item)
                     <tr>
-                        <td>{{$book->description}}</td>
-                        <td>{{$book->remarks}}</td>
-                        <td>{{$book->unit_quote_price}}</td>
+                        <td>{{$item->description}}</td>
+                        <td>{{$item->remarks}}</td>
+                        <td>{{$item->unit_quote_price}}</td>
                        
                     </tr>
                     @endforeach
@@ -283,11 +283,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($items as  $book)
+                    @foreach($items as $item)
                     <tr>
-                        <td>{{$book->description}}</td>
-                        <td>{{$book->remarks}}</td>
-                        <td>{{$book->unit_quote_price}}</td>
+                        <td>{{$item->description}}</td>
+                        <td>{{$item->remarks}}</td>
+                        <td>{{$item->unit_quote_price}}</td>
                        
                     </tr>
                     @endforeach
@@ -325,11 +325,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($items as  $book)
+                    @foreach($items as $item)
                     <tr>
-                        <td>{{$book->description}}</td>
-                        <td>{{$book->remarks}}</td>
-                        <td>{{$book->unit_quote_price}}</td>
+                        <td>{{$item->description}}</td>
+                        <td>{{$item->remarks}}</td>
+                        <td>{{$item->unit_quote_price}}</td>
                        
                     </tr>
                     @endforeach

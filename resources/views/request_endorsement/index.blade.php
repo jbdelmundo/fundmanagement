@@ -34,8 +34,8 @@
 
 
         @include('request_endorsement._requests_journal',['heading'=>'Journals','items'=>$requests_this_sem[Requests::JOURNAL]])
-        @include('request_endorsement._requests_ebook',['heading'=>'Magazines','items'=>$requests_this_sem[Requests::MAGAZINE]])
-        @include('request_endorsement._requests_ebook',['heading'=>'Electronic Resources','items'=>$requests_this_sem[Requests::ERESOURCE]])
+        @include('request_endorsement._requests_journal',['heading'=>'Magazines','items'=>$requests_this_sem[Requests::MAGAZINE]])
+    <!--    @include('request_endorsement._requests_ebook',['heading'=>'Electronic Resources','items'=>$requests_this_sem[Requests::ERESOURCE]])	-->
         @include('request_endorsement._requests_ebook',['heading'=>'Supplies','items'=>$requests_this_sem[Requests::SUPPLIES]])
         @include('request_endorsement._requests_ebook',['heading'=>'Equipment','items'=>$requests_this_sem[Requests::EQUIPMENT]])
         @include('request_endorsement._requests_ebook',['heading'=>'Others','items'=>$requests_this_sem[Requests::OTHER]])

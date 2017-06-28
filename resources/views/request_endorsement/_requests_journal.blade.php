@@ -15,7 +15,7 @@
                         <th style='width:15%'>Title</th>
                         <th style='width:10%'>Author</th>
                         <th style='width:10%'>Subject</th>
-                        <th style='width:5%'>Qty</th>                        
+                        <th style='width:5%'>Quantity</th>                        
                         <th style='width:10%'>Section</th> 
                         <th style='width:5%'>Unit price</th>
                         <th style='width:10%'>Remarks</th> 
@@ -29,7 +29,7 @@
 
                    {{ Form::open(['url' => 'endorsement' , 'class' => 'form-horizontal']) }} 
                     <div class='form-group'>
-                        {{ Form::hidden('request_id',$item->id)}}
+                        {{ Form::hidden('request_id',$item->request_id)}}
                         <td> {{$item->title}}</td>
                         <td>{{$item->author}}</td>
                         <td>{{ Form::text('subject',null, 
