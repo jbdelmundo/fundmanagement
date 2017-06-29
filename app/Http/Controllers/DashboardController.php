@@ -26,14 +26,15 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
         if(is_null($user)){
 			return redirect('');			
 		}
-		elseif(is_null($user->department_id)){
-			$department = Department::find(1);
+		elseif(Auth::user()->isLibrarian()){
+			$department_id = $request->session()->get('active_dept_id',1) ;     
+			$department = Department::find($department_id);
 		}
 		else{
 			$department = Department::find($user->department_id);
