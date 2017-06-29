@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', 'DashboardController@index');
+// Route::post('/dashboard', 'DashboardController@dropdown');
 
 
 Route::get('/balance', 'DashboardController@balance');

@@ -12,7 +12,11 @@
             @if(count($request_endorsement) >0)
 				<thead>
 					<tr>
-						<th style='width:15%'>Title/Description</th>                
+						@if($type == 'Q' || $type == 'S' || $type == 'O')
+							<th style='width:15%'>Description</th>  
+						@else	
+							<th style='width:15%'>Title</th>  
+						@endif							
 						<th style='width:10%'>Quantity</th>                
 						<th style='width:5%'>Unit price</th>
 						<th style='width:10%'>Subtotal</th> 
