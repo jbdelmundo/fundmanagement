@@ -41,6 +41,8 @@ class DashboardController extends Controller
         $beginning_balance = 1000;
         $current_balance = 2700;
         $active_department_id = $request->session()->get('active_dept_id',0 ) ;  
+        
+
         $transactions=[
             [
                 'created_at' => '01/02/17',

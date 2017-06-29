@@ -92,7 +92,7 @@ class Aysem extends Model
     		$name .= 'Mid Semester AY';
     	}
 
-    	$name .= ' ' . $year + '-' .($year+1);
+    	$name .= ' ' . $year . '-' .($year+1);
     	return $name;
     }
 

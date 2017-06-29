@@ -47,5 +47,6 @@
     },
     "config": {
         "preferred-install": "dist"
-    }
+    },
+    "dompdf/dompdf": "dev-master as 0.7.0"
 }
