@@ -13,7 +13,6 @@ use App\AccountTransactions;
 use App\Account;
 use Illuminate\Support\Facades\DB;
 
-
 class DashboardController extends Controller
 {
     public function __construct()
@@ -33,21 +32,23 @@ class DashboardController extends Controller
 			return redirect('');			
 		}
 		elseif(Auth::user()->isLibrarian()){
-			$department_id = $request->session()->get('active_dept_id',1) ;     
-			$department = Department::find($department_id);
+			$active_department_id = $request->session()->get('active_dept_id',1) ; 
+			$department = Department::find($active_department_id);
 		}
 		else{
 			$department = Department::find($user->department_id);
 		}
 
-
-        $records_to_fetch = 100;
+		
+		$departments = Department::all();
+        
+		$records_to_fetch = 100;
         $current_aysem = Aysem::current();
 
-        $begining_balances = array_column(Account::find($department->account($current_aysem))->toArray(),'begining_balance');
-        foreach ($begining_balances as $key => $begining_balance) {
-			if($begining_balances[$key] == 0) {
-				unset($begining_balances[$key]);
+        $beginning_balances = array_column(Account::find($department->account($current_aysem))->toArray(),'begining_balance');
+        foreach ($beginning_balances as $key => $beginning_balance) {
+			if($beginning_balances[$key] == 0) {
+				unset($beginning_balances[$key]);
 			}
 		}
 							
@@ -58,16 +59,30 @@ class DashboardController extends Controller
 							->id;
 
 		
-		$transactions = AccountTransactions::where('department_id',$department->id)
+		$transactionss = AccountTransactions::where('department_id',$department->id)
 											-> where('account_id',$account_id)
 											-> orderby('created_at','ase')
 											->get()
 											->toArray();
+		// foreach($transactions as $transaction){
+			// $transaction['balance']= $beginning_balance + $transaction['amount'];
+		// }
 		
 		
-		// dd($begining_balance, $transactions,$current_balance);
+        $transactions = [];
+		$balance = $beginning_balance;
+        foreach ($transactionss as $key => $value) {
+            $value['balance'] = $balance + $value['amount'];
+			$balance += $value['balance'];
+            $transactions[$key] = $value;
+        }
+		
+		// dd($beginning_balance, $transactions,$current_balance);
+		
+		
                 
-        return view('dashboard.dashboard',compact('user','department', 'balance_history','balance_chart' ,'aysem_summary','current_balance','begining_balance','transactions'));
+		return view('dashboard.dashboard',compact('active_department_id','departments','beginning_balance','current_balance','transactions', 'department', 'user','current_aysem', 'created_at'));
+
     }
 
     public function balancehistory()
