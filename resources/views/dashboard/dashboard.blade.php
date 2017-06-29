@@ -9,128 +9,80 @@
 	<div class="col-lg-12">
 		<h1 class="page-header">Dashboard of {{$department->short_name}}</h1>
 	</div>
-	<!-- /.col-lg-12 -->
 </div>
+
 @if(\Auth::user()->isLibrarian())
     @include('layouts.department_dropdowns')
-@endif
+@else
+    \Auth.user()->department->short_name();
+@endif    
 
 <div class="row">
 @include('layouts.errors')
 
-	<div class="col-lg-12">
-		<div class="panel panel-default">
-		    <div class="panel-heading">
-				Account Summary  
-		    </div>
-		    <div class="panel-body">
-		    <table class="table table-striped">
+	<div class="col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+              BALANCE
+            </div>
+            <div class="panel-body">
+             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>Semester</th>
-                        <th>Previous Balance</th>
-                        <th>Collection</th>
-                        <th>Adjustments</th>
-                        <th>Expenses</th>
-                        <th>Refunds</th>
+                       <td>Beginning Balance: {{$beginning_balance}}</td>
+                    </tr>
+                    <tr>
+                        <td>Current Balance: {{$current_balance}}</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                    
+                </tbody>
+            </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Transactions  
+            </div>
+            <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Amount</th>
                         <th>Balance</th>                       
                     </tr>
                 </thead>
                 <tbody>
-                @foreach($aysem_summary as $aysem => $summary)
-                	<tr>
-                		<td>{{\App\Aysem::abbrev($aysem)}}</td>
-                        <td>{{ number_format( $summary['PREV_BALANCE'] ,  2 ,  "." ,  "," )  }}</td>
-                        <td>{{ number_format( $summary['COLLECTION'] ,  2 ,  "." ,  "," )  }}</td>
-                        <td>{{ number_format( $summary['ADJUSTMENT'] ,  2 ,  "." ,  "," )  }}</td>
-                        <td>{{ number_format( $summary['PURCHASE'] ,  2 ,  "." ,  "," )  }}</td>
-                        <td>{{ number_format( $summary['REFUND'] ,  2 ,  "." ,  "," )  }}</td>
-                        <td>{{ number_format( $summary['BALANCE'] ,  2 ,  "." ,  "," )  }}</td>
-                  	</tr>	
-				
-				@endforeach                    
-                </tbody>
-            </table>
-		    </div>
-	    </div>
-    </div>
-
-    <div class="col-lg-12">
-	@include('dashboard._balance_history_chart')   
-	</div>
-
-
-	<div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-              Summary of expenses 
-            </div>
-            <div class="panel-body">
-             <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Sem</th>
-                        <th>1st</th>
-                        <th>2nd</th>
-                        <!-- <th>Type</th> -->
-                        <th>mid</th>
-                       
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($balance_history as  $history)
-                    <tr>
-
-                       
-                        
-                    </tr>
-                    @endforeach
                     
+                    @foreach($transactions as $key => $transaction)
+                    <tr>
+                        <td>{{$transaction['created_at']}}</td>
+                        <td>{{$transaction['transaction_type']}}</td>
+                        <td>{{$transaction['amount']}}</td>
+                        <td>{{$transaction['balance']}}</td>
+                    </tr>
+
+                    @endforeach     
                 </tbody>
+                <tr> <td></td><td></td><td></td> <td align="left"> TOTAL BALANCE: {{$total_balance}} </td></tr>
             </table>
             </div>
         </div>
     </div>
-
-
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-              Balance history  
-            </div>
-            <div class="panel-body">
-             <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Sem</th>
-                        <th>Income</th>
-                        <th>Expenses</th>
-                        <!-- <th>Type</th> -->
-                        <th>Balance</th>
-                       
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($balance_history as  $history)
-                    <tr>
-
-                        <td>{{\App\Aysem::abbrev($history->aysem)}}</td>
-                        <td>{{$history->transaction_type_id=='C'? number_format( $history->amount ,  2 ,  "." ,  "," ) : ''}}</td>
-                        <td>{{$history->transaction_type_id=='P'? number_format( $history->amount  ,  2 ,  "." ,  "," ): ''}}</td>
-                        
-                       <!--  <td>{{$history->transaction_type_id}}</td> -->
-                        <td>{{ number_format( $history->balance ,  2 ,  "." ,  "," )}}</td>
-                        
-                    </tr>
-                    @endforeach
-                    
-                </tbody>
-            </table>
-            </div>
-        </div>
-    </div>
-
 </div>
+
+
+
+
+
+
 
 
 
