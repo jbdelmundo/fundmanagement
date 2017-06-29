@@ -1,8 +1,6 @@
 <?php
-
 use Illuminate\Database\Seeder;
 use App\Aysem;
-
 class AysemSeeder extends Seeder
 {
     /**
@@ -27,10 +25,9 @@ class AysemSeeder extends Seeder
         //     20171
         // ];
         foreach ($aysems as $key => $sem) {
-        	$sem = [ 'aysem' => $sem, 'short_name' => Aysem::shortName($sem) , 'full_name' =>  Aysem::fullName($sem) ];
+            $sem = [ 'aysem' => $sem, 'short_name' => Aysem::shortName($sem) , 'full_name' =>  Aysem::fullName($sem) ];
             Aysem::create( $sem);
         }
     }
-
    
 }

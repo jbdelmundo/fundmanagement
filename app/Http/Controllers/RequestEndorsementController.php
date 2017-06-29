@@ -19,12 +19,12 @@ class RequestEndorsementController extends Controller
 {
     //
 
-    function index(){
+    function index(Request $request){
 
     	$user = Auth::user();
 
 
-
+        //get active_dept from session, use department_id = 1 as default
     	$aysem = Aysem::current();
 
         $dept = $user->department()->first();

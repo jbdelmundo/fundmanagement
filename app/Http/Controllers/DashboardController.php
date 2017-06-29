@@ -26,25 +26,44 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $user = Auth::user();
-        if(is_null($user) || is_null($user->department_id)){abort(404);}
+       // if(is_null($user) || is_null($user->department_id)){abort(404);}
+        $user->department_id = 1;
 
 
-
+        $departments = Department::all();
         $records_to_fetch = 100;
         $department = Department::find($user->department_id);
         $current_aysem = Aysem::current();
 
+        $beginning_balance = 1000;
+        $current_balance = 2700;
+        $active_department_id = $request->session()->get('active_dept_id',0 ) ;  
+        $transactions=[
+            [
+                'created_at' => '01/02/17',
+                'transactiontype_id' => 'C',
+                'Amount' => 2000,
+                'Balance' => 3000
 
+            ],
 
-        $currentbalance = $department->account($current_aysem)                                
-                                ->currentBalance();
+            [
+                'created_at' => '01/03/17',
+                'transactiontype_id' => 'P',
+                'Amount' => 300,
+                'Balance' => 2700
+
+            ]
+
+        ];
 
 
                 
-        return view('dashboard.dashboard',compact('user','department', 'balance_history','balance_chart' ,'aysem_summary'));
+       return view('dashboard.dashboard',compact('active_department_id','departments','beginning_balance','current_balance','transactions', 'department', 'user','current_aysem', 'created_at'));
+       // return view('dashboard');
     }
 
     public function balancehistory()
