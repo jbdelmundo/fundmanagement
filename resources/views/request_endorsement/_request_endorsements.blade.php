@@ -10,7 +10,7 @@
 	<table class="table table-striped table-responsive">
         <thead>
             <tr>
-                <th style='width:15%'>Item</th>                
+                <th style='width:15%'>{{$type}}</th> <!--check with sir try demo with endorse functionality (back-end)-->               
                 <th style='width:10%'>Quantity</th>                
                 <th style='width:5%'>Unit price</th>
                 <th style='width:10%'>Subtotal</th> 
@@ -21,11 +21,14 @@
             @if(count($request_endorsement) >0)
             @foreach($request_endorsement as $request)
            	<tr>
-           		<td></td>
+           		<td>
+                
+              </td>
 
            		
            	</tr>
            	@endforeach
+            @else
            	@endif
            
         </tbody>

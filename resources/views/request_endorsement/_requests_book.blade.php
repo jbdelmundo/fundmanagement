@@ -12,6 +12,7 @@
             <table class="table table-striped table-responsive">
                 <thead>
                     <tr>
+                    
                         <th style='width:15%'>Title</th>
                         <th style='width:10%'>Author</th>
                         <th style='width:10%'>Subject</th>

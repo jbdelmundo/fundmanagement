@@ -19,8 +19,7 @@
                         <th>Publisher</th>
                         <th>Year</th>
                         <th>Unit price</th>
-                       
-                     
+                        
                     </tr>
                 </thead>
                 <tbody>
@@ -71,7 +70,7 @@
                         <td>{{$book->title}}</td>
                         <td>{{$book->author}}</td>
                         <td>{{$book->unit_quote_price}}</td>
-                       
+                        <td><button method="POST">Endorse</button></td>
                     </tr>
                     @endforeach
                     
@@ -108,8 +107,7 @@
                         <th>Publisher</th>
                         <th>Year</th>
                         <th>Unit price</th>
-                       
-                     
+                                 
                     </tr>
                 </thead>
                 <tbody>
@@ -119,7 +117,8 @@
                         <td>{{$item->author}}</td>
                         <td>{{$item->publisher}}</td>
                         <td>{{$item->copyright_date}}</td>
-                        <td>{{$item->unit_quote_price}}</td>                
+                        <td>{{$item->unit_quote_price}}</td>
+                                    
                     </tr>
                     @endforeach
                     
@@ -151,9 +150,8 @@
                         <th>Title</th>
                         <th>Author</th>
                         <th>Publisher</th>
-                        
                         <th>Unit price</th>
-                       
+                        
                      
                     </tr>
                 </thead>
@@ -163,7 +161,6 @@
                         <td>{{$item->title}}</td>
                         <td>{{$item->author}}</td>
                         <td>{{$item->publisher}}</td>
-                        
                         <td>{{$item->unit_quote_price}}</td>                
                     </tr>
                     @endforeach
@@ -201,10 +198,11 @@
                 <tbody>
                     @foreach($items as  $book)
                     <tr>
+
                         <td>{{$book->title}}</td>
                         <td>{{$book->publisher}}</td>
                         <td>{{$book->unit_quote_price}}</td>
-                       
+                        
                     </tr>
                     @endforeach
                     
@@ -286,7 +284,7 @@
                         <td>{{$book->description}}</td>
                         <td>{{$book->remarks}}</td>
                         <td>{{$book->unit_quote_price}}</td>
-                       
+                        
                     </tr>
                     @endforeach
                     
@@ -319,7 +317,7 @@
                         <th>Description</th>
                         <th>Remarks</th>
                         <th>Unit price</th>
-                        
+                       
                     </tr>
                 </thead>
                 <tbody>

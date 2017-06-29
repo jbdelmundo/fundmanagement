@@ -30,9 +30,6 @@
 
         @include('request_endorsement._requests_book',['heading'=>'Books','items'=>$requests_this_sem[Requests::BOOK ]])
         @include('request_endorsement._requests_book',['heading'=>'E-books','items'=>$requests_this_sem[Requests::EBOOK]])
-
-
-
         @include('request_endorsement._requests_journal',['heading'=>'Journals','items'=>$requests_this_sem[Requests::JOURNAL]])
         @include('request_endorsement._requests_ebook',['heading'=>'Magazines','items'=>$requests_this_sem[Requests::MAGAZINE]])
         @include('request_endorsement._requests_ebook',['heading'=>'Electronic Resources','items'=>$requests_this_sem[Requests::ERESOURCE]])
