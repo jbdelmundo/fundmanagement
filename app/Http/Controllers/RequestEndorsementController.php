@@ -27,7 +27,7 @@ class RequestEndorsementController extends Controller
         //get active_dept from session, use department_id = 1 as default
     	$aysem = Aysem::current();
 
-        $dept = $user->department()->first();
+        $dept = $user->department()->first(); //default lang
         $department = $dept;
 
         if(!is_null($user->department_id) && $user->department_id != $dept->id){

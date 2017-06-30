@@ -31,7 +31,7 @@ class RequestsController extends Controller
         }
         
         //get active_dept from session, use department_id = 1 as default
-        $department_id = $request->session()->get('active_dept_id',1 ) ;     
+        $department_id = $request->session()->get('active_dept_id',$user->id ) ;     
         $department = Department::find($department_id);
 
         $aysem = Aysem::current();
@@ -201,7 +201,6 @@ class RequestsController extends Controller
         
         $request_obj->item_id = $item->id;
         $request_obj->save();
-
 
         return redirect()->action('RequestsController@index' )->with('success', 'Request recorded!');
     }

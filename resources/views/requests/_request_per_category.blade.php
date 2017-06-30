@@ -30,7 +30,8 @@
                         <td>{{$item->author}}</td>
                         <td>{{$item->publisher}}</td>
                         <td>{{$item->copyright_date}}</td>
-                        <td>{{$item->unit_quote_price}}</td>                
+                        <td>{{$item->unit_quote_price}}</td>  
+                        <form action="/endorsements"><td> <button type="submit">Endorse </button></td></form>       
                     </tr>
                     @endforeach
                     
@@ -118,8 +119,8 @@
                         <td>{{$item->author}}</td>
                         <td>{{$item->publisher}}</td>
                         <td>{{$item->copyright_date}}</td>
-                        <td>{{$item->unit_quote_price}}</td>
-                                    
+                        <td>{{$item->unit_quote_price}}</td>   
+                        <form action="/endorsements"><td> <button type="submit">Endorse </button></td></form>             
                     </tr>
                     @endforeach
                     
@@ -244,7 +245,7 @@
                         <td>{{$book->description}}</td>
                         <td>{{$book->remarks}}</td>
                         <td>{{$book->unit_quote_price}}</td>
-                       
+                       <form action="/endorsements"><td> <button type="submit">Endorse </button></td></form>
                     </tr>
                     @endforeach
                     
@@ -327,7 +328,7 @@
                         <td>{{$book->description}}</td>
                         <td>{{$book->remarks}}</td>
                         <td>{{$book->unit_quote_price}}</td>
-                       
+                       <form action="/endorsements"><td> <button type="submit">Endorse </button></td></form>
                     </tr>
                     @endforeach
                     
