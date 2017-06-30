@@ -15,10 +15,20 @@ use Illuminate\Support\Facades\DB;
 
 class ApprovalController extends Controller
 {
-    public function index()
-    {
+    public function index(Request $request)
+    {		
+ 	    	$active_department_id = $request->session()->get('active_dept_id', 1);
+    		$user = Auth::user();
+ 	    	$departments = Department::all();
+ 	    	$user->department_id=$active_department_id;
+ 	   		$department = Department::find($user->department_id);
+ 	    	$current_aysem = Aysem::current();
+ 
+ 	    	$beginning_balance = 200000;
+ 	    	$current_balance = 200000;
+ 
+
         /* Hardcoded variables */
-        $current_balance = 2700;
         $endorsements = [ 
             'B' => [ 'request_id'=> 1,
             		  'title' => 'some title',
@@ -52,16 +62,11 @@ class ApprovalController extends Controller
             		]										
         ];
         /***********************/
-        $user = Auth::user();
-        $user->department_id=1;
-        if(is_null($user) || is_null($user->department_id)){abort(404);}
 
-
-
-        $records_to_fetch = 100;
-        $department = Department::find($user->department_id);
-        $current_aysem = Aysem::current();
-
-          return view('approval.approval',compact('user','department','current_balance','endorsements'));      
+          return view('approval.approval', compact('active_department_id','departments', 'beginning_balance', 'current_balance', 'endorsements', 'department', 'user', 'current_aysem'));      
     }
+
+    function create(Request $request){
+ 		dd($request);
+ 	}
 }
