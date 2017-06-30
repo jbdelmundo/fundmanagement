@@ -3,11 +3,13 @@
 
 @section('content')
 
-
+<?php
+    //dd($transactions);
+?>
 	
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Dashboard of {{--$department->short_name--}}</h1>
+		<h1 class="page-header">Dashboard of</h1>
 	</div>
 	<!-- /.col-lg-12 -->
 </div>
@@ -17,16 +19,16 @@
     \Auth::user()->department->short_name()
 @endif
 
-<?php
-    dd($departments);
-?>
+
 <div class="panel-body">
     <h4>Beginning balance:{{$beginning_balance}}</h4> 
-    <h4>Current Balance: {{$current_balance}}</h4>
+    <h4>Current Balance:{{$current_balance}}</h4>
 </div>
-<div class="row">')
 
-@include('layouts.errors
+
+<div class="row">
+
+@include('layouts.errors')
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 		    <div class="panel-heading">
