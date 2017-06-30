@@ -22,9 +22,9 @@ class RequestEndorsementController extends Controller
     function index(){
 
     	$user = Auth::user();
-
-
-
+        if(is_null($user)){
+			return redirect('');			
+		}
     	$aysem = Aysem::current();
 
         $dept = $user->department()->first();
