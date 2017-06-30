@@ -61,13 +61,9 @@ class DashboardController extends Controller
 		
 		$transactionss = AccountTransactions::where('department_id',$department->id)
 											-> where('account_id',$account_id)
-											-> orderby('created_at','ase')
+											-> orderby('created_at','asc')
 											->get()
 											->toArray();
-		// foreach($transactions as $transaction){
-			// $transaction['balance']= $beginning_balance + $transaction['amount'];
-		// }
-		
 		
         $transactions = [];
 		$balance = $beginning_balance;

@@ -37,7 +37,9 @@ Route::post('/requests', 'RequestsController@create');
 
 Route::get('/endorsement', 'RequestEndorsementController@index');
 Route::post('/endorsement', 'RequestEndorsementController@create');
-
 Route::get('/endorsement/remove/{request_id}', 'RequestEndorsementController@remove');
 
 Route::get('/switch_active_dept/{id}','SessionController@switch_active_dept');
+
+Route::get('/approval', 'ApprovalController@index');
+Route::post('/approval', 'ApprovalController@create');

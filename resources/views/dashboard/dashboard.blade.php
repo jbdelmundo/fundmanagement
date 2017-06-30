@@ -19,8 +19,8 @@
     //dd($transactions);
 ?>
 <div class="panel-body">
-    <h4>Beginning balance: {{$beginning_balance}}</h4> 
-    <h4>Current Balance: {{$current_balance}}</h4>
+    <h4>Beginning balance:  ₱{{$beginning_balance}}</h4> 
+    <h4>Current Balance:  ₱{{$current_balance}}</h4>
 </div>
 <div class="row">
 @include('layouts.errors')

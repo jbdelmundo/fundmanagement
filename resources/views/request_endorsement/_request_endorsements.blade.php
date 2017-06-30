@@ -42,6 +42,8 @@
 					@endforeach
 				   
 				</tbody>
+			@else
+				No {{$type}} endorsements.
            	@endif
     </table>
 	@endforeach
