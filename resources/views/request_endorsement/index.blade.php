@@ -9,8 +9,14 @@
 </div>
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">{{$department->short_name}} for {{ $aysem->getShortName() }} Endorsed </h3>
+		<h3 class="page-header">{{$department->short_name}} for {{ $aysem->getShortName() }} Items Endorsed </h3>
 	
+	@if(\Auth::user()->isLibrarian())
+		@include('_active_dept_selector',['active_department_id'=>$department->id])
+        @include('_active_sem_selector',['active_aysem'=>$aysem->aysem])
+
+	@endif
+
 	@include('request_endorsement._request_endorsements',compact('endorsements'))
 	</div>	
 </div>

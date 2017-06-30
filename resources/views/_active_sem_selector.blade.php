@@ -4,7 +4,7 @@
 
         <?php 
             //get the variables here instead in the controller
-            $active_aysem = session('active_aysem',\App\Aysem::current->aysem ) ;
+            $active_aysem = session('active_aysem',\App\Aysem::current()->aysem ) ;
             $aysems = \App\Aysem::all();
         ?>
 

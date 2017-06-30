@@ -31,7 +31,7 @@ class RequestsController extends Controller
         }
         
         //get active_dept from session, use department_id = 1 as default
-        $department_id = $request->session()->get('active_dept_id',$user->id ) ;     
+        $department_id = $request->session()->get('active_dept_id',$user->department->id ) ;     
         $department = Department::find($department_id);
 
         $aysem = Aysem::current();
