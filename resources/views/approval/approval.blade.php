@@ -41,7 +41,7 @@
                         <th>Description</th>
                         <th>Qty</th>
                         <th>Type</th>
-                        <th>Unit Quote Price</th>
+                        <th width=15%>Unit Quote Price</th>
                         <th>Total</th>
                         <th>Action</th>                       
                     </tr>
@@ -51,12 +51,13 @@
                     @foreach($endorsements as $key => $endorsement)
                     <tr>
                     @if($key=='Q' || $key=='S' || $key=='O')
+                        
                         <td>{{$endorsement['description']}}</td>
                         <td>{{$endorsement['qty']}}</td>
                         <td>{{$key}}</td>
                         <td>{{$endorsement['unit_quote_price']}}</td>
-                        <td></td>
-                        <td><
+                        <td>{{$endorsement['qty'] * $endorsement['unit_quote_price']}}</td>
+                        <td>
                             <form method="GET" action="approval">
                             <button type="submit" name="Approve" class="btn btn-primary pull-left">Approve</button>
                             </form> 
