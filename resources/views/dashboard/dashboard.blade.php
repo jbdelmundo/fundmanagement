@@ -45,48 +45,15 @@
 				    @foreach($transactions as $key => $transaction)
                     <tr>
                         <td>{{$transaction['created_at']}}</td>
-                        <td>{{$transaction['transactiontype_id']}}</td>
-                        <td>{{$transaction['Amount']}}</td>
-                        <td>{{$transaction['Balance']}}</td>
+                        <td>{{$transaction['transaction_type_id']}}</td>
+                        <td>{{$transaction['amount']}}</td>
+                        <td>{{$transaction['balance']}}</td>
                     </tr>
                     @endforeach
                 </tbody> 
             </table>
 		    </div>
 	    </div>
-    </div>
-
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Transactions  
-            </div>
-            <div class="panel-body">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Type</th>
-                        <th>Amount</th>
-                        <th>Balance</th>                       
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                    @foreach($transactions as $key => $transaction)
-                    <tr>
-                        <td>{{$transaction['created_at']}}</td>
-                        <td>{{$transaction['transaction_type']}}</td>
-                        <td>{{$transaction['amount']}}</td>
-                        <td>{{$transaction['balance']}}</td>
-                    </tr>
-
-                    @endforeach     
-                </tbody>
-                <tr> <td></td><td></td><td></td> <td align="left"> TOTAL BALANCE: {{$total_balance}} </td></tr>
-            </table>
-            </div>
-        </div>
     </div>
 </div>
 

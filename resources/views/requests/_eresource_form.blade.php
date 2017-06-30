@@ -13,6 +13,11 @@
     {!! Form::text('publisher', null,['class'=>'form-control' ]) !!}
 </div>
 
+<div class="form-group">
+ 
+    {!! Form::hidden('issubscription', 1,['class'=>'form-control' ]) !!}
+</div>
+
 
 <!--  DEFAULT REQUEST FIELDS -->
 

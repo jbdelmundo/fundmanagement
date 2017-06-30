@@ -30,7 +30,7 @@
 
                    {{ Form::open(['url' => 'endorsement' , 'class' => 'form-horizontal']) }} 
                     <div class='form-group'>
-                        {{ Form::hidden('request_id',$item->id)}}
+                        {{ Form::hidden('request_id',$item->request_id)}}
                         <td> {{$item->title}}</td>
                         <td>{{$item->author}}</td>
                         <td>{{ Form::text('subject',null, 

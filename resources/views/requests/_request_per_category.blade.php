@@ -1,7 +1,6 @@
 <?php use \App\Requests; ?>
 <?php 
     $items = $requests_this_sem[Requests::BOOK] ;
-    
  ?>
 
 <div class="panel panel-primary">
@@ -20,7 +19,8 @@
                         <th>Publisher</th>
                         <th>Year</th>
                         <th>Unit price</th>
-                        
+                       
+                     
                     </tr>
                 </thead>
                 <tbody>
@@ -30,8 +30,52 @@
                         <td>{{$item->author}}</td>
                         <td>{{$item->publisher}}</td>
                         <td>{{$item->copyright_date}}</td>
-                        <td>{{$item->unit_quote_price}}</td>  
-                        <form action="/endorsements"><td> <button type="submit">Endorse </button></td></form>       
+                        <td>{{$item->unit_quote_price}}</td>                
+                    </tr>
+                    @endforeach
+                    
+                </tbody>
+            </table>
+            
+        </div>
+   		@else
+        	No items to show.
+        @endif
+    </div>
+</div>
+
+<?php 
+    $items = $requests_this_sem[Requests::EBOOK] ;
+ ?>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+	  E-Books	  
+    </div>
+    <div class="panel-body">
+        @if(count($items)>0)
+        <div class="table-responsive">
+    	
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Publisher</th>
+                        <th>Year</th>
+                        <th>Unit price</th>
+                       
+                     
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($items as  $item)
+                    <tr>
+                        <td>{{$item->title}}</td>
+                        <td>{{$item->author}}</td>
+                        <td>{{$item->publisher}}</td>
+                        <td>{{$item->copyright_date}}</td>
+                        <td>{{$item->unit_quote_price}}</td>                
                     </tr>
                     @endforeach
                     
@@ -62,59 +106,18 @@
                     <tr>
                         <th>Title</th>
                         <th>Author</th>
+                        <th>Publisher</th>
                         <th>Unit price</th>
                         
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($items as  $book)
+                    @foreach($items as  $item)
                     <tr>
-                        <td>{{$book->title}}</td>
-                        <td>{{$book->author}}</td>
-                        <td>{{$book->unit_quote_price}}</td>
-                        <td><button method="POST">Endorse</button></td>
-                    </tr>
-                    @endforeach
-                    
-                </tbody>
-            </table>
-           
-        </div>
-     	@else
-        	No items to show.
-        @endif
-   
-    </div>
-</div>
-
-<?php 
-    $items = $requests_this_sem[Requests::EBOOK] ;
- ?>
-
-<div class="panel panel-primary">
-    <div class="panel-heading">
-	Ebook	  
-    </div>
-    <div class="panel-body">
-    	@if(count($items)>0)
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Author</th>
-						<th>Publisher
-                        <th>Unit price</th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($items as  $ebook)
-                    <tr>
-                        <td>{{$ebook->title}}</td>
-						<td>{{$ebook->author}}</td>
-						<td>{{$ebook->publisher}}</td>
-                        <td>{{$ebook->unit_quote_price}}</td>
+                        <td>{{$item->title}}</td>
+                        <td>{{$item->author}}</td>
+                        <td>{{$item->publisher}}</td>
+                        <td>{{$item->unit_quote_price}}</td>
                        
                     </tr>
                     @endforeach
@@ -136,7 +139,7 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-	Magazines  
+	Magazines	  
     </div>
     <div class="panel-body">
     	@if(count($items)>0)
@@ -146,18 +149,18 @@
                     <tr>
                         <th>Title</th>
                         <th>Author</th>
-						<th>Publisher</th>
+                        <th>Publisher</th>
                         <th>Unit price</th>
                         
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($items as  $mag)
+                    @foreach($items as $item)
                     <tr>
-                        <td>{{$mag->title}}</td>
-						<td>{{$mag->author}}</td>
-                        <td>{{$mag->publisher}}</td>
-                        <td>{{$mag->unit_quote_price}}</td>
+                        <td>{{$item->title}}</td>
+                        <td>{{$item->author}}</td>
+                        <td>{{$item->publisher}}</td>
+                        <td>{{$item->unit_quote_price}}</td>
                        
                     </tr>
                     @endforeach
@@ -173,13 +176,15 @@
     </div>
 </div>
 
+
+
 <?php 
     $items = $requests_this_sem[Requests::ERESOURCE] ;
  ?>
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-	EResource  
+	E-Resources	  
     </div>
     <div class="panel-body">
     	@if(count($items)>0)
@@ -194,11 +199,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($items as  $eresource)
+                    @foreach($items as $item)
                     <tr>
-                        <td>{{$eresource->title}}</td>
-                        <td>{{$eresource->publisher}}</td>
-                        <td>{{$eresource->unit_quote_price}}</td>
+                        <td>{{$item->title}}</td>
+                        <td>{{$item->publisher}}</td>
+                        <td>{{$item->unit_quote_price}}</td>
                        
                     </tr>
                     @endforeach
@@ -213,6 +218,8 @@
    
     </div>
 </div>
+
+
 
 <?php 
     $items = $requests_this_sem[Requests::SUPPLIES] ;
@@ -220,7 +227,7 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-	Supply  
+	Supplies
     </div>
     <div class="panel-body">
     	@if(count($items)>0)
@@ -235,11 +242,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($items as  $supp)
+                    @foreach($items as $item)
                     <tr>
-                        <td>{{$supp->description}}</td>
-                        <td>{{$supp->remarks}}</td>
-                        <td>{{$supp->unit_quote_price}}</td>
+                        <td>{{$item->description}}</td>
+                        <td>{{$item->remarks}}</td>
+                        <td>{{$item->unit_quote_price}}</td>
                        
                     </tr>
                     @endforeach
@@ -254,6 +261,7 @@
    
     </div>
 </div>
+
 
 <?php 
     $items = $requests_this_sem[Requests::EQUIPMENT] ;
@@ -261,9 +269,8 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-	Equipment  
-    </div>
-    <div class="panel-body">
+	Equipment
+    </div>    <div class="panel-body">
     	@if(count($items)>0)
         <div class="table-responsive">
             <table class="table table-striped">
@@ -276,11 +283,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($items as  $eqp)
+                    @foreach($items as $item)
                     <tr>
-                        <td>{{$eqp->description}}</td>
-                        <td>{{$eqp->remarks}}</td>
-                        <td>{{$eqp->unit_quote_price}}</td>
+                        <td>{{$item->description}}</td>
+                        <td>{{$item->remarks}}</td>
+                        <td>{{$item->unit_quote_price}}</td>
                        
                     </tr>
                     @endforeach
@@ -295,6 +302,7 @@
    
     </div>
 </div>
+
 
 <?php 
     $items = $requests_this_sem[Requests::OTHER] ;
@@ -317,11 +325,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($items as  $other)
+                    @foreach($items as $item)
                     <tr>
-                        <td>{{$other->description}}</td>
-                        <td>{{$other->remarks}}</td>
-                        <td>{{$other->unit_quote_price}}</td>
+                        <td>{{$item->description}}</td>
+                        <td>{{$item->remarks}}</td>
+                        <td>{{$item->unit_quote_price}}</td>
                        
                     </tr>
                     @endforeach
@@ -338,256 +346,3 @@
 </div>
 
 
-<?php 
-    $items = $requests_this_sem[Requests::EBOOK] ;
- ?>
-
-<div class="panel panel-primary">
-    <div class="panel-heading">
-    E-Books      
-    </div>
-    <div class="panel-body">
-        @if(count($items)>0)
-        <div class="table-responsive">
-        
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Publisher</th>
-                        <th>Year</th>
-                        <th>Unit price</th>
-                                 
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($items as  $item)
-                    <tr>
-                        <td>{{$item->title}}</td>
-                        <td>{{$item->author}}</td>
-                        <td>{{$item->publisher}}</td>
-                        <td>{{$item->copyright_date}}</td>
-                        <td>{{$item->unit_quote_price}}</td>   
-                        <form action="/endorsements"><td> <button type="submit">Endorse </button></td></form>             
-                    </tr>
-                    @endforeach
-                    
-                </tbody>
-            </table>
-            
-        </div>
-        @else
-            No items to show.
-        @endif
-    </div>
-</div>
-
-<?php 
-    $items = $requests_this_sem[Requests::MAGAZINE] ;
- ?>
-
-<div class="panel panel-primary">
-    <div class="panel-heading">
-    Magazines      
-    </div>
-    <div class="panel-body">
-        @if(count($items)>0)
-        <div class="table-responsive">
-        
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Publisher</th>
-                        <th>Unit price</th>
-                        
-                     
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($items as  $item)
-                    <tr>
-                        <td>{{$item->title}}</td>
-                        <td>{{$item->author}}</td>
-                        <td>{{$item->publisher}}</td>
-                        <td>{{$item->unit_quote_price}}</td>                
-                    </tr>
-                    @endforeach
-                    
-                </tbody>
-            </table>
-            
-        </div>
-        @else
-            No items to show.
-        @endif
-    </div>
-</div>
-
-<?php 
-    $items = $requests_this_sem[Requests::ERESOURCE] ;
- ?>
-
-<div class="panel panel-primary">
-    <div class="panel-heading">
-    E-Resources      
-    </div>
-    <div class="panel-body">
-        @if(count($items)>0)
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Publisher</th>
-                        <th>Unit price</th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($items as  $book)
-                    <tr>
-
-                        <td>{{$book->title}}</td>
-                        <td>{{$book->publisher}}</td>
-                        <td>{{$book->unit_quote_price}}</td>
-                        
-                    </tr>
-                    @endforeach
-                    
-                </tbody>
-            </table>
-           
-        </div>
-        @else
-            No items to show.
-        @endif
-   
-    </div>
-</div>
-
-<?php 
-    $items = $requests_this_sem[Requests::EQUIPMENT] ;
- ?>
-
-<div class="panel panel-primary">
-    <div class="panel-heading">
-    Equipment     
-    </div>
-    <div class="panel-body">
-        @if(count($items)>0)
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Description</th>
-                        <th>Remarks</th>
-                        <th>Unit price</th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($items as  $book)
-                    <tr>
-                        <td>{{$book->description}}</td>
-                        <td>{{$book->remarks}}</td>
-                        <td>{{$book->unit_quote_price}}</td>
-                       <form action="/endorsements"><td> <button type="submit">Endorse </button></td></form>
-                    </tr>
-                    @endforeach
-                    
-                </tbody>
-            </table>
-           
-        </div>
-        @else
-            No items to show.
-        @endif
-   
-    </div>
-</div>
-
-<?php 
-    $items = $requests_this_sem[Requests::SUPPLIES] ;
- ?>
-
-<div class="panel panel-primary">
-    <div class="panel-heading">
-    Supplies      
-    </div>
-    <div class="panel-body">
-        @if(count($items)>0)
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Description</th>
-                        <th>Remarks</th>
-                        <th>Unit price</th>
-                        
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($items as  $book)
-                    <tr>
-                        <td>{{$book->description}}</td>
-                        <td>{{$book->remarks}}</td>
-                        <td>{{$book->unit_quote_price}}</td>
-                        
-                    </tr>
-                    @endforeach
-                    
-                </tbody>
-            </table>
-           
-        </div>
-        @else
-            No items to show.
-        @endif
-   
-    </div>
-</div>
-
-
-<?php 
-    $items = $requests_this_sem[Requests::OTHER] ;
- ?>
-
-<div class="panel panel-primary">
-    <div class="panel-heading">
-    Others      
-    </div>
-    <div class="panel-body">
-        @if(count($items)>0)
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Description</th>
-                        <th>Remarks</th>
-                        <th>Unit price</th>
-                       
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($items as  $book)
-                    <tr>
-                        <td>{{$book->description}}</td>
-                        <td>{{$book->remarks}}</td>
-                        <td>{{$book->unit_quote_price}}</td>
-                       <form action="/endorsements"><td> <button type="submit">Endorse </button></td></form>
-                    </tr>
-                    @endforeach
-                    
-                </tbody>
-            </table>
-           
-        </div>
-        @else
-            No items to show.
-        @endif
-   
-    </div>
-</div>
