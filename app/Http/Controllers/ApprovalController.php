@@ -19,17 +19,18 @@ use App\OtherMaterial;
 class ApprovalController extends Controller
 {
     //
-	function index(){
-		$user = Auth::user();
+	function index(Request $request){
 		
+        $user = Auth::user();
         if(is_null($user)){
 			return redirect('');			
 		}
 		elseif(Auth::user()->isLibrarian()){
-			$active_department_id = $request->session()->get('active_dept_id',1) ; 
+			$active_department_id = $request->session()->get('active_dept_id',0) ; 
 			$department = Department::find($active_department_id);
 		}
 		else{
+			$active_department_id = $user->department_id;
 			$department = Department::find($user->department_id);
 		}
 
@@ -53,10 +54,10 @@ class ApprovalController extends Controller
 
         $endorsements = [];
         foreach ($all_requests_this_sem as $key => $value) {
-            $endorsements[$key] = $value->where('status',Requests::ENDORSED);   //filter only those that are endorsed
+            $endorsements[$key] = $value->where('status',Requests::ENDORSED)->where('department_id',$active_department_id);   //filter only those that are endorsed
         }
 		
-    	return view('approval.index',compact('user','departments','department','aysem','endorsements'
+    	return view('approval.index',compact('user','departments','department','aysem','endorsements','active_department_id'
             ));
     }
 	
