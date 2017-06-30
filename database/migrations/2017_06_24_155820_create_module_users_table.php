@@ -13,6 +13,7 @@ class CreateModuleUsersTable extends Migration
      */
     public function up()
     {
+	Schema::defaultStringLength(191);
         Schema::create('module_users', function (Blueprint $table) {            
             $table->unsignedInteger('module_id');
             $table->unsignedInteger('user_id');

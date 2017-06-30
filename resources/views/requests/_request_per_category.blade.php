@@ -87,6 +87,255 @@
     </div>
 </div>
 
+<?php 
+    $items = $requests_this_sem[Requests::EBOOK] ;
+ ?>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+	Ebook	  
+    </div>
+    <div class="panel-body">
+    	@if(count($items)>0)
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+						<th>Publisher
+                        <th>Unit price</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($items as  $ebook)
+                    <tr>
+                        <td>{{$ebook->title}}</td>
+						<td>{{$ebook->author}}</td>
+						<td>{{$ebook->publisher}}</td>
+                        <td>{{$ebook->unit_quote_price}}</td>
+                       
+                    </tr>
+                    @endforeach
+                    
+                </tbody>
+            </table>
+           
+        </div>
+     	@else
+        	No items to show.
+        @endif
+   
+    </div>
+</div>
+
+<?php 
+    $items = $requests_this_sem[Requests::MAGAZINE] ;
+ ?>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+	Magazines  
+    </div>
+    <div class="panel-body">
+    	@if(count($items)>0)
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+						<th>Publisher</th>
+                        <th>Unit price</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($items as  $mag)
+                    <tr>
+                        <td>{{$mag->title}}</td>
+						<td>{{$mag->author}}</td>
+                        <td>{{$mag->publisher}}</td>
+                        <td>{{$mag->unit_quote_price}}</td>
+                       
+                    </tr>
+                    @endforeach
+                    
+                </tbody>
+            </table>
+           
+        </div>
+     	@else
+        	No items to show.
+        @endif
+   
+    </div>
+</div>
+
+<?php 
+    $items = $requests_this_sem[Requests::ERESOURCE] ;
+ ?>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+	EResource  
+    </div>
+    <div class="panel-body">
+    	@if(count($items)>0)
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Publisher</th>
+                        <th>Unit price</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($items as  $eresource)
+                    <tr>
+                        <td>{{$eresource->title}}</td>
+                        <td>{{$eresource->publisher}}</td>
+                        <td>{{$eresource->unit_quote_price}}</td>
+                       
+                    </tr>
+                    @endforeach
+                    
+                </tbody>
+            </table>
+           
+        </div>
+     	@else
+        	No items to show.
+        @endif
+   
+    </div>
+</div>
+
+<?php 
+    $items = $requests_this_sem[Requests::SUPPLIES] ;
+ ?>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+	Supply  
+    </div>
+    <div class="panel-body">
+    	@if(count($items)>0)
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Remarks</th>
+                        <th>Unit price</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($items as  $supp)
+                    <tr>
+                        <td>{{$supp->description}}</td>
+                        <td>{{$supp->remarks}}</td>
+                        <td>{{$supp->unit_quote_price}}</td>
+                       
+                    </tr>
+                    @endforeach
+                    
+                </tbody>
+            </table>
+           
+        </div>
+     	@else
+        	No items to show.
+        @endif
+   
+    </div>
+</div>
+
+<?php 
+    $items = $requests_this_sem[Requests::EQUIPMENT] ;
+ ?>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+	Equipment  
+    </div>
+    <div class="panel-body">
+    	@if(count($items)>0)
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Remarks</th>
+                        <th>Unit price</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($items as  $eqp)
+                    <tr>
+                        <td>{{$eqp->description}}</td>
+                        <td>{{$eqp->remarks}}</td>
+                        <td>{{$eqp->unit_quote_price}}</td>
+                       
+                    </tr>
+                    @endforeach
+                    
+                </tbody>
+            </table>
+           
+        </div>
+     	@else
+        	No items to show.
+        @endif
+   
+    </div>
+</div>
+
+<?php 
+    $items = $requests_this_sem[Requests::OTHER] ;
+ ?>
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+	Others
+    </div>
+    <div class="panel-body">
+    	@if(count($items)>0)
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Remarks</th>
+                        <th>Unit price</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($items as  $other)
+                    <tr>
+                        <td>{{$other->description}}</td>
+                        <td>{{$other->remarks}}</td>
+                        <td>{{$other->unit_quote_price}}</td>
+                       
+                    </tr>
+                    @endforeach
+                    
+                </tbody>
+            </table>
+           
+        </div>
+     	@else
+        	No items to show.
+        @endif
+   
+    </div>
+</div>
 
 
 <?php 

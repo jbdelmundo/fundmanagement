@@ -13,6 +13,7 @@ class CreateRequestStatusesTable extends Migration
      */
     public function up()
     {
+	Schema::defaultStringLength(191);
         Schema::create('request_statuses', function (Blueprint $table) {
             $table->unsignedInteger('id');
             $table->string('status');

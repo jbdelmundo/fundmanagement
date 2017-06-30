@@ -13,6 +13,7 @@ class CreateRequestsTable extends Migration
      */
     public function up()
     {
+	Schema::defaultStringLength(191);
         Schema::create('requests', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('aysem');
