@@ -13,10 +13,21 @@
 
 @if(\Auth::user()->isLibrarian())
     @include('layouts.department_dropdowns')
+@else
+    \Auth.user()->department->short_name();
 @endif    
 
 <div class="row">
 @include('layouts.errors')
+
+    <div class="panel-body">    
+     Beginning Balance: {{$beginning_balance}}
+     <hr>
+     Current Balance: {{$current_balance}}
+     <hr>
+ </div>
+ 
+ 
  
  <div class="row">
  
@@ -41,29 +52,23 @@
                  <tbody>
                  
                      @foreach($endorsements as $key => $endorsement)
-
-					@if(count($endorsement) >0)
-					@if($key=='B' || $key=='E' || $key=='M')
+                     @if($key=='B' || $key=='E' || $key=='M')
 
                    <tr>
-					@foreach($endorsement as $request)
                      {{ Form::open(['url' => 'approval' , 'class' => 'form-horizontal', 'method' => 'POST']) }} 
                      <div class='form-group'>
-                         {{ Form::hidden('request_id',$request->request_id)}}
-                         <td>{{$request['title']}}</td>
+                         {{ Form::hidden('request_id',$endorsement['request_id'])}}
+                         <td>{{$endorsement['title']}}</td>
                          <td>{{$key}}</td>
-                         <td>{{$request['qty']}}</td>
-                         <td>{{$request['unit_quote_price']}}</td>
-                         <td>{{$request['unit_quote_price']*$request['qty']}}</td>
+                         <td>{{$endorsement['qty']}}</td>
+                         <td>{{$endorsement['unit_quote_price']}}</td>
+                         <td>{{$endorsement['unit_quote_price']*$endorsement['qty']}}</td>
                          <td>
                              {{ Form::submit('Approve',  ['class'=>'btn btn-success', 'id'=>'btn_approve_'.$endorsement['request_id']])}}
                          </td>
                      </div>
-					 
-                     @endforeach
                      </tr>
-                     @endif
-                     @endif
+                     @endif 
                      @endforeach
                     
                  </tbody> 
