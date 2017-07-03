@@ -12,69 +12,48 @@
 </div>
 
 @if(\Auth::user()->isLibrarian())
-    @include('layouts.department_dropdowns')
+    @include('_active_dept_selector')
 @else
-    \Auth.user()->department->short_name();
-@endif    
+    \Auth::user()->department->short_name()
+@endif
 
+
+<div class="panel-body">
+    <h4>Beginning balance:{{$beginning_balance}}</h4> 
+    <h4>Current Balance: {{$current_balance}}</h4>
+</div>
 <div class="row">
 @include('layouts.errors')
 
-	<div class="col-lg-4">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-              BALANCE
-            </div>
-            <div class="panel-body">
-             <table class="table table-striped">
-                <thead>
-                    <tr>
-                       <td>Beginning Balance: {{$beginning_balance}}</td>
-                    </tr>
-                    <tr>
-                        <td>Current Balance: {{$current_balance}}</td>
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                    
-                </tbody>
-            </table>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Transactions  
-            </div>
-            <div class="panel-body">
-            <table class="table table-striped">
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+		    <div class="panel-heading">
+				Transactions  
+		    </div>
+		    <div class="panel-body">
+		    <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>Date</th>
                         <th>Type</th>
                         <th>Amount</th>
-                        <th>Balance</th>                       
+                        <th>Balance</th>
                     </tr>
                 </thead>
                 <tbody>
-                    
-                    @foreach($transactions as $key => $transaction)
+
+				    @foreach($transactions as $key => $transaction)
                     <tr>
                         <td>{{$transaction['created_at']}}</td>
-                        <td>{{$transaction['transaction_type']}}</td>
+                        <td>{{$transaction['transaction_type_id']}}</td>
                         <td>{{$transaction['amount']}}</td>
                         <td>{{$transaction['balance']}}</td>
                     </tr>
-
-                    @endforeach     
-                </tbody>
-                <tr> <td></td><td></td><td></td> <td align="left"> TOTAL BALANCE: {{$total_balance}} </td></tr>
+                    @endforeach
+                </tbody> 
             </table>
-            </div>
-        </div>
+		    </div>
+	    </div>
     </div>
 </div>
 

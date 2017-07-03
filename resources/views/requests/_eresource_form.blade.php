@@ -6,10 +6,16 @@
     {!! Form::text('title', null,['class'=>'form-control' ]) !!}
 </div>
 
-{!! Form::hidden('issubscription',1,['class'=>'form-control']) !!}
+ {!! Form::hidden('issubscription',1,['class'=>'form-control']) !!}
+ 
  <div class="form-group">
     {!! Form::label('Publisher' ) !!}
     {!! Form::text('publisher', null,['class'=>'form-control' ]) !!}
+</div>
+
+<div class="form-group">
+ 
+    {!! Form::hidden('issubscription', 1,['class'=>'form-control' ]) !!}
 </div>
 
 

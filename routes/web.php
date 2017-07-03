@@ -17,7 +17,6 @@ Route::get('/', function () {
 
 Route::get('/dashboard', 'DashboardController@index');
 
-
 Route::get('/balance', 'DashboardController@balance');
 
 Auth::routes();
@@ -39,7 +38,7 @@ Route::post('/requests', 'RequestsController@create');
 Route::get('/endorsement', 'RequestEndorsementController@index');
 Route::post('/endorsement', 'RequestEndorsementController@create');
 
-Route::get('/switch_active_dept/{id}','SessionController@switch_active_dept');
+Route::get('/endorsement/remove/{request_id}', 'RequestEndorsementController@remove');
 
-Route::get('/approval', 'ApprovalController@index');
-Route::post('/approval', 'ApprovalController@create');
+Route::get('/switch_active_dept/{id}','SessionController@switch_active_dept');
+Route::get('/switch_active_aysem/{id}','SessionController@switch_active_sem');
