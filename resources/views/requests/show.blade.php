@@ -35,7 +35,7 @@
 	<div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Create a new request for {{ \App\Aysem::current()->getShortName() }}
+                Create a new request for {{ $aysem->getShortName() }}
             </div>
             <!-- /.panel-heading -->
             
