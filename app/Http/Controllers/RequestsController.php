@@ -26,12 +26,12 @@ class RequestsController extends Controller
     function index(Request $request){
         $user = Auth::user(); 
 
-        if(!$user->isLibrarian()){
-             return redirect()->action('HomeController@index');
-        }
-        
-        //get active_dept from session, use department_id = 1 as default
-        $department_id = $request->session()->get('active_dept_id',$user->department->id ) ;     
+        if($user->isLibrarian()){ 
+            //get active_dept from session, use department_id = 1 as default
+            $department_id = $request->session()->get('active_dept_id',1) ;
+        }else{
+            $department_id = $user->department->id;
+        }     
         $department = Department::find($department_id);
 
         $aysem = Aysem::current();
