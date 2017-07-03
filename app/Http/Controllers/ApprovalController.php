@@ -66,6 +66,6 @@ class ApprovalController extends Controller
 	    }
 
 	function create(Request $request){
-		dd($request);
+		//dd($request);
 	}
 }
