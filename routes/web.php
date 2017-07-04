@@ -42,3 +42,6 @@ Route::get('/endorsement/remove/{request_id}', 'RequestEndorsementController@rem
 
 Route::get('/switch_active_dept/{id}','SessionController@switch_active_dept');
 Route::get('/switch_active_aysem/{id}','SessionController@switch_active_sem');
+
+Route::get('/refunds', 'RefundsController@index');
+Route::post('/refunds', 'RefundsController@create');
