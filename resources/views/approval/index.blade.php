@@ -7,40 +7,41 @@
 	</div>
 </div>
 @if(\Auth::user()->isLibrarian())
-		@include('_active_dept_selector',['active_department_id'=>$department->id])
-        @include('_active_sem_selector',['active_aysem'=>$aysem->aysem])
+    @include('_active_dept_selector')
 @endif
 <div class="panel panel-default">
     <div class="panel-heading">
-	  	Purchases for Book, E-Books, Journals, Magazines  
+	  	Endorsements for Book, E-Books, Journals, Magazines  
     </div>
-@if(((count($purchased['B']))+(count($purchased['E']))+(count($purchased['M']))+(count($purchased['J'])))>0)
+@if(((count($endorsements['B']))+(count($endorsements['E']))+(count($endorsements['M']))+(count($endorsements['J'])))>0)
 <div class="panel-body">
 
 	<table class="table table-striped table-responsive">
 		<thead>
 			<tr>
 				<th style='width:15%'>Title</th>
-				<th style='width:10%'>Quantity</th>
-				<th style='width:10%'>Total Quote Price</th> 
-				<th style='width:5%'>Total Refund</th>
+				<th style='width:10%'>Quantity</th>                
+				<th style='width:5%'>Unit price</th>
+				<th style='width:10%'>Subtotal</th> 
+				<th style='width:5%'>Remarks</th>
 				<th style='width:5%'>Action</th>
 			</tr>
 		</thead>
 		<tbody>
-			@foreach($purchased as $type => $purchase)
-				@if(count($purchase) >0)
+			@foreach($endorsements as $type => $request_endorsement)
+				@if(count($request_endorsement) >0)
 					@if($type == 'B' || $type == 'E' || $type == 'M' || $type == 'J')
-						@foreach($purchase as $request)
+						@foreach($request_endorsement as $request)
 							<tr>
 								<td>{{$request->title}}</td>
 								<td>{{$request->total_quote_price/$request->unit_quote_price}}</td>
+								<td>{{$request->unit_quote_price}}</td>
 								<td>{{$request->total_quote_price}}</td>
-									{{ Form::open(['url' => 'refunds' , 'class' => 'form-horizontal']) }} 
-								<td>{{ Form::number('refund',1,['class'=>'form-control', 'min'=>'1']) }}</td>
+								<td>{{$request->remarks}}</td>
 								<td>
+									{{ Form::open(['url' => 'approval' , 'class' => 'form-horizontal']) }} 
 										{{ Form::hidden('request_id',$request->request_id)}}
-										{{ Form::submit('Refund',  ['class'=>'btn btn-success', 'id'=>'btn_refund_'.$request->id])}}
+										{{ Form::submit('Approve',  ['class'=>'btn btn-success', 'id'=>'btn_approve_'.$request->id])}}
 									{{ Form::close() }}
 								</td>
 
@@ -55,41 +56,43 @@
 </div>	
 @else
 <div class="panel-body">
-	No Purchases
+	No Endorsements
 </div>
 @endif
 </div>	
 <div class="panel panel-default">
     <div class="panel-heading">
-	  	Purhases for Supplies, Equipments, Others  
+	  	Endorsements for Supplies, Equipments, Others  
     </div>
 
-@if(((count($purchased['Q']))+(count($purchased['S']))+(count($purchased['O'])))>0)
+@if(((count($endorsements['Q']))+(count($endorsements['S']))+(count($endorsements['O'])))>0)
 <div class="panel-body">
 	<table class="table table-striped table-responsive">
 		<thead>
 			<tr>
 				<th style='width:15%'>Description</th>
-				<th style='width:10%'>Quantity</th>
-				<th style='width:10%'>Total Quote Price</th> 
-				<th style='width:5%'>Total Refund</th>
+				<th style='width:10%'>Quantity</th>                
+				<th style='width:5%'>Unit price</th>
+				<th style='width:10%'>Subtotal</th> 
+				<th style='width:5%'>Remarks</th>
 				<th style='width:5%'>Action</th>
 			</tr>
 		</thead>
 		<tbody>
-			@foreach($purchased as $type => $purchase)
-				@if(count($purchase) >0)
+			@foreach($endorsements as $type => $request_endorsement)
+				@if(count($request_endorsement) >0)
 					@if($type == 'Q' || $type == 'S' || $type == 'O')
-						@foreach($purchase as $request)
+						@foreach($request_endorsement as $request)
 							<tr>
 								<td>{{$request->description}}</td>
 								<td>{{$request->total_quote_price/$request->unit_quote_price}}</td>
+								<td>{{$request->unit_quote_price}}</td>
 								<td>{{$request->total_quote_price}}</td>
-									{{ Form::open(['url' => 'refunds' , 'class' => 'form-horizontal']) }} 
-								<td>{{ Form::number('refund',1,['class'=>'form-control', 'min'=>'1']) }}</td>
+								<td>{{$request->remarks}}</td>
 								<td>
+									{{ Form::open(['url' => 'approval' , 'class' => 'form-horizontal']) }} 
 										{{ Form::hidden('request_id',$request->request_id)}}
-										{{ Form::submit('Refund',  ['class'=>'btn btn-success', 'id'=>'btn_refund_'.$request->id])}}
+										{{ Form::submit('Approve',  ['class'=>'btn btn-success', 'id'=>'btn_approve_'.$request->id])}}
 									{{ Form::close() }}
 								</td>
 
@@ -105,7 +108,7 @@
 
 @else
 <div class="panel-body">
-	No Purhases
+	No Endorsements
 </div>
 
 @endif

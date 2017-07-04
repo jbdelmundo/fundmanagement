@@ -79,7 +79,7 @@ class DashboardController extends Controller
 		
 		$transactionss = AccountTransactions::where('department_id',$department->id)
 											-> where('account_id',$account_id)
-											-> orderby('created_at','ase')
+											-> orderby('created_at','asc')
 											->get()
 											->toArray();
 		// foreach($transactions as $transaction){
@@ -91,7 +91,7 @@ class DashboardController extends Controller
 		$balance = $beginning_balance;
         foreach ($transactionss as $key => $value) {
             $value['balance'] = $balance + $value['amount'];
-			$balance += $value['balance'];
+			$balance = $value['balance'];
             $transactions[$key] = $value;
         }
 		

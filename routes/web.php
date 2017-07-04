@@ -45,3 +45,6 @@ Route::get('/switch_active_aysem/{id}','SessionController@switch_active_sem');
 
 Route::get('/refunds', 'RefundsController@index');
 Route::post('/refunds', 'RefundsController@create');
+
+Route::get('/approval', 'ApprovalController@index');
+Route::post('/approval', 'ApprovalController@create');
