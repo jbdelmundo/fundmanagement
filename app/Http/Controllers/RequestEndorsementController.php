@@ -19,9 +19,10 @@ class RequestEndorsementController extends Controller
 {
     //
 
-    function index(){
+    function index(Request $request){
 
     	$user = Auth::user();
+<<<<<<< HEAD
         if(is_null($user)){
 			return redirect('');			
 		}
@@ -32,7 +33,19 @@ class RequestEndorsementController extends Controller
 
         if(!is_null($user->department_id) && $user->department_id != $dept->id){
             abort(403, 'Unauthorized to access to this department.');
+=======
+
+        if($user->isLibrarian()){
+           $department_id = $request->session()->get('active_dept_id',1 ) ;    
+        }else{
+            $department_id = $user->department->id;
+>>>>>>> 87472476d0bc914be975b7628cc2c534f00daf48
         }
+        $department = Department::find($department_id);
+        $dept = $department; 
+        
+        $aysem = Aysem::current();
+        
 
         $all_requests_this_sem = [
             Requests::BOOK =>   	$dept->bookRequestsForSem($aysem),

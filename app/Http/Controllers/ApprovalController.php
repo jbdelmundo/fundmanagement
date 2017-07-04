@@ -1,7 +1,11 @@
 <?php
+<<<<<<< HEAD
 
 namespace App\Http\Controllers;
 
+=======
+namespace App\Http\Controllers;
+>>>>>>> 87472476d0bc914be975b7628cc2c534f00daf48
 use Illuminate\Http\Request;
 use Auth;
 use App\Aysem;
@@ -9,13 +13,19 @@ use App\Department;
 use App\Requests;
 use App\RequestEndorsement;
 use App\Account;
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 87472476d0bc914be975b7628cc2c534f00daf48
 use App\Book;
 use App\Magazine;
 use App\Eresource;
 use App\OtherMaterial;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 87472476d0bc914be975b7628cc2c534f00daf48
 class ApprovalController extends Controller
 {
     //
@@ -32,12 +42,18 @@ class ApprovalController extends Controller
 		else{
 			$department = Department::find($user->department_id);
 		}
+<<<<<<< HEAD
 
     	$aysem = Aysem::current();
 
 		
 		$departments = Department::all();
 
+=======
+    	$aysem = Aysem::current();
+		
+		$departments = Department::all();
+>>>>>>> 87472476d0bc914be975b7628cc2c534f00daf48
         $all_requests_this_sem = [
             Requests::BOOK =>   	$department->bookRequestsForSem($aysem),
             Requests::EBOOK =>   	$department->ebookRequestsForSem($aysem),
@@ -48,7 +64,10 @@ class ApprovalController extends Controller
             Requests::EQUIPMENT =>  $department->equipmentRequestsForSem($aysem),
             Requests::OTHER =>   	$department->otherRequestsForSem($aysem)
         ];
+<<<<<<< HEAD
 
+=======
+>>>>>>> 87472476d0bc914be975b7628cc2c534f00daf48
         $endorsements = [];
         foreach ($all_requests_this_sem as $key => $value) {
             $endorsements[$key] = $value->where('status',Requests::ENDORSED)->where('department_id',$active_department_id);   //filter only those that are endorsed
@@ -59,6 +78,7 @@ class ApprovalController extends Controller
     }
 	
     function create(Request $formrequest){
+<<<<<<< HEAD
 
         $request = Requests::findOrFail($formrequest->request_id);
 
@@ -66,6 +86,11 @@ class ApprovalController extends Controller
         $request_endorsement = RequestEndorsement::findOrFail($request_endorsement_id);
 
 
+=======
+        $request = Requests::findOrFail($formrequest->request_id);
+        $request_endorsement_id = RequestEndorsement::where('request_id',$formrequest->request_id)->get()->toArray()[0]['id'];
+        $request_endorsement = RequestEndorsement::findOrFail($request_endorsement_id);
+>>>>>>> 87472476d0bc914be975b7628cc2c534f00daf48
         //update request status to for purchase
         $request->status = Requests::FOR_PURCHASE;
         $request->save();
@@ -73,7 +98,10 @@ class ApprovalController extends Controller
         //update request endorsement approved_by
         $request_endorsement->approved_by = Auth::user()->id; 
         $request_endorsement->save();
+<<<<<<< HEAD
 
+=======
+>>>>>>> 87472476d0bc914be975b7628cc2c534f00daf48
 		$account_id = Account::where('department_id',$request->department_id)
 								-> orderby('created_at','desc')
 								->get()->toArray();
@@ -91,5 +119,9 @@ class ApprovalController extends Controller
         
         return redirect('approval');
     }
+<<<<<<< HEAD
 
 }
+=======
+}
+>>>>>>> 87472476d0bc914be975b7628cc2c534f00daf48

@@ -12,11 +12,10 @@
             <table class="table table-striped table-responsive">
                 <thead>
                     <tr>
-                    
                         <th style='width:15%'>Title</th>
                         <th style='width:10%'>Author</th>
                         <th style='width:10%'>Subject</th>
-                        <th style='width:5%'>Qty</th>                        
+                        <th style='width:5%'>Quantity</th>                        
                         <th style='width:10%'>Section</th> 
                         <th style='width:5%'>Unit price</th>
                         <th style='width:10%'>Remarks</th> 

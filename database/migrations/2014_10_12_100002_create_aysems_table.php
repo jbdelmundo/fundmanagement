@@ -13,6 +13,7 @@ class CreateAysemsTable extends Migration
      */
     public function up()
     {
+	Schema::defaultStringLength(191);
         Schema::create('aysems', function (Blueprint $table) {
             $table->integer('aysem')->primary()->unsigned();
             $table->string('short_name');

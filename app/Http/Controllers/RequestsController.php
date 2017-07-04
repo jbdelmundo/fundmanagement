@@ -26,15 +26,17 @@ class RequestsController extends Controller
     function index(Request $request){
         $user = Auth::user(); 
 
-        if(!$user->isLibrarian()){
-             return redirect()->action('HomeController@index');
-        }
-        
-        //get active_dept from session, use department_id = 1 as default
-        $department_id = $request->session()->get('active_dept_id',1 ) ;     
+        if($user->isLibrarian()){ 
+            //get active_dept from session, use department_id = 1 as default
+            $department_id = $request->session()->get('active_dept_id',1) ;
+        }else{
+            $department_id = $user->department->id;
+        }     
         $department = Department::find($department_id);
 
-        $aysem = Aysem::current();
+        $aysem_id = $request->session()->get('active_aysem',Aysem::current()->aysem);
+        $aysem = Aysem::where('aysem',$aysem_id)->first();
+
 
         $requests_this_sem = [
             Requests::BOOK =>   $department->bookRequestsForSem($aysem),
@@ -54,7 +56,8 @@ class RequestsController extends Controller
 
 
         $departments = Department::all();
-        return view('requests.show', compact('user','departments','department','aysem','forms','active_form', 'requests_this_sem'
+        $aysems = Aysem::all();
+        return view('requests.show', compact('user','departments','department','aysem','forms','active_form', 'requests_this_sem','aysems'
             ));
     }
 
@@ -201,7 +204,6 @@ class RequestsController extends Controller
         
         $request_obj->item_id = $item->id;
         $request_obj->save();
-
 
         return redirect()->action('RequestsController@index' )->with('success', 'Request recorded!');
     }

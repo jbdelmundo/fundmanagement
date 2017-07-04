@@ -27,6 +27,24 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
+        /* Hardcoded variables */
+        $beginning_balance = 1000;
+        $current_balance = 2700;
+        $transactions = [ 
+            ["created_at"=>'1/02/17',
+             "transaction_type"=>'Collection',
+             "amount"=>2000,
+             "balance"=>3000
+            ],
+            ["created_at"=>'1/03/17',
+             "transaction_type"=>'Purchase',
+             "amount"=>300,
+             "balance"=>2700
+            ]
+        ];
+        $total_balance = 2700;
+        /*                     */
+
         $user = Auth::user();
         if(is_null($user)){
 			return redirect('');			
@@ -69,7 +87,7 @@ class DashboardController extends Controller
 		$balance = $beginning_balance;
         foreach ($transactionss as $key => $value) {
             $value['balance'] = $balance + $value['amount'];
-			$balance += $value['balance'];
+			$balance = $value['balance'];
             $transactions[$key] = $value;
         }
 		
@@ -77,25 +95,13 @@ class DashboardController extends Controller
 		
 		
                 
-		return view('dashboard.dashboard',compact('active_department_id','departments','beginning_balance','current_balance','transactions', 'department', 'user','current_aysem', 'created_at'));
+	
 
+
+                
+       return view('dashboard.dashboard',compact('active_department_id','departments','beginning_balance','current_balance','transactions', 'department', 'user','current_aysem', 'created_at'));
+       // return view('dashboard');
     }
 
-    public function balancehistory()
-    {
-        
-        return view('balance');
-    }
-
-    public function summaryOfExpenses(){
-
-        $user = Auth::user();
-        if(is_null($user) || is_null($user->department_id)){abort(404);}
-
-
-
-        $records_to_fetch = 100;
-        $department = Department::find($user->department_id);
-        $current_aysem = Aysem::current();
-    }
+    
 }

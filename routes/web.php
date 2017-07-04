@@ -39,7 +39,18 @@ Route::get('/endorsement', 'RequestEndorsementController@index');
 Route::post('/endorsement', 'RequestEndorsementController@create');
 Route::get('/endorsement/remove/{request_id}', 'RequestEndorsementController@remove');
 
+<<<<<<< HEAD
 Route::get('/approval', 'ApprovalController@index');
 Route::post('/approval', 'ApprovalController@create');
 
 Route::get('/switch_active_dept/{id}','SessionController@switch_active_dept');
+=======
+Route::get('/switch_active_dept/{id}','SessionController@switch_active_dept');
+Route::get('/switch_active_aysem/{id}','SessionController@switch_active_sem');
+
+Route::get('/refunds', 'RefundsController@index');
+Route::post('/refunds', 'RefundsController@create');
+
+Route::get('/approval', 'ApprovalController@index');
+Route::post('/approval', 'ApprovalController@create');
+>>>>>>> 87472476d0bc914be975b7628cc2c534f00daf48

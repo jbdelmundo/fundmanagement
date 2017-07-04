@@ -13,6 +13,7 @@ class CreateTransactionTypesTable extends Migration
      */
     public function up()
     {
+	Schema::defaultStringLength(191);
         Schema::create('transaction_types', function (Blueprint $table) {
             $table->char('id',1);
             $table->string('transaction_type');

@@ -2,13 +2,13 @@
 <?php 
     $items = $requests_this_sem[Requests::BOOK] ;
  ?>
-
+@if(count($items)>0)
 <div class="panel panel-primary">
     <div class="panel-heading">
 	  Books	  
     </div>
     <div class="panel-body">
-        @if(count($items)>0)
+        
         <div class="table-responsive">
     	
             <table class="table table-striped">
@@ -38,22 +38,24 @@
             </table>
             
         </div>
-   		@else
-        	No items to show.
-        @endif
+   		
+        
     </div>
 </div>
+@endif
 
 <?php 
     $items = $requests_this_sem[Requests::EBOOK] ;
  ?>
 
+
+@if(count($items)>0)
 <div class="panel panel-primary">
     <div class="panel-heading">
 	  E-Books	  
     </div>
     <div class="panel-body">
-        @if(count($items)>0)
+        
         <div class="table-responsive">
     	
             <table class="table table-striped">
@@ -83,23 +85,22 @@
             </table>
             
         </div>
-   		@else
-        	No items to show.
-        @endif
+   		
+        
     </div>
 </div>
-
+@endif
 
 <?php 
     $items = $requests_this_sem[Requests::JOURNAL] ;
  ?>
-
+@if(count($items)>0)
 <div class="panel panel-primary">
     <div class="panel-heading">
 	Journals	  
     </div>
     <div class="panel-body">
-    	@if(count($items)>0)
+    	
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -123,26 +124,23 @@
                     @endforeach
                     
                 </tbody>
-            </table>
-           
+            </table>           
         </div>
-     	@else
-        	No items to show.
-        @endif
-   
     </div>
 </div>
+@endif
 
 <?php 
     $items = $requests_this_sem[Requests::MAGAZINE] ;
  ?>
 
+@if(count($items)>0)
 <div class="panel panel-primary">
     <div class="panel-heading">
 	Magazines	  
     </div>
     <div class="panel-body">
-    	@if(count($items)>0)
+    	
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -169,25 +167,23 @@
             </table>
            
         </div>
-     	@else
-        	No items to show.
-        @endif
+     	
+        
    
     </div>
 </div>
-
-
+@endif
 
 <?php 
     $items = $requests_this_sem[Requests::ERESOURCE] ;
  ?>
-
+@if(count($items)>0)
 <div class="panel panel-primary">
     <div class="panel-heading">
 	E-Resources	  
     </div>
     <div class="panel-body">
-    	@if(count($items)>0)
+    	
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -212,25 +208,24 @@
             </table>
            
         </div>
-     	@else
-        	No items to show.
-        @endif
+     	
+        
    
     </div>
 </div>
-
+@endif
 
 
 <?php 
     $items = $requests_this_sem[Requests::SUPPLIES] ;
  ?>
-
+@if(count($items)>0)
 <div class="panel panel-primary">
     <div class="panel-heading">
 	Supplies
     </div>
     <div class="panel-body">
-    	@if(count($items)>0)
+    	
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -255,23 +250,23 @@
             </table>
            
         </div>
-     	@else
-        	No items to show.
-        @endif
+
+        
    
     </div>
 </div>
-
+@endif
 
 <?php 
     $items = $requests_this_sem[Requests::EQUIPMENT] ;
  ?>
 
+@if(count($items)>0)
 <div class="panel panel-primary">
     <div class="panel-heading">
 	Equipment
     </div>    <div class="panel-body">
-    	@if(count($items)>0)
+    	
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -296,24 +291,23 @@
             </table>
            
         </div>
-     	@else
-        	No items to show.
-        @endif
+     	
+        
    
     </div>
 </div>
-
+@endif
 
 <?php 
     $items = $requests_this_sem[Requests::OTHER] ;
  ?>
-
+@if(count($items)>0)
 <div class="panel panel-primary">
     <div class="panel-heading">
 	Others
     </div>
     <div class="panel-body">
-    	@if(count($items)>0)
+    	
         <div class="table-responsive">
             <table class="table table-striped">
                 <thead>
@@ -338,11 +332,10 @@
             </table>
            
         </div>
-     	@else
-        	No items to show.
-        @endif
+     	
+        
    
     </div>
 </div>
-
+@endif
 
