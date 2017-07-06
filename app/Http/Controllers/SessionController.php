@@ -12,4 +12,8 @@ class SessionController extends Controller
     	$request->session()->put('active_dept_id',$dept_id);
     	return redirect()->back();
     }
+
+    funtcion switch_user(){
+    	
+    }
 }

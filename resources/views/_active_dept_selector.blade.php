@@ -1,3 +1,7 @@
+<?php
+   // dd($departments);
+?>
+
 <div class="panel panel-default">
     <div class="panel-body">
     <select id='active_sem_selector' class="form-control">

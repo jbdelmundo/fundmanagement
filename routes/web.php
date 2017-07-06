@@ -42,4 +42,6 @@ Route::post('/endorsement', 'RequestEndorsementController@create');
 Route::get('/approval', 'ApprovalController@index');
 Route::post('/approval', 'ApprovalController@create');
 
+Route::get('/usermanagement', 'UserManagementController@index');
+
 Route::get('/switch_active_dept/{id}','SessionController@switch_active_dept');

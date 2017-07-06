@@ -45,13 +45,15 @@
                     </tr>
                 </thead>
                 <tbody>
-
+                <?php
+                  //  dd($transactions);
+                ?>
 				    @foreach($transactions as $key => $transaction)
                     <tr>
                         <td>{{$transaction['created_at']}}</td>
-                        <td>{{$transaction['transactiontype_id']}}</td>
-                        <td>{{$transaction['Amount']}}</td>
-                        <td>{{$transaction['Balance']}}</td>
+                        <td>{{$transaction['transaction_type_id']}}</td>
+                        <td>{{$transaction['amount']}}</td>
+                        <td>{{$transaction['balance']}}</td>
                     </tr>
                     @endforeach
                 </tbody> 
