@@ -26,8 +26,6 @@ class Account extends Model
     }
 
 
-
-
     /*****  UTILITY FUNCTIONS *****/
 
     function currentBalance(){
