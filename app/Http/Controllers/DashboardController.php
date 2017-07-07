@@ -91,7 +91,7 @@ class DashboardController extends Controller
                 
     
                 
-       return view('dashboard.dashboard',compact('active_department_id','departments','beginning_balance','current_balance','transactions', 'department', 'user','current_aysem', 'created_at'));
+       return view('dashboard.dashboard',compact('transactions','active_department_id','departments','beginning_balance','current_balance','transactionss', 'department', 'user','current_aysem', 'created_at'));
        // return view('dashboard');
     }
     

@@ -33,26 +33,15 @@ class UserManagementController extends Controller
         $active_user_id = $user->id;
 
         $all_users = DB::table('users')->get();
-
-                
-       return view('usermanagement.usermanagement',compact('all_users'));
+        $departments = Department::all();
+        $roles = DB::table('user_roles')->get();
+        $def_user = DB::table('users')->where('id', $user->id)->first();
+       return view('usermanagement.usermanagement',compact('roles','all_users', 'departments', 'def_user'));
     }
 
-    public function balancehistory()
+    function store(Request $request)
     {
-        
-        return view('balance');
-    }
-
-    public function summaryOfExpenses(){
-
-        $user = Auth::user();
-        if(is_null($user) || is_null($user->department_id)){abort(404);}
-
-
-
-        $records_to_fetch = 100;
-        $department = Department::find($user->department_id);
-        $current_aysem = Aysem::current();
+        dd($request);
+        return "You clicked the submit button!";
     }
 }

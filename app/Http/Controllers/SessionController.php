@@ -13,7 +13,5 @@ class SessionController extends Controller
     	return redirect()->back();
     }
 
-    funtcion switch_user(){
-    	
-    }
+
 }

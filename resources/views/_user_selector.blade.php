@@ -8,6 +8,9 @@
                 {{$a->username}}
             </option>
         @endforeach
+        <?php
+        	$newvar = 1;
+        ?>
     </select>
     </div>
 </div>
