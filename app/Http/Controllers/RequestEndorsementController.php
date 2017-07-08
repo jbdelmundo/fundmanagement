@@ -33,6 +33,8 @@ class RequestEndorsementController extends Controller
         if(!is_null($user->department_id) && $user->department_id != $dept->id){
             abort(403, 'Unauthorized to access to this department.');
         }
+		
+		
 
         $all_requests_this_sem = [
             Requests::BOOK =>   	$dept->bookRequestsForSem($aysem),

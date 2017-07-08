@@ -3,9 +3,7 @@
 
 @section('content')
 
-<?php 
-
- ?>
+<?php ?>
 	
 <div class="row">
 	<div class="col-lg-12">
@@ -14,9 +12,10 @@
 	<!-- /.col-lg-12 -->
 
 @if(\Auth::user()->isLibrarian())
-		@include('_active_dept_selector')
+		@include('_active_dept_selector',['active_department_id'=>$department->id])
+        @include('_active_sem_selector',['active_aysem'=>$aysem->aysem])
 @endif
-        @include('_active_sem_selector')
+    
 	<div class="row">
 			<div class="col-md-6 text-right">
 				{!! Form::open(['method'=>'GET', 'class'=>'navbar-form navbar-left', 'role' => 'search']) !!}
@@ -55,10 +54,11 @@
 			@foreach($purchased as $type => $purchase)
 				@if(count($purchase) >0)
 						@if($type == 'B' || $type == 'E' || $type == 'M' || $type == 'J')
-							@foreach($subjects as $subject)
+							@foreach($try as $subject)
 								@foreach($purchase as $request)
 									@if($request->request_id == $subject->request_id)
 										@if($subject->total_bid_price == $checker)
+										
 										<tr>
 											<td>{{$request->title}}</td>
 											<td>{{$subject->subject}}</td>
@@ -80,8 +80,11 @@
 							@endforeach
 							
 						@elseif($type == 'Q' || $type == 'S' || $type == 'O')
-							@foreach($purchase as $request)
-							@if($subject->total_bid_price == $checker)
+							@foreach($try as $subject)
+								@foreach($purchase as $request)
+									@if($subject->request_id == $request->request_id)
+										@if($subject->total_bid_price == $checker)
+										
 									<tr>
 										<td>{{$request->description}}</td>
 										<td></td>
@@ -98,7 +101,9 @@
 
 
 								</tr>
-							@endif
+									@endif
+								@endif
+							@endforeach
 						@endforeach
 					
 					
@@ -116,7 +121,6 @@
 </div>
 @endif
 </div>	
-
 
 
 

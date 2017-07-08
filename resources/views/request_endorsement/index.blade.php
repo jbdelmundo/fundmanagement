@@ -9,8 +9,14 @@
 </div>
 <div class="row">
 	<div class="col-lg-12">
-		<h3 class="page-header">{{$department->short_name}} for {{ $aysem->getShortName() }} Endorsed </h3>
+		<h3 class="page-header">{{$department->short_name}} for {{ $aysem->getShortName() }} Items Endorsed </h3>
 	
+	@if(\Auth::user()->isLibrarian())
+		@include('_active_dept_selector',['active_department_id'=>$department->id])
+        @include('_active_sem_selector',['active_aysem'=>$aysem->aysem])
+
+	@endif
+
 	@include('request_endorsement._request_endorsements',compact('endorsements'))
 	</div>	
 </div>
@@ -34,8 +40,8 @@
 
 
         @include('request_endorsement._requests_journal',['heading'=>'Journals','items'=>$requests_this_sem[Requests::JOURNAL]])
-        @include('request_endorsement._requests_ebook',['heading'=>'Magazines','items'=>$requests_this_sem[Requests::MAGAZINE]])
-        @include('request_endorsement._requests_ebook',['heading'=>'Electronic Resources','items'=>$requests_this_sem[Requests::ERESOURCE]])
+        @include('request_endorsement._requests_journal',['heading'=>'Magazines','items'=>$requests_this_sem[Requests::MAGAZINE]])
+    <!--    @include('request_endorsement._requests_ebook',['heading'=>'Electronic Resources','items'=>$requests_this_sem[Requests::ERESOURCE]])	-->
         @include('request_endorsement._requests_ebook',['heading'=>'Supplies','items'=>$requests_this_sem[Requests::SUPPLIES]])
         @include('request_endorsement._requests_ebook',['heading'=>'Equipment','items'=>$requests_this_sem[Requests::EQUIPMENT]])
         @include('request_endorsement._requests_ebook',['heading'=>'Others','items'=>$requests_this_sem[Requests::OTHER]])

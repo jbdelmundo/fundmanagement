@@ -21,12 +21,12 @@
 
         
 
-        
 
         @include('_active_dept_selector',['active_department_id'=>$department->id])
+        @include('_active_sem_selector',['active_aysem'=>$aysem->aysem])
         
         @include('requests._request_per_category')
-        
+       
         
 	</div>
 </div>
@@ -35,7 +35,7 @@
 	<div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Create a new request for {{ \App\Aysem::current()->getShortName() }}
+                Create a new request for {{ $aysem->getShortName() }}
             </div>
             <!-- /.panel-heading -->
             

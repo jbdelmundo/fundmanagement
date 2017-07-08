@@ -12,6 +12,7 @@
             <table class="table table-striped table-responsive">
                 <thead>
                     <tr>
+                    
                         <th style='width:15%'>Title</th>
                         <th style='width:10%'>Author</th>
                         <th style='width:10%'>Subject</th>
@@ -29,7 +30,7 @@
 
                    {{ Form::open(['url' => 'endorsement' , 'class' => 'form-horizontal']) }} 
                     <div class='form-group'>
-                        {{ Form::hidden('request_id',$item->id)}}
+                        {{ Form::hidden('request_id',$item->request_id)}}
                         <td> {{$item->title}}</td>
                         <td>{{$item->author}}</td>
                         <td>{{ Form::text('subject',null, 
@@ -63,6 +64,4 @@
 
 <script type="text/javascript">
     
-
-
 </script>

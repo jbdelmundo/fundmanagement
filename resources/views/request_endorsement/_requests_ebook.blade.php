@@ -14,11 +14,12 @@
             <table class="table table-striped table-responsive">
                 <thead>
                     <tr>
-                        <th >Title</th>
-                        <th >Author</th>
-                        <th style='width:10%' >Subject</th> 
+                        <th style='width:20%'>Description</th>
+                        <th style='width:10%'>Subject</th> 
+                        <th style='width:5%'>Quantity</th>                       
+                        <th style='width:10%'>Section</th>                       
                         <th style='width:5%'>Unit price</th>                       
-                        <th >Remarks</th> 
+                        <th style='width:10%'>Remarks</th> 
                         <th style='width:10%'>Action</th>                     
                         
                     </tr>
@@ -29,15 +30,14 @@
 
                    {{ Form::open(['url' => 'endorsement' , 'class' => 'form-horizontal']) }} 
                     <div class='form-group'>
-                        {{ Form::hidden('request_id',$item->id)}}
-                        {{ Form::hidden('quantity',1) }}
-                        <td> {{$item->title}}</td>
-                        <td>{{$item->author}}</td>
+                        {{ Form::hidden('request_id',$item->request_id)}}
+                        <td> {{$item->description}}</td>
                         <td>{{ Form::text('subject',null, 
                                 ['class'=>'form-control','id'=>'subject_'.$item->id]) }}</td>
-                        
-                        
-
+                        <td>{{ Form::number('quantity',1,
+                                ['class'=>'form-control', 'min'=>'1']) }}</td>
+						<td>{{ Form::select('is_reserved', ['0' => 'Circulation', '1' => 'Reserved'], 0, 
+                                ['class'=>'form-control'])   }}</td>
                         <td>{{$item->unit_quote_price}}</td>
                         <td>{{$item->remarks}}</td>
                         <td>{{ Form::submit('Endorse',  ['class'=>'btn btn-success', 'id'=>'btn_approve_'.$item->id])}}</td>
@@ -64,6 +64,4 @@
 
 <script type="text/javascript">
     
-
-
 </script>
