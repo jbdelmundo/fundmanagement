@@ -12,6 +12,7 @@ use App\Department;
 use App\AccountTransactions;
 use App\Account;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use App\User;
 
 class UserManagementController extends Controller
@@ -46,11 +47,13 @@ class UserManagementController extends Controller
     function store(Request $request){
         //dd($request);
         $update = User::findOrFail($request->selected_user);
-        dd($request->all());
         $update->username = $request->username;
-        $update->password = $request->pw;
+        $update->password = Hash::make($request->pw);
         $update->email = $request->email;
+        $update->userrole_id = $request->role_selector;
+        $update->department_id = $request->dept_selector;
         $update->save();
+
 
         return redirect()->back();
    }

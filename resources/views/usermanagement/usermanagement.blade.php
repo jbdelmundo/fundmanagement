@@ -32,8 +32,7 @@
 
     
     <div class="panel-body" >
-        {{ csrf_field() }}
-    	{{Form::label('pw', 'Password') }} <br>
+        {{Form::label('pw', 'Password') }} <br>
     	{{Form::password('pw',['class'=>'form-control', 'style'=>'width:300px'])}}
     </div>
 
@@ -44,7 +43,7 @@
 
     <div class="panel-body" >
     	{{Form::label('dept', 'Department') }}
-    	<select id='sem_selector' class="form-control" style="width:300px" >
+        <select name='dept_selector' class="form-control" style="width:300px" >
         @foreach($departments as $d)
             <option value={{$d->id}} @if($def_user->department_id == $d->id) selected @endif>
             	{{$d->short_name}}
@@ -56,7 +55,7 @@
 
      <div class="panel-body" >
     	{{Form::label('role', 'User Role') }}
-    	<select id='role_selector' class="form-control" style="width:300px">
+    	<select name='role_selector' class="form-control" style="width:300px">
         @foreach($roles as $r)
             <option value={{$r->id}} @if($def_user->userrole_id == $r->id) selected @endif>
             	{{$r->role}}
