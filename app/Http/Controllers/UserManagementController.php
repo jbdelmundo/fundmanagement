@@ -12,10 +12,12 @@ use App\Department;
 use App\AccountTransactions;
 use App\Account;
 use Illuminate\Support\Facades\DB;
-
+use App\User;
 
 class UserManagementController extends Controller
 {
+
+    
     public function __construct()
     {
         // $this->middleware('auth');
@@ -32,16 +34,24 @@ class UserManagementController extends Controller
         $user = Auth::user();
         $active_user_id = $user->id;
 
+        $selected_user_id = $request->session()->get('selected_user', $active_user_id);
+
         $all_users = DB::table('users')->get();
         $departments = Department::all();
         $roles = DB::table('user_roles')->get();
-        $def_user = DB::table('users')->where('id', $user->id)->first();
-       return view('usermanagement.usermanagement',compact('roles','all_users', 'departments', 'def_user'));
+        $def_user = DB::table('users')->where('id', $selected_user_id)->first(); //this is a whole row from db...
+       return view('usermanagement.usermanagement',compact('active_user_id','roles','all_users', 'departments', 'def_user', 'selected_user_id'));
     }
 
-    function store(Request $request)
-    {
-        dd($request);
-        return "You clicked the submit button!";
-    }
+    function store(Request $request){
+        //dd($request);
+        $update = User::findOrFail($request->selected_user);
+        dd($request->all());
+        $update->username = $request->username;
+        $update->password = $request->pw;
+        $update->email = $request->email;
+        $update->save();
+
+        return redirect()->back();
+   }
 }

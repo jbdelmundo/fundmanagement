@@ -6,12 +6,16 @@ use Illuminate\Http\Request;
 
 class SessionController extends Controller
 {
-    //
 
     function switch_active_dept($dept_id,Request $request){
     	$request->session()->put('active_dept_id',$dept_id);
     	return redirect()->back();
     }
+    function switch_user($new_id,Request $request){
+    	
+    	$request->session()->put('selected_user',$new_id);
 
+    	return redirect()->back();
+    }
 
 }

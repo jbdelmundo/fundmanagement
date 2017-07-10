@@ -65,7 +65,7 @@ class ApprovalController extends Controller
 	       return view('approval.approval', compact('active_department_id', 'departments', 'beginning_balance', 'current_balance', 'endorsements', 'department', 'user', 'current_aysem'));
 	    }
 
-	function create(Request $request){
+	function store(Request $request){
 		//dd($request);
 	}
 }

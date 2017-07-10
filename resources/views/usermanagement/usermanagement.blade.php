@@ -3,6 +3,8 @@
 
 @section('content')
 
+
+
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">User Management</h1>
@@ -13,17 +15,15 @@
 
 @include('_user_selector')
 
-<?php 
-	//dd($def_user);
-?>
-
 
 <div class="panel panel-primary" style="width:400px" >
 
 	<div class="panel-heading">
 		User	
 	</div>
-    
+         
+    {!! Form::open() !!}
+
 	<div class="panel-body" >
     	{{Form::label('username', 'Username') }} <br>
     	{{Form::text('username', $def_user->username, ['class'=>'form-control', 'style'=>'width:300px']	)}}
@@ -32,6 +32,7 @@
 
     
     <div class="panel-body" >
+        {{ csrf_field() }}
     	{{Form::label('pw', 'Password') }} <br>
     	{{Form::password('pw',['class'=>'form-control', 'style'=>'width:300px'])}}
     </div>
@@ -43,9 +44,9 @@
 
     <div class="panel-body" >
     	{{Form::label('dept', 'Department') }}
-    	<select id='sem_selector' class="form-control" style="width:300px">
+    	<select id='sem_selector' class="form-control" style="width:300px" >
         @foreach($departments as $d)
-            <option value={{$d->id}}>
+            <option value={{$d->id}} @if($def_user->department_id == $d->id) selected @endif>
             	{{$d->short_name}}
         	</option>
         @endforeach
@@ -57,15 +58,20 @@
     	{{Form::label('role', 'User Role') }}
     	<select id='role_selector' class="form-control" style="width:300px">
         @foreach($roles as $r)
-            <option value={{$r->id}}>
+            <option value={{$r->id}} @if($def_user->userrole_id == $r->id) selected @endif>
             	{{$r->role}}
         	</option>
         @endforeach
     </select>
     </div>
 
-    <button type="submit" class="btn btn-primary">Save</button>
-
+    {!! Form::hidden('selected_user', $def_user->id) !!}
+    <center>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </center>
+        
+       {!! Form::close()  !!}
+    
 </div>        
  
 
