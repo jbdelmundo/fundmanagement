@@ -3,13 +3,64 @@
 @section('content')
 <div class="row">
 	<div class="col-lg-12">
-		<h1 class="page-header">Items to be Refunded of {{$department->short_name}}</h1>
+		<h1 class="page-header">Refunds</h1>
+		<h3 class="page-header">Refunds of {{$department->short_name}} for {{ $aysem->getShortName() }}  </h3>
 	</div>
 </div>
 @if(\Auth::user()->isLibrarian())
 		@include('_active_dept_selector',['active_department_id'=>$department->id])
 @endif
         @include('_active_sem_selector',['active_aysem'=>$aysem->aysem])
+
+@if(count($refunded)>0)
+	<div class="panel panel-primary">
+		<div class="panel-heading">
+		  Refunded Requests
+		</div>
+		<div class="panel-body">
+			
+			<div class="table-responsive">
+			
+				<table class="table table-striped">
+					@if(count($refunded['B'])+count($refunded['E'])+count($refunded['M'])+count($refunded['J'])+count($refunded['R'])+count($refunded['Q'])+count($refunded['S'])+count($refunded['O']) == 0)
+						No Refunds
+					@else
+						<thead>
+							<tr>
+								<th>Title/Description</th>
+								<th>Quantity</th>
+								<th>Total Quote Price</th>
+								<th>Total Bid Price</th>
+							   
+							 
+							</tr>
+						</thead>
+						<tbody>
+							@foreach($refunded as  $items)
+							<?php $items = $items->toArray();?>
+								@foreach($items as  $item)
+								<tr>
+									@if($item->category_id == 'Q' || $item->category_id == 'S' ||$item->category_id == 'O')
+										<td>{{$item->description}}</td>
+									@else
+										<td>{{$item->title}}</td>
+									@endif
+									<td>{{$item->total_quote_price/$item->unit_quote_price}}</td>
+									<td>{{$item->total_quote_price}}</td>
+									<td>{{$item->total_bid_price}}</td>                
+								</tr>
+								@endforeach
+							@endforeach
+						</tbody>
+					@endif
+				</table>
+				
+			</div>
+			
+		</div>
+	</div>
+@endif
+<hr>
 <div class="panel panel-default">
     <div class="panel-heading">
 	  	Purchases for Book, E-Books, Journals, Magazines  
