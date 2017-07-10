@@ -19,7 +19,7 @@ class RefundsController extends Controller
     	$user = Auth::user();
         if($user->isLibrarian()){
 			$department_id = $request->session()->get('active_dept_id',1 ) ;    
-			$sem = $request->session()->get('active_aysem',1 );
+			$sem = $request->session()->get('active_aysem',\App\Aysem::current()->aysem );
 			$aysem = Aysem::where('aysem',$sem)->first();
         }else{
             $department_id = $user->department->id;

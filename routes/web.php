@@ -30,6 +30,8 @@ Route::get('/endorsement/remove/{request_id}', 'RequestEndorsementController@rem
 Route::get('/switch_active_dept/{id}','SessionController@switch_active_dept');
 Route::get('/switch_active_aysem/{id}','SessionController@switch_active_sem');
 Route::get('/purchasehistory', 'PurchaseHistoryController@index');
+// Route::get('/purchasehistory', function () {return view('purchasehistory.seeall');})->name('seeall');
+// Route::get('/purchasehistory', 'PurchaseHistoryController@seeall');
 Route::get('/refunds', 'RefundsController@index');
 Route::post('/refunds', 'RefundsController@create');
 Route::get('/approval', 'ApprovalController@index');
