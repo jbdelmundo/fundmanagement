@@ -62,7 +62,7 @@ class PurchaseHistoryController extends Controller
 						// return Redirect::to('/purchasehistory');
 					// }
 				// else{}
-
+//->where('requests.aysem', '=', $aysem)->where('requests.department_id' , '=', $dept)
 				// $boks = Requests::selectRaw('requests.*,books.*,request_endorsements.*,magazines.*,other_materials.*')->leftJoin('books', 'requests.id', '=' , 'books.request_id')
 										// ->leftJoin('magazines', 'requests.id', '=' , 'magazines.request_id')->leftJoin('other_materials', 'requests.id', '=' , 'other_materials.request_id')->leftJoin('request_endorsements', 'requests.id', '=' , 'request_endorsements.request_id')
 										// ->where('requests.status', '=', '4')->get(); //lahat ng purchased. pero dipa nkukuha yung sa magazines, others etc. papasa sa all view.

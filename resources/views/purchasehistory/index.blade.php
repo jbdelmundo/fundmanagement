@@ -31,7 +31,9 @@
 		</div>	
 		
 		<div class="col-md-6 text-right">
-
+						{{ Form::open([  'method'=>'GET', 'url'=>'purchasehistory/all' , 'class' => 'btn btn-default-sm']) }} 
+										{{ Form::submit('SEE ALL',  ['class'=>'btn btn-success'])}}
+					{{ Form::close() }}
 		</div>
 	
 	</div>
@@ -118,8 +120,10 @@
 			@foreach($purchased as $type => $purchase)
 				@if(count($purchase) >0)
 					@if($type == 'Q' || $type == 'S' || $type == 'O')
+
 						@foreach($purchase as $request)
-							@if($subject->total_bid_price == $checker)
+								@if(is_null($search) || $search == "")
+							@if($request->total_bid_price == $checker)
 									<tr>
 										<td>{{$request->description}}</td>
 										<td></td>
@@ -136,7 +140,13 @@
 
 								</tr>
 							@endif
+							@else
+									<tr></tr>
+									<tr></tr>
+									<tr></tr>
+							@endif
 						@endforeach
+
 					@endif
 				@endif
 			@endforeach
