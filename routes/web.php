@@ -24,8 +24,6 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 Route::get('/logout', 'Auth\LoginController@logout');
 
-Auth::routes();
-
 Route::get('/home', 'HomeController@index');
 
 Route::get('/collection', 'CollectionController@index');
@@ -48,3 +46,7 @@ Route::post('/refunds', 'RefundsController@create');
 
 Route::get('/approval', 'ApprovalController@index');
 Route::post('/approval', 'ApprovalController@create');
+
+Route::get('/module_permissions', 'ModulePermissionsController@index');
+Route::get('/module_permissions/{id}', 'ModulePermissionsController@switch_active_user');
+Route::post('/module_permissions', 'ModulePermissionsController@create');
