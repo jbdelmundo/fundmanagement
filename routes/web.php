@@ -47,6 +47,6 @@ Route::post('/refunds', 'RefundsController@create');
 Route::get('/approval', 'ApprovalController@index');
 Route::post('/approval', 'ApprovalController@create');
 
-Route::get('/module_permissions', 'ModulePermissionsController@index');
+Route::get('/module_permissions', 'ModulePermissionsController@index')->middleware('permit:5');
 Route::get('/module_permissions/{id}', 'ModulePermissionsController@switch_active_user');
 Route::post('/module_permissions', 'ModulePermissionsController@create');
