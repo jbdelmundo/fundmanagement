@@ -87,44 +87,10 @@
 									@endif
 								@endforeach
 								@endforeach
-							@endforeach					
-						@endif
-				@endif
-			@endforeach
-		</tbody>
-    </table>
-	
-</div>	
-@else
-<div class="panel-body">
-	No Purchases
-</div>
-@endif
-</div>	
+							@endforeach	
 
-
-<div class="panel panel-default">
-    <div class="panel-heading">
-	  		Purhases for Journals, Magazines of {{$department->short_name}} 
-    </div>
-@if(((count($purchased['B']))+(count($purchased['E']))+(count($purchased['M']))+(count($purchased['J'])))>0)
-
-
-<div class="panel-body">
-
-	<table class="table table-striped table-responsive">
-		<thead>
-			<tr>
-				<th style='width:15%'>Title</th>
-				<th style='width:15%'>Subject</th>
-				<th style='width:10%'>Total Quote Price</th> 
-
-			</tr>
-		</thead>
-		<tbody>
-			@foreach($purchased as $type => $purchase)
-				@if(count($purchase) >0)
-						@if($type == 'M' || $type == 'J' )
+					@elseif($type == 'M' || $type == 'J' )
+					
 							@foreach($try as $subject)
 								@foreach($magz as $book)
 								@foreach($purchase as $request)
@@ -152,43 +118,9 @@
 									@endif
 								@endforeach
 								@endforeach
-							@endforeach					
-						@endif
-				@endif
-			@endforeach
-		</tbody>
-    </table>
-	
-</div>	
-@else
-<div class="panel-body">
-	No Purchases
-</div>
-@endif
-</div>	
-
-<div class="panel panel-default">
-    <div class="panel-heading">
-	  	Purhases for Supplies, Equipments, Others of {{$department->short_name}} 
-    </div>
-
-@if(((count($purchased['Q']))+(count($purchased['S']))+(count($purchased['O'])))>0)
-<div class="panel-body">
-	<table class="table table-striped table-responsive">
-		<thead>
-			<tr>
-				<th style='width:15%'>Description</th>
-				<th style='width:15%'>Subject</th>
-				<th style='width:10%'>Total Quote Price</th> 
-
-			</tr>
-		</thead>
-		<tbody>
-
-			@foreach($purchased as $type => $purchase)
-				@if(count($purchase) >0)
-					@if($type == 'Q' || $type == 'S' || $type == 'O')
-								@foreach($otherz as $book)
+							@endforeach	
+					@else
+					@foreach($otherz as $book)
 						@foreach($purchase as $request)
 						@if($request->id == $book->request_id)
 								@if(is_null($search) || $search == "")
@@ -217,22 +149,21 @@
 							@endif
 						@endforeach
 						@endforeach
-					@endif
+						@endif
 				@endif
 			@endforeach
-
 		</tbody>
     </table>
-		
+	
 </div>	
-
 @else
 <div class="panel-body">
-	No Purhases
+	No Purchases
 </div>
-
 @endif
-</div>
+</div>	
+
+
 
 
 @endsection
