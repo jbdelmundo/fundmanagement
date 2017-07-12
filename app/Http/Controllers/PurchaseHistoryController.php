@@ -54,31 +54,62 @@ class PurchaseHistoryController extends Controller
 																->select('request_endorsements.*','requests.*')->where('subject','like', '%'.$search.'%')
 																->get(); //pagkuha sa mga nasa search bar hahaha.
 
-
-
-			
-				// if(Request::get('seeall'))
-					// {
-						// return Redirect::to('/purchasehistory');
-					// }
-				// else{}
-//->where('requests.aysem', '=', $aysem)->where('requests.department_id' , '=', $dept)
-				// $boks = Requests::selectRaw('requests.*,books.*,request_endorsements.*,magazines.*,other_materials.*')->leftJoin('books', 'requests.id', '=' , 'books.request_id')
-										// ->leftJoin('magazines', 'requests.id', '=' , 'magazines.request_id')->leftJoin('other_materials', 'requests.id', '=' , 'other_materials.request_id')->leftJoin('request_endorsements', 'requests.id', '=' , 'request_endorsements.request_id')
-										// ->where('requests.status', '=', '4')->get(); //lahat ng purchased. pero dipa nkukuha yung sa magazines, others etc. papasa sa all view.
-										 // dd($boks);
 			return view('purchasehistory.index',compact('user','departments','department','aysem', 'requests_this_sem','purchased','all','checker','search','try','subjects'));
     }
 	
-	function seeall(){
-	$checker = 0.00;
-			$boks = Requests::selectRaw('requests.*,books.*,request_endorsements.*,magazines.*,other_materials.*')->leftJoin('books', 'requests.id', '=' , 'books.request_id')
-										->leftJoin('magazines', 'requests.id', '=' , 'magazines.request_id')->leftJoin('other_materials', 'requests.id', '=' , 'other_materials.request_id')->leftJoin('request_endorsements', 'requests.id', '=' , 'request_endorsements.request_id')
-										->where('requests.status', '=', '4')->get(); //lahat ng purchased. pero dipa nkukuha yung sa magazines, others etc. papasa sa all view.
-										// dd($boks);
-										$requests = Requests::all();
-										
-		return view('purchasehistory.seeall', compact('boks','checker','requests'));
+	function seeall(Request $request){
+
+			
+		$user = Auth::user();
+			if($user->isLibrarian()){
+				$department_id = $request->session()->get('active_dept_id',1 ) ;    
+			}else{
+				$department_id = $user->department->id;
+			}
+			$department = Department::find($department_id);
+			$dept = $department; 
+
+			$aysem = Aysem::all();
+			$all_requests_this_sem = [
+				Requests::BOOK =>   	Requests::where('category_id','B')->where('department_id',$dept->id)->get(),
+				Requests::EBOOK =>   	Requests::where('category_id','E')->where('department_id',$dept->id)->get(),
+				Requests::JOURNAL =>   	Requests::where('category_id','J')->where('department_id',$dept->id)->get(),
+				Requests::MAGAZINE =>   Requests::where('category_id','M')->where('department_id',$dept->id)->get(),
+				Requests::ERESOURCE =>  Requests::where('category_id','R')->where('department_id',$dept->id)->get(),
+				Requests::SUPPLIES =>   Requests::where('category_id','S')->where('department_id',$dept->id)->get(),
+				Requests::EQUIPMENT =>  Requests::where('category_id','Q')->where('department_id',$dept->id)->get(),
+				Requests::OTHER =>   	Requests::where('category_id','O')->where('department_id',$dept->id)->get()
+			];			
+			$purchased = [];
+			foreach ($all_requests_this_sem as $key => $value) {
+				$purchased[$key] = $value->where('status',Requests::PURCHASED); 
+			}
+			$bookz = DB::table('books')
+            ->select('books.*')
+            ->get();
+			$magz = DB::table('magazines')
+            ->select('magazines.*')
+            ->get();
+			$otherz = DB::table('other_materials')
+            ->select('other_materials.*')
+            ->get();
+			  // dd($purchased,$all_requests_this_sem, $bookz, $magz, $otherz);
+		
+		$subjects = RequestEndorsement::join('requests', 'requests.id', '=', 'request_endorsements.request_id')
+																 ->select('request_endorsements.*','requests.*')->get();
+																
+		$checker = 0.00;
+		
+		// dd($subjects);
+
+		$search = \Request::get('subject');
+
+		$try = RequestEndorsement::with('request')->join('requests', 'requests.id', '=', 'request_endorsements.request_id')
+																->select('request_endorsements.*','requests.*')->where('subject','like', '%'.$search.'%')
+																->get(); //pagkuha sa mga nasa search bar hahaha.
+
+			
+			return view('purchasehistory.seeall',compact('user','departments','department','purchased','all','checker','search','try','subjects','bookz','magz','otherz'));
 	
 	}
 	
