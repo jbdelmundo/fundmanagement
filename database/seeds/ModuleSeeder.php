@@ -15,6 +15,18 @@ class ModuleSeeder extends Seeder
         //
 		$modules = [
         	[
+        		'module' => 'Collection',
+        	],
+        	[
+        		'module' => 'Endorsement',
+        	],
+        	[
+        		'module' => 'Requests',
+        	],
+        	[
+        		'module' => 'Approval',
+        	],
+        	[
         		'module' => 'User Management',
         	],
         	[
