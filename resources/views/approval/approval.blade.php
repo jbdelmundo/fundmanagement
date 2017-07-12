@@ -1,22 +1,16 @@
 
 @extends('app')
-
 @section('content')
-
-
-
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">Endorsements for Approval of {{$department->short_name}}</h1>
 	</div>
 </div>
-
 @if(\Auth::user()->isLibrarian())
     @include('layouts.department_dropdowns')
 @else
     \Auth.user()->department->short_name();
 @endif    
-
 <div class="row">
 @include('layouts.errors')
 
@@ -123,14 +117,4 @@
         </div>
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
 @endsection

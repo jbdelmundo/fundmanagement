@@ -35,8 +35,6 @@ Add this:
 </div>
 
 <div class="panel">
-	
-
 		@include('layouts.errors')
 		
 		<?php
@@ -48,12 +46,6 @@ Add this:
 		    <div class = "col-sm-4" style="font-size:20px">
 				{{$sem['short_name']}}
 			</div>		
-        @endforeach
-        
-        
-  			
-		
-	
+        @endforeach	
 </div>
-
 @endsection

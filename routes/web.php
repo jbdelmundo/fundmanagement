@@ -48,3 +48,6 @@ Route::get('/switch_active_aysem/{id}','SessionController@switch_active_sem');
 
 Route::get('/semestermanagement', 'SemesterManagementController@index');
 Route::post('/semestermanagement', 'SemesterManagementController@create');
+
+Route::get('/usagestatistics/encode', 'UsageStatisticsController@encode');
+Route::post('/usagestatistics/encode/{id}', 'UsageStatisticsController@gotoform');
