@@ -28,7 +28,7 @@ class CreateUsagestatisticsTable extends Migration
             $table->unsignedInteger('department_id');
             $table->unsignedInteger('status_id');
             $table->integer('month');
-            $table->date('year'); 
+            $table->integer('year'); 
             $table->integer('usage');
            
            
