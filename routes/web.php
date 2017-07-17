@@ -50,6 +50,14 @@ Route::get('/purchasehistory/all', 'PurchaseHistoryController@seeall')->middlewa
 Route::get('/refunds', 'RefundsController@index')->middleware('permit:8');
 Route::post('/refunds', 'RefundsController@create')->middleware('permit:8');
 
+
 Route::get('/module_permissions', 'ModulePermissionsController@index')->middleware('permit:9');
 Route::get('/module_permissions/{id}', 'ModulePermissionsController@switch_active_user')->middleware('permit:9');
 Route::post('/module_permissions', 'ModulePermissionsController@create')->middleware('permit:9');
+
+Route::get('/usagestatistics/encode', 'UsageStatisticsController@encode');
+Route::post('/usagestatistics/encode/{id}', 'UsageStatisticsController@gotoform');
+
+Route::get('/usagestatistics/encode/{id}','UsageStatisticsController@gotoform');
+Route::post('/usagestatistics/index/{id}', 'UsageStatisticsController@submitform');
+

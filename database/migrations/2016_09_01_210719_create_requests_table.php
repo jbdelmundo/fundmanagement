@@ -27,7 +27,8 @@ class CreateRequestsTable extends Migration
             $table->unsignedInteger('status')->default(0);
             $table->string('pr_number')->nullable();
             $table->unsignedInteger('item_id')->nullable();
-
+            
+            
             $table->foreign('department_id')
                 ->references('id')->on('departments')
                 ->onUpdate('cascade');
