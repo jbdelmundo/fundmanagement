@@ -101,7 +101,7 @@ class UsageStatisticsController extends Controller
 
        			$new_entry = ['eresource_id'=>$eresource['id'],'request_id'=>$eresource['request_id'],'department_id'=>$eresource_request['department_id'],'status_id'=>4,'month'=>$month_ctr,'year'=>$current_year,'usage'=>$stats[$j]];
 				
-       			//UsageStatistics::create($new_entry);
+       			UsageStatistics::create($new_entry);
 
 				$diff = $diff-1;
 				$month_ctr=$month_ctr+1;
