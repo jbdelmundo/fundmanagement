@@ -34,11 +34,7 @@
 				<td>{{ $list_item['publisher'] }}	</td>
 				<td>{{ $list_item['startdate'] }}	</td>
 				<td>{{ $list_item['enddate'] }}	</td>
-				<td> 
-					{{ Form::open(['url' => 'usagestatistics/encode/'.$list_item['id'] , 'class' => 'form-horizontal', 'method' => 'POST']) }}
-						{!! Form::hidden('id', $list_item['id']) !!}	
-					<input type="hidden" name="_token"  value="{{ csrf_token() }}" ">
-					{{ Form::submit('Go To Form',  ['class'=>'btn btn-success', 'id'=>'btn_approve_']) }}
+				<td> <a href = "{{url('usagestatistics/encode').'/'.$list_item['id']}}" class="btn btn-info" role="button">Go to Form </a>
 				</td>
 			</tr>	
 			@endforeach

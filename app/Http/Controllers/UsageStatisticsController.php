@@ -16,7 +16,7 @@ use App\UsageStatistics;
 class UsageStatisticsController extends Controller
 {
     public function encode(Request $request)
-    {
+    {	
     	$user = Auth::user(); //fetch credentials
 
         if(is_null($user)){ //if not logged in
@@ -50,6 +50,9 @@ class UsageStatisticsController extends Controller
 
     public function gotoform(Request $request,$id)
     {
+    	$id2 = $request->id;
+
+
     	$user = Auth::user(); //fetch credentials
 
         if(is_null($user)){ //if not logged in
@@ -63,11 +66,13 @@ class UsageStatisticsController extends Controller
 			$department = Department::find($user->department_id);
 		}//end if
 
-    	$eresource = Eresource::Find($id);
+    	$eresource = Eresource::Find($id2);
     	return view('usagestatistics.form',compact('eresource'));
     }//end function
 
     public function submitform(Request $request,$id){
+        $id2 = $request->id;
+
         $stats = $request->all();
         $stats_temp=array_slice($stats,1); //returns usage stats per month
         $stats=array();
@@ -75,7 +80,7 @@ class UsageStatisticsController extends Controller
         	$stats[]=$stat;
         }//end for
 
-        $eresource = Eresource::Find($id);
+        $eresource = Eresource::Find($id2);
         $eresource_request = Requests::Find($eresource['request_id']);
         
         $year_arr = session('year_arr');
@@ -99,7 +104,7 @@ class UsageStatisticsController extends Controller
 					break;
 				}//end if
 
-       			$new_entry = ['eresource_id'=>$eresource['id'],'request_id'=>$eresource['request_id'],'department_id'=>$eresource_request['department_id'],'status_id'=>4,'month'=>$month_ctr,'year'=>$current_year,'usage'=>$stats[$j]];
+       			$new_entry = ['eresource_id'=>$eresource['id2'],'request_id'=>$eresource['request_id'],'department_id'=>$eresource_request['department_id'],'status_id'=>4,'month'=>$month_ctr,'year'=>$current_year,'usage'=>$stats[$j]];
 				
        			UsageStatistics::create($new_entry);
 
