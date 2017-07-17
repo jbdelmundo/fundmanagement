@@ -45,5 +45,8 @@ Route::post('/approval', 'ApprovalController@create');
 Route::get('/usermanagement', 'UserManagementController@index');
 Route::post('/usermanagement', 'UserManagementController@store');
 
+Route::get('/usagestatistics/show', 'UsageStatisticsController@show');
+Route::post('/usagestatistics/show/', 'UsageStatisticsController@buildChart');
+
 Route::get('/switch_active_dept/{id}','SessionController@switch_active_dept');
 Route::get('/switch_user/{id}', 'SessionController@switch_user');

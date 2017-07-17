@@ -169,12 +169,13 @@ class RequestsController extends Controller
         //insert into individual tables
         
         $params = $request->all();
+
         $params['total_quote_price'] = 0;
         $params['total_bid_price'] = 0;
-        // dd($params);
+        
         $request_obj = Requests::create($params);
         $params['request_id'] = $request_obj->id;
-
+        //dd($params);
         switch($category_id){
 
             case 'B':   //Books
