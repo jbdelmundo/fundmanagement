@@ -4,9 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Auth;
-
 use Mail;
-use App\User;
+
 use App\Module;
 use App\ModuleUser;
 
@@ -81,19 +80,22 @@ class ModulePermissionsController extends Controller
 			$module_user = ModuleUser::create($module);
 			$module_user->save();
 		}
-        
-		$users = User::where('department_id',1)->get()->toArray();
 		
-		foreach($users as $user){
-			
-			$message = 'Permitted modules for your account (username: '. $user['username'] .') has been changed.';
-			$user['message'] = $message;
-			
-			Mail::send('reminder', ['user' => $user], function ($m) use ($user) {
-				$m->to($user['email'])->subject('Module Permissionss');
-			});
+		$request_description = [];
+		foreach($module_permission as $key => $module){
+			$request_description[$key+1] = Module::find($module['module_id'])->module;
 		}
 		
+		$user = \App\User::find($user_id);
+		
+		$message = 'Library Fund Management System account '.Auth::user()->username .' updated the permitted modules for your account '. $user->username .'. Listed below are your current modules:';
+		$user->message = $message;
+		$user->request = $request_description;
+		if($user->email){
+			Mail::send('reminder', ['user' => $user], function ($m) use ($user) {
+				$m->to($user->email)->subject('Module Permissions');
+			});
+        }
         return redirect('module_permissions/'.$user_id);
     }
 }
