@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
 
+use Mail;
+use App\User;
 use App\Module;
 use App\ModuleUser;
 
@@ -80,6 +82,18 @@ class ModulePermissionsController extends Controller
 			$module_user->save();
 		}
         
+		$users = User::where('department_id',1)->get()->toArray();
+		
+		foreach($users as $user){
+			
+			$message = 'Permitted modules for your account (username: '. $user['username'] .') has been changed.';
+			$user['message'] = $message;
+			
+			Mail::send('reminder', ['user' => $user], function ($m) use ($user) {
+				$m->to($user['email'])->subject('Module Permissionss');
+			});
+		}
+		
         return redirect('module_permissions/'.$user_id);
     }
 }
