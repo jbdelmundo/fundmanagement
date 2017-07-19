@@ -31,21 +31,23 @@ class ApprovalController extends Controller
     	$aysem = Aysem::current();
 		
 		$departments = Department::all();
+        $dept = $user->department()->first();
+        $department = $dept;
         $all_requests_this_sem = [
-            Requests::BOOK =>   	$department->bookRequestsForSem($aysem),
-            Requests::EBOOK =>   	$department->ebookRequestsForSem($aysem),
-            Requests::JOURNAL =>   	$department->journalRequestsForSem($aysem),
-            Requests::MAGAZINE =>   $department->magazineRequestsForSem($aysem),
-            Requests::ERESOURCE =>  $department->eresourceRequestsForSem($aysem),
-            Requests::SUPPLIES =>   $department->suppliesRequestsForSem($aysem),
-            Requests::EQUIPMENT =>  $department->equipmentRequestsForSem($aysem),
-            Requests::OTHER =>   	$department->otherRequestsForSem($aysem)
+            Requests::BOOK =>   	$dept->bookRequestsForSem($aysem),
+            Requests::EBOOK =>   	$dept->ebookRequestsForSem($aysem),
+            Requests::JOURNAL =>   	$dept->journalRequestsForSem($aysem),
+            Requests::MAGAZINE =>   $dept->magazineRequestsForSem($aysem),
+            Requests::ERESOURCE =>  $dept->eresourceRequestsForSem($aysem),
+            Requests::SUPPLIES =>   $dept->suppliesRequestsForSem($aysem),
+            Requests::EQUIPMENT =>  $dept->equipmentRequestsForSem($aysem),
+            Requests::OTHER =>   	$dept->otherRequestsForSem($aysem)
         ];
         $endorsements = [];
         foreach ($all_requests_this_sem as $key => $value) {
             $endorsements[$key] = $value->where('status',Requests::ENDORSED)->where('department_id',$active_department_id);   //filter only those that are endorsed
         }
-		// dd($endorsements);
+		
     	return view('approval.index',compact('user','departments','department','aysem','endorsements','active_department_id'
             ));
     }

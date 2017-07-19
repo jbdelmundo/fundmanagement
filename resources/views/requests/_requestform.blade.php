@@ -30,5 +30,5 @@
 				</table>
 				{{ Form::submit('Create collection',['class'=> 'form btn-primary btn']) }}
 	    		
-			{!! Form::close() !!}
+				{!! Form::close() !!}
 		  </div>

@@ -13,6 +13,8 @@
 
 @if(\Auth::user()->isLibrarian())
     @include('_active_dept_selector')
+@else
+    \Auth::user()->department->short_name()
 @endif
 
 
