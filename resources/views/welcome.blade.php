@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-
+	@if(Auth::user())
+		<script> window.location.href = "dashboard"; </script>
+	@endif
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
