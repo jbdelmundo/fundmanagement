@@ -84,15 +84,16 @@ class Aysem extends Model
     	$sem = $aysem%10;
         $year = $aysem/10 ;
 
-    	if($sem == '1'){
+    	if($sem == 1){
     		$name .= '1st Semester AY';
-    	}elseif($sem == '2'){
+    	}elseif($sem == 2){
     		$name .= '2nd Semester AY';
     	}else{
     		$name .= 'Mid Semester AY';
     	}
 
-    	$name .= ' ' . $year + '-' .($year+1);
+    	$name .= ' ' . $year . '-' .intval($year+1);
+
     	return $name;
     }
 
