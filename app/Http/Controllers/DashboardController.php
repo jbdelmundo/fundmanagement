@@ -1,25 +1,19 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use Illuminate\Support\Facades\Auth;
-
 use App\Aysem;
 use App\Department;
 use App\AccountTransactions;
 use App\Account;
 use Illuminate\Support\Facades\DB;
-
 class DashboardController extends Controller
 {
     public function __construct()
     {
         // $this->middleware('auth');
     }
-
     /**
      * Show the application dashboard.
      *
@@ -44,7 +38,6 @@ class DashboardController extends Controller
         ];
         $total_balance = 2700;
         /*                     */
-
         $user = Auth::user();
         if(is_null($user)){
 			return redirect('');			
@@ -56,13 +49,11 @@ class DashboardController extends Controller
 		else{
 			$department = Department::find($user->department_id);
 		}
-
 		
 		$departments = Department::all();
         
 		$records_to_fetch = 100;
         $current_aysem = Aysem::current();
-
         $beginning_balances = array_column(Account::find($department->account($current_aysem))->toArray(),'begining_balance');
         foreach ($beginning_balances as $key => $beginning_balance) {
 			if($beginning_balances[$key] == 0) {
@@ -75,7 +66,6 @@ class DashboardController extends Controller
 							
         $account_id = $department->account($current_aysem)                                
 							->id;
-
 		
 		$transactionss = AccountTransactions::where('department_id',$department->id)
 											-> where('account_id',$account_id)
@@ -100,12 +90,9 @@ class DashboardController extends Controller
 		
                 
 	
-
-
                 
        return view('dashboard.dashboard',compact('active_department_id','departments','beginning_balance','current_balance','transactions', 'department', 'user','current_aysem', 'created_at'));
        
     }
-
     
 }

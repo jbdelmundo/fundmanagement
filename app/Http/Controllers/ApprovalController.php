@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Auth;
+use Mail;
 use App\Aysem;
 use App\Department;
 use App\Requests;
@@ -25,32 +26,87 @@ class ApprovalController extends Controller
 			$department = Department::find($active_department_id);
 		}
 		else{
+			$active_department_id = $user->department_id;
 			$department = Department::find($user->department_id);
 		}
     	$aysem = Aysem::current();
 		
 		$departments = Department::all();
+        $dept = $department;
         $all_requests_this_sem = [
-            Requests::BOOK =>   	$department->bookRequestsForSem($aysem),
-            Requests::EBOOK =>   	$department->ebookRequestsForSem($aysem),
-            Requests::JOURNAL =>   	$department->journalRequestsForSem($aysem),
-            Requests::MAGAZINE =>   $department->magazineRequestsForSem($aysem),
-            Requests::ERESOURCE =>  $department->eresourceRequestsForSem($aysem),
-            Requests::SUPPLIES =>   $department->suppliesRequestsForSem($aysem),
-            Requests::EQUIPMENT =>  $department->equipmentRequestsForSem($aysem),
-            Requests::OTHER =>   	$department->otherRequestsForSem($aysem)
+            Requests::BOOK =>   	$dept->bookRequestsForSem($aysem),
+            Requests::EBOOK =>   	$dept->ebookRequestsForSem($aysem),
+            Requests::JOURNAL =>   	$dept->journalRequestsForSem($aysem),
+            Requests::MAGAZINE =>   $dept->magazineRequestsForSem($aysem),
+            Requests::ERESOURCE =>  $dept->eresourceRequestsForSem($aysem),
+            Requests::SUPPLIES =>   $dept->suppliesRequestsForSem($aysem),
+            Requests::EQUIPMENT =>  $dept->equipmentRequestsForSem($aysem),
+            Requests::OTHER =>   	$dept->otherRequestsForSem($aysem)
         ];
         $endorsements = [];
         foreach ($all_requests_this_sem as $key => $value) {
             $endorsements[$key] = $value->where('status',Requests::ENDORSED)->where('department_id',$active_department_id);   //filter only those that are endorsed
         }
-		// dd($endorsements);
+		
     	return view('approval.index',compact('user','departments','department','aysem','endorsements','active_department_id'
             ));
     }
 	
     function create(Request $formrequest){
+		
         $request = Requests::findOrFail($formrequest->request_id);
+		$category = $request->category_id;
+		switch($category){
+			case 'B':
+				$category_name = 'book';
+				$item = Book::find($request->item_id)->title;
+				break;
+			case 'E':
+				$category_name = 'eBook';
+				$item = Book::find($request->item_id)->title;
+				break;
+			case 'J':
+				$category_name = 'journal';
+				$item = Magazine::find($request->item_id)->title;
+				break;
+			case 'M':
+				$category_name = 'magazine';
+				$item = Magazine::find($request->item_id)->title;
+				break;
+			case 'R':
+				$category_name = 'eResource';
+				$item = Eresource::find($request->item_id)->title;
+				break;
+			case 'Q':
+				$category_name = 'equipment';
+				$item = OtherMaterial::find($request->item_id)->description;
+				break;
+			case 'S':
+				$category_name = 'supply';
+				$item = OtherMaterial::find($request->item_id)->description;
+				break;
+			case 'O':
+				$category_name = 'material';
+				$item = OtherMaterial::find($request->item_id)->description;
+				break;
+		}
+		
+		$users = \App\User::where('department_id',$request->department_id)->get()->toArray();
+		
+			foreach($users as $user){
+				
+				$message = 'A new '.$category_name.' endorsement was approved by the Library Fund Management System account '.Auth::user()->username.' for the '.\App\Department::find($request->department_id)->full_name.'.';
+				$user['message'] = $message;
+				$user['request'] = ['Title/Descrition' => $item,
+									'Date Requested' => $request->created_at->format('d-M-Y'),
+									'Recommended By' => $request->recommendedby];
+				if($user['email']){
+					Mail::send('reminder', ['user' => $user], function ($m) use ($user) {
+						$m->to($user['email'])->subject('Request Approval');
+					});
+				}
+			}
+			
         $request_endorsement_id = RequestEndorsement::where('request_id',$formrequest->request_id)->get()->toArray()[0]['id'];
         $request_endorsement = RequestEndorsement::findOrFail($request_endorsement_id);
         //update request status to for purchase

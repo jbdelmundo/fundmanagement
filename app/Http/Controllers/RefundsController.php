@@ -26,10 +26,12 @@ class RefundsController extends Controller
 
         if($user->isLibrarian()){
 			$department_id = $request->session()->get('active_dept_id',1 ) ;    
-			$sem = $request->session()->get('active_aysem',1 );
+			$sem = $request->session()->get('active_aysem',\App\Aysem::current()->aysem );
 			$aysem = Aysem::where('aysem',$sem)->first();
         }else{
-            $department_id = $user->department->id;
+			$sem = $request->session()->get('active_aysem',\App\Aysem::current()->aysem );
+			$aysem = Aysem::where('aysem',$sem)->first();
+			$department_id = $user->department->id;
         }
         $department = Department::find($department_id);
         $dept = $department; 
@@ -50,7 +52,13 @@ class RefundsController extends Controller
         foreach ($all_requests_this_sem as $key => $value) {
             $purchased[$key] = $value->where('status',Requests::PURCHASED);   //filter only those that are endorsed
         }
-    	return view('refunds.index',compact('user','departments','department','aysem', 'requests_this_sem','purchased'));
+		
+        $refunded = [];
+        foreach ($all_requests_this_sem as $key => $value) {
+            $refunded[$key] = $value->where('status',Requests::REFUNDED);   //filter only those that are endorsed
+        }
+    	
+    	return view('refunds.index',compact('user','departments','department','aysem', 'requests_this_sem','purchased','refunded'));
     }
 
 	function create(Request $formrequest){

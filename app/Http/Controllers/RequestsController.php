@@ -9,7 +9,7 @@ use App\Aysem;
 use App\Department;
 use App\Requests;
 
-
+use Mail;
 use App\Book;
 use App\Magazine;
 use App\Eresource;
@@ -151,7 +151,67 @@ class RequestsController extends Controller
 
     function create(Request $request){
 
-        
+		$request_description = [];
+		foreach($request->all() as $key => $value){
+			if($key == 'description'){
+				$request_description['Description'] = $value;
+			}
+			else if($key == 'category_id'){
+				if($value == 'B')	$request_description['Category'] = 'Books';
+				else if($value == 'E')	$request_description['Category'] = 'eBooks';
+				else if($value == 'J')	$request_description['Category'] = 'Journals';
+				else if($value == 'M')	$request_description['Category'] = 'Magazines';
+				else if($value == 'R')	$request_description['Category'] = 'eResources';
+				else if($value == 'Q')	$request_description['Category'] = 'Equipment';
+				else if($value == 'S')	$request_description['Category'] = 'Supplies';
+				else if($value == 'O')	$request_description['Category'] = 'Other Materials';
+			}
+			else if($key == 'unit_quote_price'){
+				$request_description['Unit Quote Price'] = $value;
+			}
+			else if($key == 'remarks'){
+				$request_description['Remarks'] = $value;
+			}
+			else if($key == 'title'){
+				$request_description['Title'] = $value;
+			}
+			else if($key == 'author'){
+				$request_description['Author'] = $value;
+			}
+			else if($key == 'publisher'){
+				$request_description['Publisher'] = $value;
+			}
+			else if($key == 'year'){
+				$request_description['Year'] = $value;
+			}
+			else if($key == 'edition'){
+				$request_description['Edition'] = $value;
+			}
+			else if($key == 'copyright_date'){
+				$request_description['Copyright Date'] = $value;
+			}
+			else if($key == 'publisher'){
+				$request_description['Publisher'] = $value;
+			}
+			else if($key == 'recommendedby'){
+				$request_description['Recommended By'] = $value;
+			}
+		}
+		
+		$users = \App\User::where('department_id',$request->department_id)->get()->toArray();
+		
+		foreach($users as $user){
+			
+			$message = 'New Request from the Library Fund Management System account '. Auth::user()->username .' for the '.\App\Department::find($request->department_id)->full_name.'.';
+			$user['message'] = $message;
+			$user['request'] = $request_description;
+			if($user['email']){
+				Mail::send('reminder', ['user' => $user], function ($m) use ($user) {
+					$m->to($user['email'])->subject('New Request');
+				});
+			}
+		}
+		       
         // $request->is_reserved = isset($request->is_reserved); 
         // dd($request);
         // abort(403,'Record not found');

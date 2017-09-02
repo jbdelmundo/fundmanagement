@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Mail;
+use Auth;
 use App\Http\Requests;
 use App\Aysem;
 use App\Collection;
@@ -62,6 +63,18 @@ class CollectionController extends Controller
     */
     function store(Request $request){
 
+		$users = \App\User::all();
+		
+		$message = 'Library Fund Management System account '. Auth::user()->username .' made a new collection for '. Aysem::current()->short_name .'.';
+		foreach($users as $user){
+			$user->message = $message;
+			$user->request = ['Collected Amount from Main Library' => $request->amount . ' PHP'];
+			if($user->email){
+				Mail::send('reminder', ['user' => $user], function ($m) use ($user) {
+					$m->to($user->email)->subject('New Collection');
+				});
+			}
+		}
     	$aysem = Aysem::current();
     	$amount = floatval($request->amount) ;  	
 
