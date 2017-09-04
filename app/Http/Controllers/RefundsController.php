@@ -50,7 +50,7 @@ class RefundsController extends Controller
 
         $purchased = [];
         foreach ($all_requests_this_sem as $key => $value) {
-            $purchased[$key] = $value->where('status',Requests::PURCHASED);   //filter only those that are endorsed
+            $purchased[$key] = $value->where('status',Requests::APPROVED);   //filter only those that are deducted
         }
 		
         $refunded = [];
@@ -64,7 +64,9 @@ class RefundsController extends Controller
 	function create(Request $formrequest){
         $request = Requests::findOrFail($formrequest->request_id);
 		
-		$validation_rules = ['refund'=>'required|min:1'];
+        $maxrefund = $request->total_quote_price;
+
+		$validation_rules = ['refund'=>"required|min:1|max:$maxrefund|numeric"];
 		$this->validate($formrequest,$validation_rules);
 		
 		
@@ -87,6 +89,8 @@ class RefundsController extends Controller
 		$account_transactions = \App\AccountTransactions::create($transaction);		
         $account_transactions->save();
         
+
+        session()->flash('alert-success', 'Item is redunded and credited back to your account!');
         return redirect('refunds');
     }
 }

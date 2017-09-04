@@ -9,7 +9,7 @@ class Requests extends Model
     // based on TransactionTypes table
     const RECORDED = 0;                 //recorded and for approval of LFC
     const ENDORSED = 1;                 //for approval of chair
-    const APPROVED = 2;                 //approved by chair, credited to balance, awaiting PR
+    const APPROVED = 2;                 //approved by chair, credited to balance, awaiting PR  (CURRENTLY UP TO THIS POINT ONLY)
     const FOR_PURCHASE = 3;             //PR issued
     const PURCHASED = 4;                //Awaiting delivery
     const DELIVERED = 5;

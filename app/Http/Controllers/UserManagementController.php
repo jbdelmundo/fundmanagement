@@ -19,7 +19,7 @@ class UserManagementController extends Controller
 {
 
     
-    public function __construct()
+     public function __construct()
     {
         // $this->middleware('auth');
     }
@@ -29,30 +29,53 @@ class UserManagementController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        
+      
         $user = Auth::user();
-        $active_user_id = $user->id;
+      
 
-        $selected_user_id = $request->session()->get('selected_user', $active_user_id);
-
-        $all_users = DB::table('users')->get();
+        $selected_user_id = session()->get('active_user', $user->id);
+        $current_user = User::findOrFail($selected_user_id); 
+        
         $departments = Department::all();
         $roles = DB::table('user_roles')->get();
-        $def_user = DB::table('users')->where('id', $selected_user_id)->first(); //this is a whole row from db...
-       return view('usermanagement.usermanagement',compact('active_user_id','roles','all_users', 'departments', 'def_user', 'selected_user_id'));
+        // dd($selected_user_id);
+        
+
+       return view('usermanagement.usermanagement',compact('active_user_id','roles', 'departments', 'current_user'));
     }
 
-    function store(Request $request){        
+    function store(Request $request){
+        
+        //validate
+        $validation_rules = ['username'=>"required|min:1|unique:users,username"];
+        $this->validate($request,$validation_rules);
+
+
         $update = User::findOrFail($request->selected_user);
         $update->username = $request->username;
-        $update->password = Hash::make($request->pw);
+        // $update->password = Hash::make($request->pw);
         $update->email = $request->email;
         $update->userrole_id = $request->role_selector;
         $update->department_id = $request->dept_selector;
         $update->save();
 
+        session()->flash('alert-success','User info updated.');
+        return redirect()->back();
+   }
+
+   function changepassword(Request $request){
+
+        $validation_rules = ['password'=>"required",'confirm_password'=>'required|same:password'];
+        $this->validate($request,$validation_rules);
+
+
+        $update = User::findOrFail($request->selected_user);
+        $update->password = Hash::make($request->password);
+        $update->save();
+        
+        session()->flash('alert-success','Password updated.');
         return redirect()->back();
    }
 }

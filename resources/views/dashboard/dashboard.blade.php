@@ -3,7 +3,14 @@
 
 @section('content')
 
-
+<?php 
+    $types = [
+            'C' => 'COLLECTION',
+            'P' => 'PURCHASE',
+            'A' => 'ADJUSTMENT',
+            'R' => 'REFUND',
+        ];
+?>
 	
 <div class="row">
 	<div class="col-lg-12">
@@ -13,22 +20,22 @@
 
 @if(\Auth::user()->isLibrarian())
     @include('_active_dept_selector')
-@else
-    \Auth::user()->department->short_name()
-@endif
 
+@endif
+    @include('_active_sem_selector',['active_aysem'=>$aysem->aysem])
 
 <div class="panel-body">
-    <h4>Beginning balance:{{$beginning_balance}}</h4> 
-    <h4>Current Balance: {{$current_balance}}</h4>
+    <h4>Beginning balance:{{ number_format( $beginning_balance ,  2 ,  "." ,  "," ) }}</h4> 
+    <h4>Current Balance: {{ number_format( $current_balance ,  2 ,  "." ,  "," ) }}</h4>
 </div>
+
 <div class="row">
-@include('layouts.errors')
+@include('layouts._alerts')
 
 	<div class="col-lg-12">
 		<div class="panel panel-default">
 		    <div class="panel-heading">
-				Transactions  
+				Transactions for  {{ $aysem->shortName()}}
 		    </div>
 		    <div class="panel-body">
 		    <table class="table table-striped">
@@ -45,9 +52,9 @@
 				    @foreach($transactions as $key => $transaction)
                     <tr>
                         <td>{{$transaction['created_at']}}</td>
-                        <td>{{$transaction['transaction_type_id']}}</td>
-                        <td>{{$transaction['amount']}}</td>
-                        <td>{{$transaction['balance']}}</td>
+                        <td>{{$types[$transaction['transaction_type_id']]}}</td>
+                        <td>{{  number_format ( $transaction['amount'] ,  2 ,  "." ,  "," )  }}</td>
+                        <td>{{  number_format ( $transaction['balance'] ,  2 ,  "." ,  "," )  }}</td>
                     </tr>
                     @endforeach
                 </tbody> 
@@ -60,8 +67,9 @@
 
 
 
-
-
+    
+@include('requests._request_per_category')
+       
 
 
 

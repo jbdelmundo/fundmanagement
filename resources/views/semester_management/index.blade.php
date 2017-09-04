@@ -10,13 +10,40 @@
 </div>
 
 <div class="row">
-	<div class="col-lg-12">
+	<div class="col-lg-3">
 		<h3 class="page-header">
 			Current Semester: {{ $current_aysem->getShortName() }}
 		</h3>
-			{{ Form::open(['url' => 'semestermanagement' , 'class' => 'form-horizontal', 'method' => 'POST','onsubmit' => 'return confirm("are you sure ?")']) }}
-				<input type="hidden" name="_token"  value="{{ csrf_token() }}" ">
-			{{ Form::submit('New Semester',  ['class'=>'btn btn-success', 'id'=>'btn_approve_'])}}
+{{ Form::open(['url' => 'semestermanagement' , 'class' => 'form-horizontal', 'method' => 'POST']) }}
+				
+			
+
+
+			<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Move to new semester</button>
+
+<!-- Modal -->
+		<div id="myModal" class="modal fade" role="dialog">
+		  <div class="modal-dialog">
+
+		    <!-- Modal content-->
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal">&times;</button>
+		        <h4 class="modal-title">Confirm Moving to New Semester</h4>
+		      </div>
+		      <div class="modal-body">
+		        <p>This action is irreversible. Moving to a new semester will finalize all balances of each department/institute. No further transactions <strong>(request, endorsement, approval and collection adjustment )</strong> will be made during this semester.
+		        </p>
+		      </div>
+		      <div class="modal-footer">
+		        {{ Form::submit("End ".$current_aysem->getFullName(),  ['class'=>'btn btn-success', 'id'=>'btn_approve_'])}}
+		        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+		      </div>
+		    </div>
+
+		  </div>
+		</div>		<!-- Modal -->
+{{ Form::close() }}
 	</div>	
 </div>
 
@@ -35,7 +62,7 @@ Add this:
 </div>
 
 <div class="panel">
-		@include('layouts.errors')
+		@include('layouts._alerts')
 		
 		<?php
 			$existing_semesters=Aysem::all();

@@ -53,7 +53,7 @@
 			@endif
 			@if(in_array(7,$modules))
 				<li>
-					<a href="{{url('puchasehistory')}}"><i class="fa fa-calendar fa-fw"></i> Purchase History</a>
+					<a href="{{url('purchasehistory')}}"><i class="fa fa-calendar fa-fw"></i> Purchase History</a>
 				</li>
 			@endif
 			@if(in_array(8,$modules))
@@ -68,7 +68,12 @@
 			@endif
 			@if(in_array(10,$modules))
 				<li>
-					<a href="{{url('usagestatisics')}}"><i class="fa fa-bar-chart-o fa-fw"></i> EResource Usage Statistics</a>
+					<a href="{{url('usagestatistics')}}"><i class="fa fa-bar-chart-o fa-fw"></i> EResource Usage Statistics</a>
+				</li>
+			@endif
+			@if(in_array(11,$modules))
+				<li>
+					<a href="{{url('usagestatistics_encoding')}}"><i class="fa fa-bar-chart-o fa-fw"></i> Usage Statistics Encoding</a>
 				</li>
 			@endif
             

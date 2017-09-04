@@ -13,6 +13,7 @@
         @include('_active_sem_selector',['active_aysem'=>$aysem->aysem])
 
 @if(count($refunded)>0)
+	@include('layouts._alerts')
 	<div class="panel panel-primary">
 		<div class="panel-heading">
 		  Refunded Requests
@@ -22,7 +23,15 @@
 			<div class="table-responsive">
 			
 				<table class="table table-striped">
-					@if(count($refunded['B'])+count($refunded['E'])+count($refunded['M'])+count($refunded['J'])+count($refunded['R'])+count($refunded['Q'])+count($refunded['S'])+count($refunded['O']) == 0)
+					@if(
+						count($refunded['B'])+
+						count($refunded['E'])+
+						count($refunded['M'])+
+						count($refunded['J'])+
+						count($refunded['R'])+
+						count($refunded['Q'])+
+						count($refunded['S'])+
+						count($refunded['O']) == 0)
 						No Refunds
 					@else
 						<thead>
@@ -65,7 +74,7 @@
     <div class="panel-heading">
 	  	Purchases for Book, E-Books, Journals, Magazines  
     </div>
-@if(((count($purchased['B']))+(count($purchased['E']))+(count($purchased['M']))+(count($purchased['J'])))>0)
+@if(( (count($purchased['B'])) + (count($purchased['R'])) +(count($purchased['E']))+(count($purchased['M']))+(count($purchased['J'])))>0)
 <div class="panel-body">
 
 	<table class="table table-striped table-responsive">
@@ -81,14 +90,14 @@
 		<tbody>
 			@foreach($purchased as $type => $purchase)
 				@if(count($purchase) >0)
-					@if($type == 'B' || $type == 'E' || $type == 'M' || $type == 'J')
+					@if($type == 'B' || $type == 'E' || $type == 'M' || $type == 'J'|| $type == 'R')
 						@foreach($purchase as $request)
 							<tr>
 								<td>{{$request->title}}</td>
 								<td>{{$request->total_quote_price/$request->unit_quote_price}}</td>
 								<td>{{$request->total_quote_price}}</td>
 									{{ Form::open(['url' => 'refunds' , 'class' => 'form-horizontal']) }} 
-								<td>{{ Form::number('refund',1,['class'=>'form-control', 'min'=>'1']) }}</td>
+								<td>{{ Form::number('refund','',['class'=>'form-control', 'required']) }}</td>
 								<td>
 										{{ Form::hidden('request_id',$request->request_id)}}
 										{{ Form::submit('Refund',  ['class'=>'btn btn-success', 'id'=>'btn_refund_'.$request->id])}}

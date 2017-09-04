@@ -20,8 +20,8 @@ class CreateEresourcesTable extends Migration
             $table->string('title');
             $table->string('publisher');
             $table->boolean('issubscription');
-            $table->date('startdate');
-            $table->date('enddate');
+            $table->date('startdate')->default(null);
+            $table->date('enddate')->default(null);
 
             $table->timestamps();
 

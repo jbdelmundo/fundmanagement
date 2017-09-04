@@ -1,12 +1,12 @@
 <?php use \App\Requests; ?>
 
-
+@if(count($items)>0)
 <div class="panel panel-primary">
     <div class="panel-heading">
 	  {{$heading}}  
     </div>
         
-        @if(count($items)>0)
+    <div class="panel-body">    
         
     	
             <table class="table table-striped table-responsive">
@@ -34,9 +34,9 @@
                         <td> {{$item->title}}</td>
                         <td>{{$item->author}}</td>
                         <td>{{ Form::text('subject',null, 
-                                ['class'=>'form-control','id'=>'subject_'.$item->id]) }}</td>
+                                ['class'=>'form-control','id'=>'subject_'.$item->id,'required']) }}</td>
                         <td>{{ Form::number('quantity',1,
-                                ['class'=>'form-control', 'min'=>'1']) }}</td>
+                                ['class'=>'form-control', 'min'=>'1','required']) }}</td>
                         <td>{{ Form::select('is_reserved', ['0' => 'Circulation', '1' => 'Reserved'], 0, 
                                 ['class'=>'form-control'])   }}</td>
 
@@ -54,13 +54,11 @@
             </table>
             
         
-   		@else
-        <div class="panel-body">
-        	No items to show.
-        </div>
-        @endif
+   		
+     </div>  
     
 </div>
+ @endif
 
 <script type="text/javascript">
     

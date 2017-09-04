@@ -31,8 +31,8 @@ class RequestEndorsementController extends Controller
         $department = Department::find($department_id);
         $dept = $department; 
         
-        $aysem = Aysem::current();
-        
+        $aysem = $request->session()->get('active_aysem', Aysem::current()->aysem );
+        $aysem = Aysem::where('aysem',$aysem)->first();
 
         $all_requests_this_sem = [
             Requests::BOOK =>   	$dept->bookRequestsForSem($aysem),
@@ -44,6 +44,8 @@ class RequestEndorsementController extends Controller
             Requests::EQUIPMENT =>  $dept->equipmentRequestsForSem($aysem),
             Requests::OTHER =>   	$dept->otherRequestsForSem($aysem)
         ];
+
+
 
         $requests_this_sem = [];
         foreach ($all_requests_this_sem as $key => $value) {
@@ -62,7 +64,7 @@ class RequestEndorsementController extends Controller
         
 
         $request = Requests::findOrFail($formrequest->request_id);
-
+        
         $category = $request->category_id;
         
 
@@ -76,12 +78,16 @@ class RequestEndorsementController extends Controller
                 break;
 
             case Requests::EBOOK:
-                $validation_rules = ['subject'=>'required' , 'quantity'=>'required|min:1'];
+
+                $validation_rules = ['subject'=>'required','quantity'=>'required|min:1' ];
                 $this->validate($formrequest,$validation_rules);
                 $request_endorsement = \App\RequestEndorsement::create($formrequest->toArray());                           
 
                 break;
-            
+
+            // case Requests::EQUIPMENT:
+            // case Requests::SUPPLIES:
+            // case Requests::OTHER:
             default:
                 
                 $validation_rules = ['quantity'=>'required|min:1'];
@@ -151,7 +157,7 @@ class RequestEndorsementController extends Controller
         $request->total_quote_price = $formrequest->quantity * $request->unit_quote_price;
         $request->save();
 
-        
+        session()->flash('alert-success', 'Request endorsed and waiting for approval!');
         return redirect('endorsement');
     }
 	

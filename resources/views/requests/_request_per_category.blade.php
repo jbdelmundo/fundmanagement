@@ -1,4 +1,13 @@
-<?php use \App\Requests; ?>
+<?php use \App\Requests;
+use Illuminate\Support\Facades\DB;
+
+    $stats =DB::table('request_statuses')->get()->toArray();
+    $statuses = [];
+    foreach ($stats as  $value) {
+        $statuses[$value->id] = $value->status;
+    }
+    
+?>
 <?php 
     $items = $requests_this_sem[Requests::BOOK] ;
  ?>
@@ -19,6 +28,7 @@
                         <th>Publisher</th>
                         <th>Year</th>
                         <th>Unit price</th>
+                        <th>Status</th>
                        
                      
                     </tr>
@@ -30,7 +40,8 @@
                         <td>{{$item->author}}</td>
                         <td>{{$item->publisher}}</td>
                         <td>{{$item->copyright_date}}</td>
-                        <td>{{$item->unit_quote_price}}</td>                
+                        <td>{{$item->unit_quote_price}}</td> 
+                        <td>{{ $statuses[$item->status] }}</td>               
                     </tr>
                     @endforeach
                     
@@ -66,6 +77,7 @@
                         <th>Publisher</th>
                         <th>Year</th>
                         <th>Unit price</th>
+                        <th>Status</th>
                        
                      
                     </tr>
@@ -77,7 +89,8 @@
                         <td>{{$item->author}}</td>
                         <td>{{$item->publisher}}</td>
                         <td>{{$item->copyright_date}}</td>
-                        <td>{{$item->unit_quote_price}}</td>                
+                        <td>{{$item->unit_quote_price}}</td> 
+                        <td>{{ $statuses[$item->status] }}</td>                
                     </tr>
                     @endforeach
                     
@@ -109,6 +122,7 @@
                         <th>Author</th>
                         <th>Publisher</th>
                         <th>Unit price</th>
+                        <th>Status</th>
                         
                     </tr>
                 </thead>
@@ -119,6 +133,7 @@
                         <td>{{$item->author}}</td>
                         <td>{{$item->publisher}}</td>
                         <td>{{$item->unit_quote_price}}</td>
+                        <td>{{ $statuses[$item->status] }}</td> 
                        
                     </tr>
                     @endforeach
@@ -149,6 +164,7 @@
                         <th>Author</th>
                         <th>Publisher</th>
                         <th>Unit price</th>
+                        <th>Status</th>
                         
                     </tr>
                 </thead>
@@ -159,7 +175,7 @@
                         <td>{{$item->author}}</td>
                         <td>{{$item->publisher}}</td>
                         <td>{{$item->unit_quote_price}}</td>
-                       
+                       <td>{{ $statuses[$item->status] }}</td> 
                     </tr>
                     @endforeach
                     
@@ -191,6 +207,7 @@
                         <th>Title</th>
                         <th>Publisher</th>
                         <th>Unit price</th>
+                        <th>Status</th>
                         
                     </tr>
                 </thead>
@@ -200,6 +217,7 @@
                         <td>{{$item->title}}</td>
                         <td>{{$item->publisher}}</td>
                         <td>{{$item->unit_quote_price}}</td>
+                        <td>{{ $statuses[$item->status] }}</td> 
                        
                     </tr>
                     @endforeach
@@ -233,6 +251,7 @@
                         <th>Description</th>
                         <th>Remarks</th>
                         <th>Unit price</th>
+                        <th>Status</th>
                         
                     </tr>
                 </thead>
@@ -242,6 +261,7 @@
                         <td>{{$item->description}}</td>
                         <td>{{$item->remarks}}</td>
                         <td>{{$item->unit_quote_price}}</td>
+                        <td>{{ $statuses[$item->status] }}</td> 
                        
                     </tr>
                     @endforeach
@@ -274,6 +294,7 @@
                         <th>Description</th>
                         <th>Remarks</th>
                         <th>Unit price</th>
+                        <th>Status</th>
                         
                     </tr>
                 </thead>
@@ -283,6 +304,7 @@
                         <td>{{$item->description}}</td>
                         <td>{{$item->remarks}}</td>
                         <td>{{$item->unit_quote_price}}</td>
+                        <td>{{ $statuses[$item->status] }}</td> 
                        
                     </tr>
                     @endforeach
@@ -315,6 +337,7 @@
                         <th>Description</th>
                         <th>Remarks</th>
                         <th>Unit price</th>
+                        <th>Status</th>
                         
                     </tr>
                 </thead>
@@ -324,6 +347,7 @@
                         <td>{{$item->description}}</td>
                         <td>{{$item->remarks}}</td>
                         <td>{{$item->unit_quote_price}}</td>
+                        <td>{{ $statuses[$item->status] }}</td> 
                        
                     </tr>
                     @endforeach

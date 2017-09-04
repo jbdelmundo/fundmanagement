@@ -7,6 +7,7 @@ use App\Aysem;
 use App\Department;
 use App\AccountTransactions;
 use App\Account;
+
 use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
@@ -22,21 +23,21 @@ class DashboardController extends Controller
     public function index(Request $request)
     {
         /* Hardcoded variables */
-        $beginning_balance = 1000;
-        $current_balance = 2700;
-        $transactions = [ 
-            ["created_at"=>'1/02/17',
-             "transaction_type"=>'Collection',
-             "amount"=>2000,
-             "balance"=>3000
-            ],
-            ["created_at"=>'1/03/17',
-             "transaction_type"=>'Purchase',
-             "amount"=>300,
-             "balance"=>2700
-            ]
-        ];
-        $total_balance = 2700;
+        // $beginning_balance = 1002200;
+        // $current_balance = 2700;
+        // $transactions = [ 
+        //     ["created_at"=>'1/02/17',
+        //      "transaction_type"=>'Collection',
+        //      "amount"=>2000,
+        //      "balance"=>3000
+        //     ],
+        //     ["created_at"=>'1/03/17',
+        //      "transaction_type"=>'Purchase',
+        //      "amount"=>300,
+        //      "balance"=>2700
+        //     ]
+        // ];
+        // $total_balance = 2700;
         /*                     */
         $user = Auth::user();
         if(is_null($user)){
@@ -45,24 +46,28 @@ class DashboardController extends Controller
 		elseif(Auth::user()->isLibrarian()){
 			$active_department_id = $request->session()->get('active_dept_id',1) ; 
 			$department = Department::find($active_department_id);
+            $departments = Department::all();           // For dropdown
 		}
 		else{
 			$department = Department::find($user->department_id);
 		}
 		
-		$departments = Department::all();
+		
         
 		$records_to_fetch = 100;
-        $current_aysem = Aysem::current();
-        $beginning_balances = array_column(Account::find($department->account($current_aysem))->toArray(),'begining_balance');
-        foreach ($beginning_balances as $key => $beginning_balance) {
-			if($beginning_balances[$key] == 0) {
-				unset($beginning_balances[$key]);
-			}
-		}
+        $current_aysem = $request->session()->get('active_aysem',Aysem::current()->aysem);
+        $current_aysem = Aysem::where('aysem',$current_aysem)->first();
+        $aysem = $current_aysem;
+        
+        
+
+        $beginning_balance = Account::where('department_id', $department->id)
+                                    ->where('aysem',$current_aysem->aysem)
+                                    ->pluck('begining_balance')
+                                    ->first();
 							
         $current_balance = $department->account($current_aysem)                                
-							->currentBalance();
+						             ->currentBalance();
 							
         $account_id = $department->account($current_aysem)                                
 							->id;
@@ -72,10 +77,6 @@ class DashboardController extends Controller
 											-> orderby('created_at','asc')
 											->get()
 											->toArray();
-		// foreach($transactions as $transaction){
-			// $transaction['balance']= $beginning_balance + $transaction['amount'];
-		// }
-		
 		
         $transactions = [];
 		$balance = $beginning_balance;
@@ -87,11 +88,21 @@ class DashboardController extends Controller
 		
 		// dd($beginning_balance, $transactions,$current_balance);
 		
-		
+		$requests_this_sem = [
+            \App\Requests::BOOK =>   $department->bookRequestsForSem($aysem),
+            \App\Requests::EBOOK =>   $department->ebookRequestsForSem($aysem),
+            \App\Requests::JOURNAL =>   $department->journalRequestsForSem($aysem),
+            \App\Requests::MAGAZINE =>   $department->magazineRequestsForSem($aysem),
+            \App\Requests::ERESOURCE =>   $department->eresourceRequestsForSem($aysem),
+            \App\Requests::SUPPLIES =>   $department->suppliesRequestsForSem($aysem),
+            \App\Requests::EQUIPMENT =>   $department->equipmentRequestsForSem($aysem),
+            \App\Requests::OTHER =>   $department->otherRequestsForSem($aysem)
+        ];
+
                 
 	
                 
-       return view('dashboard.dashboard',compact('active_department_id','departments','beginning_balance','current_balance','transactions', 'department', 'user','current_aysem', 'created_at'));
+       return view('dashboard.dashboard',compact('requests_this_sem','active_department_id','departments','beginning_balance','current_balance','transactions', 'department', 'user','current_aysem','aysem', 'created_at'));
        
     }
     

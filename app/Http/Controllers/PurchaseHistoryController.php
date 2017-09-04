@@ -17,11 +17,13 @@ class PurchaseHistoryController extends Controller
 			$user = Auth::user();
 			if($user->isLibrarian()){
 				$department_id = $request->session()->get('active_dept_id',1 ) ;    
-				$sem = $request->session()->get('active_aysem',\App\Aysem::current()->aysem );
-				$aysem = Aysem::where('aysem',$sem)->first();
+				
 			}else{
 				$department_id = $user->department->id;
 			}
+			$sem = $request->session()->get('active_aysem',\App\Aysem::current()->aysem );
+			$aysem = Aysem::where('aysem',$sem)->first();
+
 			$department = Department::find($department_id);
 			$dept = $department; 
         
@@ -40,12 +42,12 @@ class PurchaseHistoryController extends Controller
 			$purchased = [];
 			$need=[];
 			foreach ($all_requests_this_sem as $key => $value) {
-				$purchased[$key] = $value->where('status',Requests::PURCHASED); 
+				$purchased[$key] = $value->where('status',Requests::APPROVED); 
 			}
 
 		$subjects = RequestEndorsement::join('requests', 'requests.id', '=', 'request_endorsements.request_id')
 																 ->select('request_endorsements.*','requests.*')->get();
-																
+		// dd($purchased);												
 		$checker = 0.00;
 
 		$search = \Request::get('subject');
@@ -100,7 +102,7 @@ class PurchaseHistoryController extends Controller
 																
 		$checker = 0.00;
 		
-		// dd($subjects);
+		// dd($purchased);
 
 		$search = \Request::get('subject');
 

@@ -28,15 +28,19 @@ class CollectionController extends Controller
     	$depts_with_collection = DB::table('departments')->where('percent_allocation',null)->get();
     	$current_aysem = Aysem::current();
 
+        //validate that this is the first entry in Collections table
+        $is_first_collection = Collection::isFirstCollectionForTheSem($current_aysem);
+
 
         
-    	return view('collection.index',compact('aysems', 'collections','depts_with_collection','current_aysem'));
+    	return view('collection.index',compact('aysems', 'collections','depts_with_collection','current_aysem', 'is_first_collection'));
     }
 
     function show(Aysem $aysem){
         $collections = DB::table('collections')->distinct()->pluck('aysem');
     	//get latest collection
     	$collection = Collection::where('aysem',$aysem->aysem)->orderBy('created_at')->first();
+
 
     	$enrollee_statistics = $collection->enrolleeStatistics()->get();
 
@@ -84,27 +88,30 @@ class CollectionController extends Controller
         ];
     	$this->validate($request,$validation_rules);
 
-
-        // insert entries in collectionb and enrollmentstatistics
-		$collection = Collection::create(['aysem'=>$aysem->aysem , 'amount' => $amount ]);
-        $statistics = $request->statistics; 
-		foreach($statistics as $department_id => $department){
-			$input = [
-				'aysem' => $collection->aysem,
-				'collection_id' => $collection->id,
-				'department_id' => $department_id,
-				'undergraduate' => $department['undergraduate'],
-				'graduate' => $department['graduate']
-			];
-			$dept_statistics = EnrolleeStatistics::create($input);
-		}
-
-        //compute allocations
-		$allocations = $this->computeAllocations($amount,$statistics);		
-
-
         //validate that this is the first entry in Collections table
         $is_first_collection = Collection::isFirstCollectionForTheSem($aysem);
+
+        // insert entries in collectionb and enrollmentstatistics
+        $collection = Collection::create(['aysem'=>$aysem->aysem , 'amount' => $amount ]);
+        $statistics = $request->statistics; 
+        foreach($statistics as $department_id => $department){
+            $input = [
+                'aysem' => $collection->aysem,
+                'collection_id' => $collection->id,
+                'department_id' => $department_id,
+                'undergraduate' => $department['undergraduate'],
+                'graduate' => $department['graduate']
+            ];
+            // $dept_statistics = EnrolleeStatistics::create($input);
+        }
+
+        //compute allocations
+        $allocations = $this->computeAllocations($amount,$statistics);      
+
+
+
+        
+
         if($is_first_collection){
             $transactiontype = AccountTransactions::COLLECTION();
         }else{
@@ -125,7 +132,8 @@ class CollectionController extends Controller
 			];		
 			AccountTransactions::create($input);
 		}
-	
+
+        session()->flash('alert-success', 'Collection entries recorded!');
 		return redirect()->action('CollectionController@index')->with('success', 'Collection recorded!');
 		
     }

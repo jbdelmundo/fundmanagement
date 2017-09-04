@@ -31,8 +31,8 @@
 		</div>	
 		
 		<div class="col-md-6 text-right">
-						{{ Form::open([  'method'=>'GET', 'url'=>'purchasehistory/all' , 'class' => 'btn btn-default-sm']) }} 
-										{{ Form::submit('SEE ALL',  ['class'=>'btn btn-success'])}}
+					{{ Form::open([  'method'=>'GET', 'url'=>'purchasehistory/all' , 'class' => 'btn btn-default-sm']) }} 
+									{{ Form::submit('SEE ALL',  ['class'=>'btn btn-success'])}}
 					{{ Form::close() }}
 		</div>
 	
@@ -42,7 +42,7 @@
     <div class="panel-heading">
 	  		Purhases for Books, EBooks, Magazines of {{$department->short_name}} in AYSEM {{$aysem->short_name}}
     </div>
-@if(((count($purchased['B']))+(count($purchased['E']))+(count($purchased['M']))+(count($purchased['J'])))>0)
+@if(((count($purchased['B']))+(count($purchased['E']))+(count($purchased['M']))+(count($purchased['R']))+(count($purchased['J'])))>0)
 
 
 <div class="panel-body">
@@ -52,14 +52,14 @@
 			<tr>
 				<th style='width:15%'>Title</th>
 				<th style='width:15%'>Subject</th>
-				<th style='width:10%'>Total Quote Price</th> 
+				<th style='width:10%'>Price</th> 
 
 			</tr>
 		</thead>
 		<tbody>
 			@foreach($purchased as $type => $purchase)
 				@if(count($purchase) >0)
-						@if($type == 'B' || $type == 'E' || $type == 'M' || $type == 'J')
+						@if($type == 'B' || $type == 'E' || $type == 'M' || $type == 'J'|| $type == 'R')
 							@foreach($try as $subject)
 								@foreach($purchase as $request)
 									@if($request->request_id == $subject->request_id)
@@ -111,7 +111,7 @@
 			<tr>
 				<th style='width:15%'>Description</th>
 				<th style='width:15%'>Subject</th>
-				<th style='width:10%'>Total Quote Price</th> 
+				<th style='width:10%'>Price</th> 
 
 			</tr>
 		</thead>

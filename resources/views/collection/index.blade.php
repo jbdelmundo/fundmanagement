@@ -11,7 +11,7 @@
 <div class="row">
 	<div class="col-lg-12">
 
-		@include('layouts.errors')
+		@include('layouts._alerts')
 
 		@if(count($collections)>0)
 			<ul class="list-group">
@@ -23,7 +23,7 @@
 			</ul>
 
 		@else
-			No collections found yet.
+			<!-- No collections found yet. -->
 		@endif
 
 		

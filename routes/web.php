@@ -9,9 +9,7 @@
 | to using a Closure or controller method. Build something great!
 |
 */
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
 Route::get('/dashboard', 'DashboardController@index');
 
 Route::get('/balance', 'DashboardController@balance');
@@ -23,6 +21,7 @@ Route::get('/home', 'HomeController@index');
 
 Route::get('/switch_active_dept/{id}','SessionController@switch_active_dept');
 Route::get('/switch_active_aysem/{id}','SessionController@switch_active_sem');
+Route::get('/switch_active_user/{id}','SessionController@switch_active_user');
 
 Route::get('/collection', 'CollectionController@index')->middleware('permit:1');
 Route::post('/collection', 'CollectionController@store')->middleware('permit:1');
@@ -40,6 +39,7 @@ Route::post('/approval', 'ApprovalController@create')->middleware('permit:4');
 
 Route::get('/usermanagement', 'UserManagementController@index')->middleware('permit:5');
 Route::post('/usermanagement', 'UserManagementController@store')->middleware('permit:5');
+Route::post('/usermanagement/changepassword', 'UserManagementController@changepassword')->middleware('permit:5');
 
 Route::get('/semestermanagement', 'SemesterManagementController@index')->middleware('permit:6');
 Route::post('/semestermanagement', 'SemesterManagementController@create')->middleware('permit:6');
@@ -55,9 +55,11 @@ Route::get('/module_permissions', 'ModulePermissionsController@index')->middlewa
 Route::get('/module_permissions/{id}', 'ModulePermissionsController@switch_active_user')->middleware('permit:9');
 Route::post('/module_permissions', 'ModulePermissionsController@create')->middleware('permit:9');
 
-Route::get('/usagestatistics/encode', 'UsageStatisticsController@encode');
-Route::post('/usagestatistics/encode/{id}', 'UsageStatisticsController@gotoform');
+Route::get('/usagestatistics/', 'UsageStatisticsController@view');
+Route::get('/usagestatistics/{id}', 'UsageStatisticsController@viewstats');
 
-Route::get('/usagestatistics/encode/{id}','UsageStatisticsController@gotoform');
-Route::post('/usagestatistics/index/{id}', 'UsageStatisticsController@submitform');
+Route::get('/usagestatistics_encoding', 'UsageStatisticsController@encode');
+Route::get('/usagestatistics_encoding/{id}','UsageStatisticsController@gotoform');
+Route::post('/usagestatistics_encoding/{id}', 'UsageStatisticsController@submitform');
+
 

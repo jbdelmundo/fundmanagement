@@ -54,10 +54,13 @@
                 </div>
                 
                 <button type="submit" class="btn btn-success">Sign in</button>
+               
               </form>
+      
         </div>
         <!-- /.container -->
     </nav>
+    
 
     <div id="myCarousel" class="carousel slide">
         <!-- Indicators -->
@@ -100,6 +103,8 @@
             <span class="icon-next"></span>
         </a>
     </div>
+
+
 
     <div class="section">
 
@@ -164,10 +169,69 @@
     <!-- /.container -->
 
     <!-- JavaScript -->
+
     <script src="js/jquery-1.10.2.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/modern-business.js"></script>
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+@if ($errors->any())
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Login Error</h4>
+      </div>
+
+      <div class="modal-body">
+      
+        <div class="alert alert-danger">
+            <ul>            
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    
+        <p class="alert-danger"></p>
+
+
+        <form class="" role="form" method='post' action="{{ url('/login') }}">
+                
+                        {{ csrf_field() }}
+                <div class="form-group">
+                  <input id="username" type="text" class="form-control" placeholder="Username" name="username" value="{{ old('username') }}" required autofocus>
+                </div>
+                <div class="form-group">
+                 
+                  <input id="password" type="password" placeholder="Password" class="form-control" name="password" required>
+
+                </div>
+                
+                <button type="submit" class="btn btn-success">Sign in</button>
+               
+              </form>
+      </div>
+      
+    </div>
+
+  </div>
+</div>
+@endif
+
+<script type="text/javascript">
+    $(window).on('load',function(){
+        $('#myModal').modal('show');
+    });
+</script>
 </body>
 
 </html>

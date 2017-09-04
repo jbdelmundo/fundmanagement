@@ -19,7 +19,7 @@ class Department extends Model
         return $this->hasMany('App\Account');
     }
 
-    function account(Aysem $aysem){
+    function account(Aysem $aysem){        
          return $this->hasMany('App\Account')->where('aysem',$aysem->aysem)->first();
     }
 

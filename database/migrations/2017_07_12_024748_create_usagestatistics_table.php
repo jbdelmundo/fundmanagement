@@ -26,7 +26,7 @@ class CreateUsagestatisticsTable extends Migration
             $table->unsignedInteger('eresource_id');
             $table->unsignedInteger('request_id');
             $table->unsignedInteger('department_id');
-            $table->unsignedInteger('status_id');
+            
             $table->integer('month');
             $table->integer('year'); 
             $table->integer('usage');
@@ -47,11 +47,7 @@ class CreateUsagestatisticsTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 
-            $table->foreign('status_id')
-                ->references('id')->on('request_statuses')
-                ->onUpdate('cascade')
-                ->onDelete('cascade');
-
+       
 
 
              $table->timestamps();

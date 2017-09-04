@@ -2,7 +2,7 @@
 
 
  <div class="form-group">
-    {!! Form::label('Description' ) !!}
+    {!! Form::label('Description *' ) !!}
     {!! Form::text('description', null,['class'=>'form-control' ]) !!}
 </div>
 
@@ -11,8 +11,8 @@
 <!--  DEFAULT REQUEST FIELDS -->
 
 <div class="form-group">
-    {!! Form::label('unit_quote_price', 'Quote price' ) !!}
-    {!! Form::number('unit_quote_price', null,['class'=>'form-control' ]) !!}
+    {!! Form::label('unit_quote_price', 'Quote price *' ) !!}
+    {!! Form::number('unit_quote_price', null,['class'=>'form-control','required', 'min'=>0 ]) !!}
 </div>
 
 

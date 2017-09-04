@@ -1,25 +1,25 @@
 <?php use \App\Requests; ?>
 
+@if(count($items)>0)
 
 <div class="panel panel-primary">
     <div class="panel-heading">
 	  {{$heading}}  
     </div>
         
-        @if(count($items)>0)
+        
         
     	
             <table class="table table-striped table-responsive">
                 <thead>
-                    <tr>
+                    <tr>                     
                         <th style='width:15%'>Title</th>
-                        <th style='width:10%'>Author</th>
+                        <th style='width:10%'>Publisher</th>
                         <th style='width:10%'>Subject</th>
-                        <th style='width:5%'>Quantity</th>                        
-                        <th style='width:10%'>Section</th> 
+                        
                         <th style='width:5%'>Unit price</th>
                         <th style='width:10%'>Remarks</th> 
-                        <th style='width:5%'>Action</th>                     
+                        <th style='width:5%'>Action</th>                    
                         
                     </tr>
                 </thead>
@@ -31,13 +31,12 @@
                     <div class='form-group'>
                         {{ Form::hidden('request_id',$item->request_id)}}
                         <td> {{$item->title}}</td>
-                        <td>{{$item->author}}</td>
+                        <td>{{$item->publisher}}</td>
                         <td>{{ Form::text('subject',null, 
-                                ['class'=>'form-control','id'=>'subject_'.$item->id]) }}</td>
-                        <td>{{ Form::number('quantity',1,
-                                ['class'=>'form-control', 'min'=>'1']) }}</td>
-                        <td>{{ Form::select('is_reserved', ['0' => 'Circulation', '1' => 'Reserved'], 0, 
-                                ['class'=>'form-control'])   }}</td>
+                                ['class'=>'form-control','id'=>'subject_'.$item->id]) }}
+                        </td>
+                        <input type="hidden" name="quantity" value='1'/>
+                        
 
                         <td>{{$item->unit_quote_price}}</td>
                         <td>{{$item->remarks}}</td>
@@ -53,13 +52,10 @@
             </table>
             
         
-   		@else
-        <div class="panel-body">
-        	No items to show.
-        </div>
-        @endif
+   		
     
 </div>
+@endif
 
 <script type="text/javascript">
     

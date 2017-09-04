@@ -2,8 +2,8 @@
 
 
  <div class="form-group">
-    {!! Form::label('Title' ) !!}
-    {!! Form::text('title', null,['class'=>'form-control' ]) !!}
+    {!! Form::label('Title*' ) !!}
+    {!! Form::text('title', null,['class'=>'form-control' ,'required']) !!}
 </div>
 
  <div class="form-group">
@@ -13,13 +13,13 @@
 
 
  <div class="form-group">
-    {!! Form::label('Publisher' ) !!}
-    {!! Form::text('publisher', null,['class'=>'form-control' ]) !!}
+    {!! Form::label('Publisher *' ) !!}
+    {!! Form::text('publisher', null,['class'=>'form-control'  ,'required']) !!}
 </div>
 
 <div class="form-group">
-    {!! Form::label('ISSN/E-ISSN' ) !!}
-    {!! Form::text('issn', null,['class'=>'form-control' ]) !!}
+    {!! Form::label('ISSN/E-ISSN * ' ) !!}
+    {!! Form::text('issn', null,['class'=>'form-control'  ,'required']) !!}
 </div>
 
 <div class="form-group">
@@ -31,8 +31,8 @@
 <!--  DEFAULT REQUEST FIELDS -->
 
 <div class="form-group">
-    {!! Form::label('unit_quote_price', 'Quote price' ) !!}
-    {!! Form::number('unit_quote_price', null,['class'=>'form-control' ]) !!}
+    {!! Form::label('unit_quote_price', 'Quote price *' ) !!}
+    {!! Form::number('unit_quote_price', null,['class'=>'form-control'  ,'required', 'min'=>0]) !!}
 </div>
 
 

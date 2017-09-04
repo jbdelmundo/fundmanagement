@@ -49,7 +49,8 @@ class RequestsController extends Controller
             Requests::OTHER =>   $department->otherRequestsForSem($aysem)
         ];
 
-       
+        $request_count = Requests::where('department_id',$department_id)->where('aysem',$aysem_id)->count();
+        
         
         $forms = $this->getForms();
         $active_form = 'Books';         //match with btn_caption
@@ -57,7 +58,7 @@ class RequestsController extends Controller
 
         $departments = Department::all();
         $aysems = Aysem::all();
-        return view('requests.show', compact('user','departments','department','aysem','forms','active_form', 'requests_this_sem','aysems'
+        return view('requests.show', compact('request_count','user','departments','department','aysem','forms','active_form', 'requests_this_sem','aysems'
             ));
     }
 
@@ -150,6 +151,11 @@ class RequestsController extends Controller
 
 
     function create(Request $request){
+        // dd($request);
+        if($request->category_id == Requests::ERESOURCE && $request->issubscription == 1){
+            $validation_rules = ['startdate'=>'required','enddate'=>'required|after:startdate'];
+            $this->validate($request,$validation_rules);
+        }
 
 		$request_description = [];
 		foreach($request->all() as $key => $value){
@@ -228,6 +234,7 @@ class RequestsController extends Controller
 
         //TODO: add validation 
 
+
         //insert into requests
         //insert into individual tables
         
@@ -237,6 +244,8 @@ class RequestsController extends Controller
         // dd($params);
         $request_obj = Requests::create($params);
         $params['request_id'] = $request_obj->id;
+
+        
 
         switch($category_id){
 
@@ -265,6 +274,7 @@ class RequestsController extends Controller
         $request_obj->item_id = $item->id;
         $request_obj->save();
 
+        session()->flash('alert-success', 'Request recorded!');
         return redirect()->action('RequestsController@index' )->with('success', 'Request recorded!');
     }
 }

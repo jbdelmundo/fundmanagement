@@ -12,4 +12,9 @@ class SessionController extends Controller
     	$request->session()->put('active_aysem',$aysem_id);
     	return redirect()->back();
     }
+
+    function switch_active_user($user_id,Request $request){
+    	$request->session()->put('active_user',$user_id);
+    	return redirect()->back();
+    }
 }

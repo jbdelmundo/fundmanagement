@@ -28,10 +28,15 @@ class UserSeeder extends Seeder
                 'userrole_id' => 1
         	],
         	[
-        		'username' => 'lib',
-        		'password' => 'wew',
+                'username' => 'lib',
+                'password' => 'wew',
                 'userrole_id' => 2
-        	],
+            ],
+            [
+                'username' => 'admin',
+                'password' => 'wew',
+                'userrole_id' => 3
+            ],
         ];
         foreach ($users as $key => $user) {
             $user['password'] = Hash::make($user['password']);

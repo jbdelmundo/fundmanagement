@@ -47,7 +47,7 @@ class ApprovalController extends Controller
         foreach ($all_requests_this_sem as $key => $value) {
             $endorsements[$key] = $value->where('status',Requests::ENDORSED)->where('department_id',$active_department_id);   //filter only those that are endorsed
         }
-		
+		// dd($endorsements);
     	return view('approval.index',compact('user','departments','department','aysem','endorsements','active_department_id'
             ));
     }
@@ -109,8 +109,10 @@ class ApprovalController extends Controller
 			
         $request_endorsement_id = RequestEndorsement::where('request_id',$formrequest->request_id)->get()->toArray()[0]['id'];
         $request_endorsement = RequestEndorsement::findOrFail($request_endorsement_id);
+       
         //update request status to for purchase
-        $request->status = Requests::FOR_PURCHASE;
+        // $request->status = Requests::FOR_PURCHASE;
+        $request->status = Requests::APPROVED;
         $request->save();
 		
         //update request endorsement approved_by
@@ -131,6 +133,7 @@ class ApprovalController extends Controller
 // dd($transaction);
         $account_transactions->save();
         
+        session()->flash('alert-success', 'Request is approved and deducted to your account!');
         return redirect('approval');
     }
 }

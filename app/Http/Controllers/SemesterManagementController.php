@@ -53,17 +53,19 @@ class SemesterManagementController extends Controller
        	Aysem::create( $new_sem);
         $new_sem = Aysem::current();
 
-        //create new account per department
+       //create new account per department
         $prev_sem = $new_sem->previous(); 
 
-        for($i=1;$i<=13;$i++){
+        $deptids = Department::pluck('id')->toArray();
+        
+        foreach($deptids as $i){
         	$accnt=Account::where('department_id',$i)->get()->where('aysem',$prev_sem['aysem']); //get account of department id from previous semester
 
-        	$new_account = ['department_id'=>$i,'aysem'=>$new_sem['aysem'],'begining_balance'=>$accnt[0]->currentBalance(),'ending_balance'=>0];
-        	//0 is default value for ending balance of newly created account
-        	Account::create($new_account);
-        }//end for
     	
+            $new_account = ['department_id'=>$i,'aysem'=>$new_sem['aysem'],'begining_balance'=>$accnt[0]->currentBalance(),'ending_balance'=>0];
+            //0 is default value for ending balance of newly created account
+            Account::create($new_account);
+        }//end for
     	return redirect('semestermanagement');
     }	
 }

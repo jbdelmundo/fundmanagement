@@ -17,7 +17,7 @@ class UsageStatistics extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'eresource_id', 'request_id','department_id','status_id','month','year','usage'
+        'eresource_id', 'request_id','department_id','month','year','usage'
     ];
 
     function eresource(){

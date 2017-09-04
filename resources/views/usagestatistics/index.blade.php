@@ -19,7 +19,7 @@
 </div>
 
 <div class="panel">
-	@include('layouts.errors')
+	@include('layouts._alerts')
 	panel
 </div>
 @endsection

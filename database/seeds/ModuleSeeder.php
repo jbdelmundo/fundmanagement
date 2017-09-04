@@ -15,35 +15,49 @@ class ModuleSeeder extends Seeder
         //
 		$modules = [
         	[
+                'id' => 1,
         		'module' => 'Collection',
         	],
         	[
+                'id' => 2,
         		'module' => 'Endorsement',
         	],
         	[
+                'id' => 3,
         		'module' => 'Requests',
         	],
         	[
+                'id' => 4,
         		'module' => 'Approval',
         	],
         	[
+                'id' => 5,
         		'module' => 'User Management',
         	],
         	[
+                'id' => 6,
         		'module' => 'Semester Management',
         	],
         	[
+                'id' => 7,
         		'module' => 'Purchase History',
         	],
         	[
+                'id' => 8,
         		'module' => 'Refunds',
         	],
         	[
+                'id' => 9,
         		'module' => 'Module Permissions',
         	],
         	[
-        		'module' => 'Eresource Usage Statistics',
-        	],
+                'id' => 10,
+                'module' => 'Eresource Usage Statistics',
+            ],
+            [
+                'id' => 11,
+                'module' => 'Eresource Usage Statistics Encoding',
+            ],
         ];
         foreach ($modules as  $module) {
         	 Module::create($module);

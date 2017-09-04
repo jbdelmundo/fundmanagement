@@ -19,15 +19,15 @@
 					<li>
 						<a href="#">
 							<div>
-								<strong>John Smith</strong>
+								<strong>Inbox Feature</strong>
 								<span class="pull-right text-muted">
-									<em>Yesterday</em>
+									<em>Coming Soon</em>
 								</span>
 							</div>
-							<div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
+							<div>This feature is not yet available.</div>
 						</a>
 					</li>
-					<li class="divider"></li>
+					<!-- <li class="divider"></li>
 					<li>
 						<a href="#">
 							<div>
@@ -57,12 +57,12 @@
 							<strong>Read All Messages</strong>
 							<i class="fa fa-angle-right"></i>
 						</a>
-					</li>
+					</li> -->
 				</ul>
 				<!-- /.dropdown-messages -->
-			</li>
+			<!-- </li> -->
 			<!-- /.dropdown -->
-			<li class="dropdown">
+			<!-- <li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 					<i class="fa fa-tasks fa-fw"></i>  <i class="fa fa-caret-down"></i>
 				</a>
@@ -137,10 +137,11 @@
 							<i class="fa fa-angle-right"></i>
 						</a>
 					</li>
-				</ul>
+				</ul> -->
 				<!-- /.dropdown-tasks -->
-			</li>
+			<!-- </li> -->
 			<!-- /.dropdown -->
+			
 			<li class="dropdown">
 				<a class="dropdown-toggle" data-toggle="dropdown" href="#">
 					<i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
@@ -149,12 +150,12 @@
 					<li>
 						<a href="#">
 							<div>
-								<i class="fa fa-comment fa-fw"></i> New Comment
-								<span class="pull-right text-muted small">4 minutes ago</span>
+								<i class="fa fa-comment fa-fw"></i> Notifications
+								<span class="pull-right text-muted small">Coming Soon</span>
 							</div>
 						</a>
 					</li>
-					<li class="divider"></li>
+					<!-- <li class="divider"></li>
 					<li>
 						<a href="#">
 							<div>
@@ -196,7 +197,7 @@
 							<strong>See All Alerts</strong>
 							<i class="fa fa-angle-right"></i>
 						</a>
-					</li>
+					</li> -->
 				</ul>
 				<!-- /.dropdown-alerts -->
 			</li>

@@ -9,11 +9,32 @@
 @if(\Auth::user()->isLibrarian())
     @include('_active_dept_selector')
 @endif
+
+<div class="row">
+
+	<div class="col-lg-12">
+	@include('layouts._alerts')
+		<div class="alert alert-info" role="alert">
+		<h3 >Current Balance: {{  $department->account(\App\Aysem::current() )->currentBalance()   }}</h3>
+	  		<h4>
+	        Upon approval of the request, the amount will be deducted to your current balance.</h4>
+	    </div>
+	</div>
+</div>
+
+  
 <div class="panel panel-default">
     <div class="panel-heading">
 	  	Endorsements for Book, E-Books, Journals, Magazines  
     </div>
-@if(((count($endorsements['B']))+(count($endorsements['E']))+(count($endorsements['M']))+(count($endorsements['J'])))>0)
+@if( 	count($endorsements['B'])+
+		count($endorsements['E'])+
+		count($endorsements['M'])+
+		count($endorsements['J'])+
+		count($endorsements['R'])+
+		count($endorsements['Q'])+
+		count($endorsements['S'])+
+		count($endorsements['O']) > 0)
 <div class="panel-body">
 
 	<table class="table table-striped table-responsive">
@@ -30,7 +51,7 @@
 		<tbody>
 			@foreach($endorsements as $type => $request_endorsement)
 				@if(count($request_endorsement) >0)
-					@if($type == 'B' || $type == 'E' || $type == 'M' || $type == 'J')
+					@if($type == 'B' || $type == 'E' || $type == 'M' || $type == 'J' ||$type == 'R')
 						@foreach($request_endorsement as $request)
 							<tr>
 								<td>{{$request->title}}</td>

@@ -19,7 +19,7 @@
 </div>
 
 <div class="panel">
-	@include('layouts.errors')
+	@include('layouts._alerts')
 		<table class="table table-bordered">
 			<tr>
 				<th> Title </th>
@@ -34,7 +34,7 @@
 				<td>{{ $list_item['publisher'] }}	</td>
 				<td>{{ $list_item['startdate'] }}	</td>
 				<td>{{ $list_item['enddate'] }}	</td>
-				<td> <a href = "{{url('usagestatistics/encode').'/'.$list_item['id']}}" class="btn btn-info" role="button">Go to Form </a>
+				<td> <a href = "{{url('usagestatistics_encoding').'/'.$list_item['id']}}" class="btn btn-info" role="button">Go to Form </a>
 				</td>
 			</tr>	
 			@endforeach
