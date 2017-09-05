@@ -19,19 +19,25 @@
 <div class="panel panel-primary"  >
 
     <div class="panel-heading">
-        User    
+        Update user info for {{ \Auth::user()->username}}
     </div>
          
     {!! Form::open() !!}
 
     <div class="panel-body" >
-        {{Form::label('username', 'Username') }} <br>
-        {{Form::text('username', $current_user->username, ['class'=>'form-control' , 'min'=>3]    )}}
+
+    <div class="form-group">
+        {{Form::label('username', 'Username *') }} <br>
+        {{Form::text('username', $current_user->username, ['class'=>'form-control' , 'min'=>3, 'required']    )}}
+        
+    </div>
+    <div class="form-group">
     
-    
-        {{Form::label('email', 'E-Mail') }} <br>
+        {{Form::label('email', 'E-Mail') }} (email is used for notifications)<br>
         {{Form::text('email',$current_user->email, ['class'=>'form-control'])}}
     
+    </div>
+    <div class="form-group">
 
         {{Form::label('dept', 'Department') }}
         <select name='dept_selector' class="form-control"" >
@@ -41,7 +47,10 @@
             </option>
         @endforeach
         </select>
-    
+
+    </div>
+    <div class="form-group">
+
         {{Form::label('role', 'User Role') }}
         <select name='role_selector' class="form-control" ">
         @foreach($roles as $r)
@@ -51,12 +60,15 @@
         @endforeach
         </select>
     
-
+    </div>
+    <div class="form-group">
         {!! Form::hidden('selected_user', $current_user->id) !!}
         
-            <button type="submit" class="btn btn-primary">Update</button>
+        <button type="submit" class="btn btn-primary">Update user info for {{ \Auth::user()->username}}</button>
        
         {!! Form::close()  !!}
+    </div>
+    
     </div>
     
 </div>       

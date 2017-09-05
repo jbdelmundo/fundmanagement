@@ -69,6 +69,50 @@
 
 <div class="panel">
 	<!-- Graph here -->
-	
+	<!-- <div id="placeholder" style="width:100%;height:400px"></div> -->
+	<div id="usage" style="width:100%;height:500px"></div>
+
 </div>
+
+<script src="{{asset('js/jquery.flot.js')}}"></script>
+<script src="{{asset('js/jquery.flot.time.js')}}"></script>
+
+<script type="text/javascript">
+	// $.plot($("#placeholder"), [ [[0, 0], [1, 1]] ], { yaxis: { max: 1 } });
+</script>
+
+<script type="text/javascript">
+
+
+
+	var testDate = new Date(2017,10,1).getTime()
+	// var data = [
+	// 		[ new Date(2017,10,1).getTime() , 				51 ], 
+	// 		[ new Date(2017,11,1).getTime() , 677],
+	// 		[ new Date(2018,2,1).getTime() , 127],
+	// 		[ new Date(2018,0,1).getTime() , 357]
+	// ];
+
+
+	var data = [
+		@foreach($stats as $year => $stat)
+			@foreach($stat as $month => $usage)
+				[  new Date({{$year}},{{$month}},1).getTime()  , {{$usage}}  ],
+				// console.log(  new Date({{$year}},{{$month}},1).getTime() )
+			@endforeach
+		@endforeach
+	]
+
+	$.plot("#usage", [data], {
+				points: {show:true},
+				lines: {show:true},
+				xaxis: {
+					mode: "time",
+					minTickSize: [1, "month"],
+					min: (new Date({{$sdate[0]}}, {{$sdate[1]-1}}, 1)).getTime(),
+					max: (new Date({{$edate[0]}}, {{$edate[1]}}, 1)).getTime(),
+					timeformat: "%b %Y"
+				}
+			});
+</script>
 @endsection
