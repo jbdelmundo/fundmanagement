@@ -19,7 +19,13 @@ class UsageStatisticsController extends Controller
     {	
     	$user = Auth::user(); //fetch credentials
 
-		
+		if($user->isLibrarian()){ 
+            //get active_dept from session, use department_id = 1 as default
+            $active_department_id = $request->session()->get('active_dept_id',1) ;
+        }else{
+            $active_department_id = $user->department->id;
+        } 
+        $department = Department::find($active_department_id);
 
 		//get list of all purchased e resources
 		$eresources=Requests::where('department_id',$active_department_id)->get()->where('category_id',Requests::ERESOURCE)->where('status',Requests::APPROVED);	//get array of all purchased e resources
@@ -52,14 +58,36 @@ class UsageStatisticsController extends Controller
 		}
 		
 
+
     	$eresource = Eresource::Find($id2);
-    	return view('usagestatistics.form',compact('eresource'));
+    	$usagestats = UsageStatistics::where('request_id',$eresource->request_id)
+    					->orderBy('year','asc')
+    					->orderBy('month','asc')
+    					->get();
+
+		$stats=[];
+
+		foreach($usagestats as $key => $usagestat){
+			// $total[$key]['month'] = $usagestat->month;
+			// $total[$key]['year'] = $usagestat->year;
+			// $total[$key]['usage'] = $usagestat->usage;
+			$stats[] = $usagestat->usage;		//sorted by year, month
+		}
+
+    	return view('usagestatistics.form',compact('eresource','stats'));
     }//end function
+
+
 
     public function submitform(Request $request,$id){
 
     	// dd($request);
         $id2 = $request->id;
+
+
+        //delete existing stats
+         DB::table('usagestatistics')->where('eresource_id', $id2)->delete(); 
+
 
         $stats = $request->all();
         $stats_temp=array_slice($stats,1); //returns usage stats per month
@@ -102,7 +130,9 @@ class UsageStatisticsController extends Controller
 			}//end while		
 		}//end for		
 
-    	redirect('usagestatistics_encoding');
+		
+		session()->flash('alert-success', 'Usage statistics recorded!');
+    	return redirect('usagestatistics_encoding');
     }//end function
 
     public function view(Request $request){
@@ -149,21 +179,23 @@ class UsageStatisticsController extends Controller
 
     	$eresource = Eresource::Find($id2);
 
-    	$stats = UsageStatistics::where('request_id',$eresource->request_id)
-    					->orderBy('year','asc','month','asc')
+    	$usagestats = UsageStatistics::where('request_id',$eresource->request_id)
+    					->orderBy('year','asc')
+    					->orderBy('month','asc')
     					->get();
 
-		$total=[];
+		$stats=[];
 
-		foreach($stats as $key => $usagestat){
-			$total[$key]['month'] = $usagestat->month;
-			$total[$key]['year'] = $usagestat->year;
-			$total[$key]['usage'] = $usagestat->usage;
+		foreach($usagestats as $key => $usagestat){
+			// $total[$key]['month'] = $usagestat->month;
+			// $total[$key]['year'] = $usagestat->year;
+			// $total[$key]['usage'] = $usagestat->usage;
+			$stats[$usagestat->year][$usagestat->month] = $usagestat->usage;
 		}
 
-    	// dd($total);	
+    	// dd($stats);	
 
-    	return view('usagestatistics.view_stat',compact('eresource'));
+    	return view('usagestatistics.view_stat',compact('eresource','stats'));
     }
 
 }//end class

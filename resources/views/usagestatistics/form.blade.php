@@ -100,6 +100,7 @@ function show(){
 						<th style="width:80%"> Usage </th>
 					</tr>
 				<?php
+				$statindex = 0;
 				$month_ctr = $firstmonth; 
 				for($i=0;$i<=$ctr;$i++){
 				  ?>
@@ -116,7 +117,9 @@ function show(){
 						<tr>
 							<td ></td>
 							<td>{{Form::label($months[$month_ctr])}}</td>
-							<td>{{Form::number('stats-'.$diff,'0',['class'=>'form-control','required','min'=>'0'])}}</td>
+							<?php $value = (!empty($stats))? $stats[$statindex] : 0; ?>
+							<td>{{Form::number('stats-'.$diff, $value  ,['class'=>'form-control','required','min'=>'0'])}}</td>
+							<?php $statindex+= 1; ?>
 						</tr>
 					<?php  
 						$diff = $diff-1;

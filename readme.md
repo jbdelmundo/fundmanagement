@@ -43,6 +43,10 @@ Create tables and inital database contents
 	php artisan migrate
 	php artisan db:seed
 
+Configure inital permissions
+Configure department and user seeders
+
+
 
 Create value in the APPLICATION KEY field in your .env file
 	php artisan key:generate
@@ -51,4 +55,4 @@ Create value in the APPLICATION KEY field in your .env file
 
 # CODE CONVENTIONS
 
-	DATABASE NAMING
+	
