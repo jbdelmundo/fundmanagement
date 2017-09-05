@@ -33,6 +33,8 @@
     <script src="{{asset('js/jquery-1.10.2.js')}}"></script>
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/plugins/metisMenu/jquery.metisMenu.js')}}"></script>
+
+    
 </head>
 
 <body>
