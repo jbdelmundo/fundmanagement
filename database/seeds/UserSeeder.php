@@ -15,17 +15,19 @@ class UserSeeder extends Seeder
     {
         //
         $users = [
+
+            [
+                'username' => 'admin',
+                'password' => '@dmin',
+                'userrole_id' => 2
+            ],
         	
         	[
                 'username' => 'lib',
-                'password' => 'wew',
+                'password' => '123',
                 'userrole_id' => 2
             ],
-            [
-                'username' => 'admin',
-                'password' => 'wew',
-                'userrole_id' => 3
-            ],
+            
 
             [
                 'username' => 'che',

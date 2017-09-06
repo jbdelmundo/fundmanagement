@@ -56,7 +56,8 @@ return [
     */
 
     'from' => [
-        'address' => 'updengglib@gmail.com',
+        'address' => 'engglibupd@gmail.com',
+        // 'address' => 'updengglib@gmail.com',
         'name' => 'UPD Engg Lib Fundmanagement',
     ],
 
@@ -83,8 +84,8 @@ return [
     | connection. You may also set the "password" value below this one.
     |
     */
-
-    'username' => env('MAIL_USERNAME','updengglib@gmail.com'),
+    'username' => env('MAIL_USERNAME','engglibupd@gmail.com'),
+    // 'username' => env('MAIL_USERNAME','updengglib@gmail.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -96,8 +97,8 @@ return [
     | connection so that the application will be able to send messages.
     |
     */
-
-    'password' =>env('MAIL_PASSWORD','fvmaulmruoasqsdf'),
+    'password' =>env('MAIL_PASSWORD','msqoxsiyrjwondda'),
+    // 'password' =>env('MAIL_PASSWORD','fvmaulmruoasqsdf'),
 
     /*
     |--------------------------------------------------------------------------

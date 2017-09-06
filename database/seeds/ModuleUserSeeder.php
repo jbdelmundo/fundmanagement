@@ -62,6 +62,9 @@ class ModuleUserSeeder extends Seeder
             }
         }
 
+        // add permissionsmodule to admin
+        $admin = User::where('username', 'admin')->first();
+        ModuleUser::create(['user_id' => $admin->id , 'module_id' => 9]);
 		
     }
 }
