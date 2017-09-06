@@ -64,7 +64,7 @@
     <div class="form-group">
         {!! Form::hidden('selected_user', $current_user->id) !!}
         
-        <button type="submit" class="btn btn-primary">Update user info for {{ \Auth::user()->username}}</button>
+        <button type="submit" class="btn btn-primary">Update user info for {{ $current_user->username}}</button>
        
         {!! Form::close()  !!}
     </div>

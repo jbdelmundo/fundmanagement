@@ -48,17 +48,28 @@ class UserManagementController extends Controller
 
     function store(Request $request){
         
-        //validate
-        $validation_rules = ['username'=>"required|min:1|unique:users,username"];
-        $this->validate($request,$validation_rules);
-
-
+        
         $update = User::findOrFail($request->selected_user);
+        
+        //validate
+        if($request->username != $update->username){
+            $validation_rules = ['username'=>"required|min:1|unique:users,username"];
+        }else{
+            $validation_rules = ['username'=>"required|min:1"];
+        }
+        $this->validate($request,$validation_rules);
+        
         $update->username = $request->username;
         // $update->password = Hash::make($request->pw);
-        $update->email = $request->email;
+        $update->email = (trim($request->email) == '')? null : trim($request->email);
+      
         $update->userrole_id = $request->role_selector;
         $update->department_id = $request->dept_selector;
+
+        
+
+
+
         $update->save();
 
         session()->flash('alert-success','User info updated.');
