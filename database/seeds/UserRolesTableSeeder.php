@@ -22,7 +22,7 @@ class UserRolesTableSeeder extends Seeder
     		],
     		[
     			'id' => '3',
-    			'role' => 'Department/Institue Head',    			
+    			'role' => 'Department/Institue Head'    			
     		],
     		
     	];

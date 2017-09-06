@@ -37,13 +37,13 @@
                     <span class="icon-bar"></span>
                 </button>
                 <!-- You'll want to use a responsive image option so this logo looks good on devices - I recommend using something like retina.js (do a quick Google search for it and you'll find it) -->
-                <a class="navbar-brand" href="{{url('')}}">Library Fund Management System</a>
+                <a class="navbar-brand" href="{{url('')}}">UP Enggineering Library Fund Management System</a>
             </div>
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <form class="navbar-form navbar-right" role="form" method='post' action="{{ url('/login') }}">
-                
-                        {{ csrf_field() }}
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                        
                 <div class="form-group">
                   <input id="username" type="text" class="form-control" placeholder="Username" name="username" value="{{ old('username') }}" required autofocus>
                 </div>
