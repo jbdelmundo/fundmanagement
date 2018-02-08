@@ -23,6 +23,23 @@ Route::get('/switch_active_dept/{id}','SessionController@switch_active_dept');
 Route::get('/switch_active_aysem/{id}','SessionController@switch_active_sem');
 Route::get('/switch_active_user/{id}','SessionController@switch_active_user');
 
+
+/*
+	RESTRICTED ROUTES: Permission is allowed according to module number
+	See app/Http/Middleware/ModulePermission for details
+	1 - Collection
+	2 - Endorsement
+	3 - Requests
+	4 - Approval
+	5 - UserManagement
+	6 - Semester Management
+	7 - Purchase History
+	8 - Refunds
+	9 - Module Permissions
+	10 - Usage Statistics Viewing
+	11 - Usage Statistics Encoding
+*/
+
 Route::get('/collection', 'CollectionController@index')->middleware('permit:1');
 Route::post('/collection', 'CollectionController@store')->middleware('permit:1');
 Route::get('/collection/{aysem}', 'CollectionController@show')->middleware('permit:1');
@@ -55,11 +72,11 @@ Route::get('/module_permissions', 'ModulePermissionsController@index')->middlewa
 Route::get('/module_permissions/{id}', 'ModulePermissionsController@switch_active_user')->middleware('permit:9');
 Route::post('/module_permissions', 'ModulePermissionsController@create')->middleware('permit:9');
 
-Route::get('/usagestatistics/', 'UsageStatisticsController@view');
-Route::get('/usagestatistics/{id}', 'UsageStatisticsController@viewstats');
+Route::get('/usagestatistics/', 'UsageStatisticsController@view')->middleware('permit:10');
+Route::get('/usagestatistics/{id}', 'UsageStatisticsController@viewstats')->middleware('permit:10');
 
-Route::get('/usagestatistics_encoding', 'UsageStatisticsController@encode');
-Route::get('/usagestatistics_encoding/{id}','UsageStatisticsController@gotoform');
-Route::post('/usagestatistics_encoding/{id}', 'UsageStatisticsController@submitform');
+Route::get('/usagestatistics_encoding', 'UsageStatisticsController@encode')->middleware('permit:11');
+Route::get('/usagestatistics_encoding/{id}','UsageStatisticsController@gotoform')->middleware('permit:11');
+Route::post('/usagestatistics_encoding/{id}', 'UsageStatisticsController@submitform')->middleware('permit:11');
 
 

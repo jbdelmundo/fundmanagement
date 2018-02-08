@@ -33,23 +33,26 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 -Download libraries
 	navigate to directory
-	type "composer update"
+	type `composer update`
 
 -Set up database backend
 	create MySQL database
 	create a .env file from .env.example
 
 Create tables and inital database contents
-	php artisan migrate
-	php artisan db:seed
+	`php artisan migrate`
+	`php artisan db:seed`
 
 Configure inital permissions
+- Set folders with write permissions
+
 Configure department and user seeders
+- Modify `/database/seeds/UserSeeders`
 
 
 
 Create value in the APPLICATION KEY field in your .env file
-	php artisan key:generate
+	`php artisan key:generate`
 
 
 

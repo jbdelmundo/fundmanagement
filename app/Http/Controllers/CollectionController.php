@@ -102,15 +102,11 @@ class CollectionController extends Controller
                 'undergraduate' => $department['undergraduate'],
                 'graduate' => $department['graduate']
             ];
-            // $dept_statistics = EnrolleeStatistics::create($input);
+            $dept_statistics = EnrolleeStatistics::create($input);
         }
 
         //compute allocations
         $allocations = $this->computeAllocations($amount,$statistics);      
-
-
-
-        
 
         if($is_first_collection){
             $transactiontype = AccountTransactions::COLLECTION();

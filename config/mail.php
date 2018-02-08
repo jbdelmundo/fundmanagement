@@ -15,6 +15,8 @@ return [
     |            "ses", "sparkpost", "log"
     |
     */
+    // StreamBuffer line # 259
+    // $options['ssl'] = array('verify_peer' => false, 'verify_peer_name' => false, 'allow_self_signed' => true);
 
     'driver' => env('MAIL_DRIVER', 'smtp'),
 
@@ -56,8 +58,8 @@ return [
     */
 
     'from' => [
-        'address' => 'engglibupd@gmail.com',
-        // 'address' => 'updengglib@gmail.com',
+        // 'address' => 'engglibupd@gmail.com',
+        'address' => 'jbdelmundo.random@gmail.com',
         'name' => 'UPD Engg Lib Fundmanagement',
     ],
 
@@ -84,8 +86,9 @@ return [
     | connection. You may also set the "password" value below this one.
     |
     */
-    'username' => env('MAIL_USERNAME','engglibupd@gmail.com'),
+    // 'username' => env('MAIL_USERNAME','engglibupd@gmail.com'),
     // 'username' => env('MAIL_USERNAME','updengglib@gmail.com'),
+    'username' => env('MAIL_USERNAME','jbdelmundo.random@gmail.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -97,8 +100,9 @@ return [
     | connection so that the application will be able to send messages.
     |
     */
-    'password' =>env('MAIL_PASSWORD','msqoxsiyrjwondda'),
+    // 'password' =>env('MAIL_PASSWORD','msqoxsiyrjwondda'),
     // 'password' =>env('MAIL_PASSWORD','fvmaulmruoasqsdf'),
+    'password' =>env('MAIL_PASSWORD','ofuknoxkkbdrmnqe'),
 
     /*
     |--------------------------------------------------------------------------
