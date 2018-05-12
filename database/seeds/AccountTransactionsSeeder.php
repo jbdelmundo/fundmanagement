@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class AccountsSeeder extends Seeder
+class AccountTransactionsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,10 +15,13 @@ class AccountsSeeder extends Seeder
         $all_depts = App\Department::all();
         foreach ($all_depts as $dept) {        	        	
 
-        	$dept->accounts()->create([
+        	$dept->account_transactions()->create([
         		'aysem' => App\Aysem::current()->aysem,
-        		'begining_balance' => 0,
-        		'ending_balance' => 0
+        		'department_id' => $dept->id,
+                'transaction_type_id' => 'I',
+                'amount' => 0,
+                'balance' => 0,
+                'remarks' => 'Inital balance'
     		]);
 
 

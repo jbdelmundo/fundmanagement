@@ -21,7 +21,7 @@ class CreateEnrolleeStatisticsTable extends Migration
             $table->unsignedInteger('department_id');
             $table->unsignedInteger('undergraduate');
             $table->unsignedInteger('graduate');
-
+            
             $table->foreign('department_id')
                 ->references('id')->on('departments')
                 ->onUpdate('cascade');

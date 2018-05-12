@@ -11,14 +11,11 @@ use Illuminate\Support\Facades\DB;
 class Department extends Model
 {
     //
-    protected $fillable = ['initials','short_name','full_name','percent_allocation'];
+    protected $fillable = ['initials','short_name','full_name','is_from_book_fund','percent_allocation'];
 
     /****  RELATIONSHIP FUNCTIONS  ****/
 
-    function accounts(){
-        return $this->hasMany('App\Account');
-    }
-
+  
     function account(Aysem $aysem){        
          return $this->hasMany('App\Account')->where('aysem',$aysem->aysem)->first();
     }
@@ -28,6 +25,12 @@ class Department extends Model
             ->orderBy('aysem','desc');
     }
 
+    function last_account_transaction(){
+        return $this->hasMany('App\AccountTransactions')
+            ->orderBy('parent_account_transaction_id','desc')
+            ->first();
+    
+    }
 
     /****  FUNCTIONS  ****/
 

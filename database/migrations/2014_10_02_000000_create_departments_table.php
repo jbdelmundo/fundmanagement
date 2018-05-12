@@ -19,6 +19,8 @@ class CreateDepartmentsTable extends Migration
             $table->string('initials');
             $table->string('short_name');
             $table->string('full_name');
+            $table->boolean('is_from_book_fund')->default(true);
+            $table->boolean('is_percent_based')->default(false);
             $table->decimal('percent_allocation',5,2)->nullable();
             $table->timestamps();
         });

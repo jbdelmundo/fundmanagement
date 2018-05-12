@@ -65,29 +65,7 @@ class RequestsController extends Controller
 
 
     private function getForms(){
-        // $categories = Requests::categories();
-        // $forms = [];
-
-        // foreach($categories as $id => $category){
-        //     if($id == 'E' || $id == 'S'|| $id == 'O'){              //equipment, suppies or others
-        //         $path = '_other_material_form';
-        //     }else{
-        //         $path = '_'.$category.'_form';
-        //     }
-            
-        //     $forms[] =
-        //             [
-        //                 'btn_caption' => ucwords($category),
-        //                 'form_id' => $category.'_form',
-        //                 'form_title' => 'Request '.$category,
-        //                 'form_path' => '_'.$category.'_form',
-        //                 'category_id' => $id
-        //             ];
-        // }
-
-        // TODO: FIX THIS ^^^ and THIS VVVV
-
-
+     
         $forms = [
                     [
                         'btn_caption' => 'Books',

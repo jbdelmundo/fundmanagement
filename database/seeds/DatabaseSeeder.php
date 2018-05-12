@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AysemSeeder::class);
         $this->call(TransactionTypeSeeder::class);
         $this->call(RequestStatusesSeeder::class);
-        $this->call(AccountsSeeder::class);
+        $this->call(AccountTransactionsSeeder::class);
         $this->call(ModuleSeeder::class);
 
         $this->call(ModuleUserSeeder::class);

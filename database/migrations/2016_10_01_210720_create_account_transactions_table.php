@@ -15,15 +15,22 @@ class CreateAccountTransactionsTable extends Migration
     {
 	Schema::defaultStringLength(191);
         Schema::create('account_transactions', function (Blueprint $table) {
-            $table->increments('id');            
+            $table->increments('id');
+            $table->unsignedInteger('parent_account_transaction_id')->nullable();
+            $table->unsignedInteger('aysem');           
             $table->unsignedInteger('department_id');
-            $table->unsignedInteger('account_id');
             $table->unsignedInteger('request_id')->nullable();
             $table->char('transaction_type_id',1);
             $table->decimal('amount',12,2);
+            $table->decimal('balance',12,2);
+
             
             $table->string('remarks')->nullable();
             $table->unsignedInteger('transaction_details_id')->nullable();
+
+            $table->foreign('parent_account_transaction_id')
+                ->references('id')->on('account_transactions')
+                ->onUpdate('cascade');
 
             $table->foreign('department_id')
                 ->references('id')->on('departments')
@@ -37,8 +44,8 @@ class CreateAccountTransactionsTable extends Migration
                 ->references('id')->on('requests')
                 ->onUpdate('cascade');
 
-            $table->foreign('account_id')
-                ->references('id')->on('accounts')
+            $table->foreign('aysem')
+                ->references('aysem')->on('aysems')
                 ->onUpdate('cascade');
 
             $table->timestamps();

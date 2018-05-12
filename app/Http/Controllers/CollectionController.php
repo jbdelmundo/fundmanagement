@@ -23,9 +23,19 @@ class CollectionController extends Controller
 	
 
     function index(){
+        
     	$aysems = Aysem::all();
     	$collections = DB::table('collections')->distinct()->pluck('aysem');
-    	$depts_with_collection = DB::table('departments')->where('percent_allocation',null)->get();
+    	$depts_with_percent = DB::table('departments')
+                                    ->where('is_from_book_fund',True)
+                                    ->where('is_percent_based',True)
+                                    ->get();
+
+        $depts_with_collection = DB::table('departments')
+                                    ->where('is_from_book_fund',True)
+                                    ->where('is_percent_based',False)
+                                    ->get();
+
     	$current_aysem = Aysem::current();
 
         //validate that this is the first entry in Collections table
@@ -33,7 +43,7 @@ class CollectionController extends Controller
 
 
         
-    	return view('collection.index',compact('aysems', 'collections','depts_with_collection','current_aysem', 'is_first_collection'));
+    	return view('collection.index',compact('aysems', 'collections','depts_with_collection', 'depts_with_percent','current_aysem', 'is_first_collection'));
     }
 
     function show(Aysem $aysem){
@@ -70,6 +80,7 @@ class CollectionController extends Controller
 		$users = \App\User::all();
 		
 		$message = 'Library Fund Management System account '. Auth::user()->username .' made a new collection for '. Aysem::current()->short_name .'.';
+
 		foreach($users as $user){
 			$user->message = $message;
 			$user->request = ['Collected Amount from Main Library' => $request->amount . ' PHP'];
@@ -90,10 +101,48 @@ class CollectionController extends Controller
 
         //validate that this is the first entry in Collections table
         $is_first_collection = Collection::isFirstCollectionForTheSem($aysem);
+        if($is_first_collection){
+            $transactiontype = AccountTransactions::COLLECTION();
+        }else{
+            $transactiontype = AccountTransactions::ADJUSTMENT();
+        }
+
 
         // insert entries in collectionb and enrollmentstatistics
         $collection = Collection::create(['aysem'=>$aysem->aysem , 'amount' => $amount ]);
-        $statistics = $request->statistics; 
+        //insert statistics
+        $statistics = $request->statistics;
+        $this->store_enrollment_statistics($statistics,$collection);
+
+        //compute allocations
+        $allocations = $this->computeAllocations($amount,$statistics); 
+
+        
+        //insert allocation as transactions
+		foreach($allocations as $dept_id => $allocation){
+
+            $department = \App\Department::find($dept_id);  
+            $last_account_transaction = $department->last_account_transaction();
+       		
+			$input = [				
+				'department_id' => $dept_id,
+				'transaction_type_id' =>$transactiontype,
+				'amount' => floatval($allocation),
+                'balance' => $last_account_transaction->balance + floatval($allocation),
+                'aysem' => Aysem::current()->aysem,
+                'parent_account_transaction_id'=>$last_account_transaction->id
+
+			];		
+			AccountTransactions::create($input);
+		}
+
+        session()->flash('alert-success', 'Collection entries recorded!');
+		return redirect()->action('CollectionController@index')->with('success', 'Collection recorded!');
+		
+    }
+
+    private function store_enrollment_statistics($statistics,$collection){
+         
         foreach($statistics as $department_id => $department){
             $input = [
                 'aysem' => $collection->aysem,
@@ -104,37 +153,7 @@ class CollectionController extends Controller
             ];
             $dept_statistics = EnrolleeStatistics::create($input);
         }
-
-        //compute allocations
-        $allocations = $this->computeAllocations($amount,$statistics);      
-
-        if($is_first_collection){
-            $transactiontype = AccountTransactions::COLLECTION();
-        }else{
-            $transactiontype = AccountTransactions::ADJUSTMENT();
-        }
-
-        
-        //insert allocation as transactions
-		foreach($allocations as $dept_id => $allocation){
-
-            $department = \App\Department::find($dept_id);  
-            $dept_account =  $department->account($aysem);        		
-			$input = [				
-				'department_id' => $dept_id,
-                'account_id' => $dept_account->id,
-				'transaction_type_id' =>$transactiontype,
-				'amount' => floatval($allocation),
-			];		
-			AccountTransactions::create($input);
-		}
-
-        session()->flash('alert-success', 'Collection entries recorded!');
-		return redirect()->action('CollectionController@index')->with('success', 'Collection recorded!');
-		
     }
-
-    
 
      /**
         @parameter $statistics[dept_id][udnergraduate|graduate] = count

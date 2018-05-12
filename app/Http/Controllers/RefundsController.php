@@ -75,16 +75,18 @@ class RefundsController extends Controller
         $request->total_bid_price = $request->total_quote_price - $formrequest->refund;
         $request->save();
 		
-		$account_id = Account::where('department_id',$request->department_id)
-								-> orderby('created_at','desc')
-								->first()->id;
+		
+        $department = Department::find($request->department_id);                        
+        $last_account_transaction = $department->last_account_transaction();
+
 		$transaction = [];
         $transaction['department_id'] = $request->department_id; 
-        $transaction['account_id'] = $account_id; 
         $transaction['request_id'] = $request->id; 
         $transaction['amount'] = $formrequest->refund; 
-        $transaction['remarks'] = 'NONE';
+        $transaction['balance'] = $last_account_transaction->balance + $formrequest->refund;
+        $transaction['aysem'] = Aysem::current()->aysem;
         $transaction['transaction_type_id'] = 'R';
+        $transaction['parent_account_transaction_id'] = $last_account_transaction->id;
 		
 		$account_transactions = \App\AccountTransactions::create($transaction);		
         $account_transactions->save();

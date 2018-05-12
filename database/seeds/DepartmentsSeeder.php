@@ -62,25 +62,35 @@ class DepartmentsSeeder extends Seeder
 	        [
 	        	'initials'=> 'MMM',
 	        	'short_name' => 'Metallurgical, Mining and Materials Engineering',
-	        	'full_name' => 'Department of Metallurgical, Mining and Materials Engineering'
+	        	'full_name' => 'Department of  Mining, Metallurgical, and Materials Engineering'
 	        ],
 	        [
 	        	'initials'=> 'ES',
 	        	'short_name' => 'Engineering Science',
 	        	'full_name' => 'Department of Engineering Science',
+	        	'is_percent_based' => True,
 	        	'percent_allocation' => 7.0
+	        ],
+	        [
+	        	'initials'=> 'EQUIPMENT',
+	        	'short_name' => 'Equipment Fund',
+	        	'full_name' => 'Equipment Fund',
+	        	'is_percent_based' => True,
+	        	'percent_allocation' => 3.0
 	        ],
 	        [
 	        	'initials'=> 'GenRef',
 	        	'short_name' => 'General Reference',
 	        	'full_name' => 'General References',
+	        	'is_percent_based' => True,
 	        	'percent_allocation' => 5.0
 	        ],
 	        [
 	        	'initials'=> 'ERDT',
 	        	'short_name' => 'Engineering Research and Development for Technology',
 	        	'full_name' => 'Engineering Research and Development for Technology',
-	        	'percent_allocation' => 0.0
+	        	'percent_allocation' => 0.0,
+	        	'is_from_book_fund' => False
 	        ],
         ];
         foreach ($depts as  $dept) {

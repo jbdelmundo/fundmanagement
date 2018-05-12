@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Aysem;
 use App\Department;
 use App\AccountTransactions;
-use App\Account;
+
 
 use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
@@ -22,23 +22,7 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
-        /* Hardcoded variables */
-        // $beginning_balance = 1002200;
-        // $current_balance = 2700;
-        // $transactions = [ 
-        //     ["created_at"=>'1/02/17',
-        //      "transaction_type"=>'Collection',
-        //      "amount"=>2000,
-        //      "balance"=>3000
-        //     ],
-        //     ["created_at"=>'1/03/17',
-        //      "transaction_type"=>'Purchase',
-        //      "amount"=>300,
-        //      "balance"=>2700
-        //     ]
-        // ];
-        // $total_balance = 2700;
-        /*                     */
+
         $user = Auth::user();
         if(is_null($user)){
 			return redirect('');			
@@ -54,39 +38,22 @@ class DashboardController extends Controller
 		
 		
         
-		$records_to_fetch = 100;
+		$records_to_fetch = 20;
         $current_aysem = $request->session()->get('active_aysem',Aysem::current()->aysem);
         $current_aysem = Aysem::where('aysem',$current_aysem)->first();
         $aysem = $current_aysem;
         
-        
 
-        $beginning_balance = Account::where('department_id', $department->id)
-                                    ->where('aysem',$current_aysem->aysem)
-                                    ->pluck('begining_balance')
-                                    ->first();
 							
-        $current_balance = $department->account($current_aysem)                                
-						             ->currentBalance();
+        $current_balance = $department->last_account_transaction()->balance;
 							
-        $account_id = $department->account($current_aysem)                                
-							->id;
+        
 		
-		$transactionss = AccountTransactions::where('department_id',$department->id)
-											-> where('account_id',$account_id)
-											-> orderby('created_at','asc')
-											->get()
-											->toArray();
-		
-        $transactions = [];
-		$balance = $beginning_balance;
-        foreach ($transactionss as $key => $value) {
-            $value['balance'] = $balance + $value['amount'];
-			$balance = $value['balance'];
-            $transactions[$key] = $value;
-        }
-		
-		// dd($beginning_balance, $transactions,$current_balance);
+		$transactions = AccountTransactions::where('department_id',$department->id)
+											-> where('aysem',$aysem->aysem)
+											-> orderby('created_at','desc')
+                                            ->limit($records_to_fetch)
+											->get();
 		
 		$requests_this_sem = [
             \App\Requests::BOOK =>   $department->bookRequestsForSem($aysem),
@@ -100,9 +67,15 @@ class DashboardController extends Controller
         ];
 
                 
-	
+	    $types = [
+            'C' => 'COLLECTION',
+            'P' => 'PURCHASE',
+            'A' => 'ADJUSTMENT',
+            'R' => 'REFUND',
+            'I' => 'INITIAL'
+        ];
                 
-       return view('dashboard.dashboard',compact('requests_this_sem','active_department_id','departments','beginning_balance','current_balance','transactions', 'department', 'user','current_aysem','aysem', 'created_at'));
+       return view('dashboard.dashboard',compact('requests_this_sem','active_department_id','departments','current_balance','transactions', 'department', 'user','current_aysem','aysem', 'types'));
        
     }
     

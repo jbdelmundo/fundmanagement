@@ -33,6 +33,11 @@ class TransactionTypeSeeder extends Seeder
     			'transaction_type' => 'REFUND',
     			'description' => 'Refund from purchases'
     		],
+            [
+                'id' => 'I',
+                'transaction_type' => 'INITIAL',
+                'description' => 'Initial fund'
+            ],
     	];
         DB::table('transaction_types')->insert($types);
     }

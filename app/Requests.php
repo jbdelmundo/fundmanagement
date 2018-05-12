@@ -47,14 +47,5 @@ class Requests extends Model
         return $this->belongsTo('\App\RequestEndorsement','id','request_id');
     }
 
-
-    function book(){
-        
-    }
-
-    function ebook(){
-        
-    }
-
   
 }

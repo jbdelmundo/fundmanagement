@@ -3,14 +3,7 @@
 
 @section('content')
 
-<?php 
-    $types = [
-            'C' => 'COLLECTION',
-            'P' => 'PURCHASE',
-            'A' => 'ADJUSTMENT',
-            'R' => 'REFUND',
-        ];
-?>
+
 	
 <div class="row">
 	<div class="col-lg-12">
@@ -25,7 +18,7 @@
     @include('_active_sem_selector',['active_aysem'=>$aysem->aysem])
 
 <div class="panel-body">
-    <h4>Beginning balance:{{ number_format( $beginning_balance ,  2 ,  "." ,  "," ) }}</h4> 
+    
     <h4>Current Balance: {{ number_format( $current_balance ,  2 ,  "." ,  "," ) }}</h4>
 </div>
 
@@ -53,8 +46,8 @@
                     <tr>
                         <td>{{$transaction['created_at']}}</td>
                         <td>{{$types[$transaction['transaction_type_id']]}}</td>
-                        <td>{{  number_format ( $transaction['amount'] ,  2 ,  "." ,  "," )  }}</td>
-                        <td>{{  number_format ( $transaction['balance'] ,  2 ,  "." ,  "," )  }}</td>
+                        <td>{{  number_format ( $transaction->amount ,  2 ,  "." ,  "," )  }}</td>
+                        <td>{{  number_format ( $transaction->balance ,  2 ,  "." ,  "," )  }}</td>
                     </tr>
                     @endforeach
                 </tbody> 
