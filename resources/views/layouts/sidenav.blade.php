@@ -35,7 +35,7 @@
 			@endif
 			@if(in_array(3,$modules))
 				<li>
-					<a href="{{url('requests')}}"><i class="fa fa-bar-chart-o fa-fw"></i> Requests</a>
+					<a href="{{url('requests')}}"><i class="fa fa-bar-chart-o fa-fw"></i> Request Preparation</a>
 				</li>
 			@endif
 			@if(in_array(4,$modules))

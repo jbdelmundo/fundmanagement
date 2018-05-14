@@ -70,7 +70,7 @@ class DashboardController extends Controller
 	    $types = [
             'C' => 'COLLECTION',
             'P' => 'PURCHASE',
-            'A' => 'ADJUSTMENT',
+            'A' => 'COLLECTION ADJUSTMENT',
             'R' => 'REFUND',
             'I' => 'INITIAL'
         ];

@@ -13,7 +13,10 @@ class Requests extends Model
     const FOR_PURCHASE = 3;             //PR issued
     const PURCHASED = 4;                //Awaiting delivery
     const DELIVERED = 5;
-    const REFUNDED = 6;
+    const REFUNDED = 6;                 // Item was not purchased, amount was refunded
+    const DISCOUNTED = 7;               // Item was purchased at a lower price, saved amount was credited back
+    const REJECTED_ENDORSE = 8;
+    const REJECTED_APPROVE = 9;
 
     // based on Requests::categories()
     const BOOK = 'B';

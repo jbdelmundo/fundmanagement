@@ -22,6 +22,7 @@ class CreateRequestsTable extends Migration
             $table->decimal('total_quote_price',12,2)->nullable();
             $table->decimal('total_bid_price',12,2)->nullable();            
             $table->string('remarks')->nullable();
+            $table->string('reject_reason')->nullable();
             $table->string('recommendedby')->nullable();
             
             $table->unsignedInteger('status')->default(0);

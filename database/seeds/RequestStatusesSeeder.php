@@ -46,8 +46,23 @@ class RequestStatusesSeeder extends Seeder
             [
                 'id' => 6,
                 'status' => 'REFUNDED',
+                'description' => 'Refund from purchases. Item was not purchased. Debited to account.'
+            ],
+            [
+                'id' => 7,
+                'status' => 'DISCOUNTED',
                 'description' => 'Refund from purchases. Debited to account.'
             ],
+            [
+                'id' => 8,
+                'status' => 'REJECTED (ENDORSMENT)',
+                'description' => 'Rejected at endorsement level.'
+            ],
+            [
+                'id' => 9,
+                'status' => 'REJECTED (APPROVAL)',
+                'description' => 'Rejected at approval level.'
+            ]
     	];
         DB::table('request_statuses')->insert($statuses);
     }

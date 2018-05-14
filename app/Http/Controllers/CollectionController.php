@@ -47,29 +47,58 @@ class CollectionController extends Controller
     }
 
     function show(Aysem $aysem){
-        $collections = DB::table('collections')->distinct()->pluck('aysem');
+        
     	//get latest collection
-    	$collection = Collection::where('aysem',$aysem->aysem)->orderBy('created_at')->first();
+    	$collection_objects = Collection::where('aysem',$aysem->aysem)->orderBy('created_at','desc')->get();
 
+        $collections = [];
+        $last_collection = [];
+        
+        foreach($collection_objects as $collection){
+            
+            $enrollee_statistics = $collection->enrolleeStatistics()->get();
 
-    	$enrollee_statistics = $collection->enrolleeStatistics()->get();
+            $statistics=[];
+            foreach($enrollee_statistics as $es){
+                $statistics[$es->department_id] = [
+                    'graduate' => $es->graduate,
+                    'undergraduate' => $es->undergraduate
+                ];                  
+            }
 
-    	$statistics=[];
-    	foreach($enrollee_statistics as $es){
-    		$statistics[$es->department_id] = [
-    			'graduate' => $es->graduate,
-    			'undergraduate' => $es->undergraduate
-    		];    		   		
-    	}
+            $allocations =  $this->computeAllocations($collection->amount,$statistics); 
+            $dept_ids = array_keys($allocations);
 
-    	$allocations =  $this->computeAllocations($collection->amount,$statistics); 
-    	$dept_ids = array_keys($allocations);
+            $departments = Department::find($dept_ids);
 
-    	$departments = Department::find($dept_ids);
+            
+            $collections[$collection->id]['amount'] = $collection->amount ;
+            $collections[$collection->id]['allocations'] = $allocations ;
+            $collections[$collection->id]['statistics'] = $statistics ;
+            $collections[$collection->id]['aysem'] = $aysem ;
+            $collections[$collection->id]['is_adjustment'] = $collection->is_adjustment ;
+            $collections[$collection->id]['created_at'] = $collection->created_at; 
+
+            if(count($last_collection) == 0){
+               $last_collection = $collections[$collection->id];
+            }
+        }
     	
+    	$current_aysem = Aysem::current();
+        $depts_with_percent = DB::table('departments')
+                                    ->where('is_from_book_fund',True)
+                                    ->where('is_percent_based',True)
+                                    ->get();
+
+        $depts_with_collection = DB::table('departments')
+                                    ->where('is_from_book_fund',True)
+                                    ->where('is_percent_based',False)
+                                    ->get();
     
+        $aysem_collections = DB::table('collections')->distinct()->pluck('aysem');
     	
-    	return view('collection.show',compact('collections','aysem','collection','allocations','departments','statistics'));
+    	return view('collection.show',compact('aysem_collections','collections','aysem', 'departments','current_aysem',
+                    'depts_with_collection', 'depts_with_percent','last_collection'));
     }
 
     /**
@@ -101,15 +130,24 @@ class CollectionController extends Controller
 
         //validate that this is the first entry in Collections table
         $is_first_collection = Collection::isFirstCollectionForTheSem($aysem);
+        $is_adjustment = !$is_first_collection;
         if($is_first_collection){
             $transactiontype = AccountTransactions::COLLECTION();
+            $parent_id = null;
         }else{
             $transactiontype = AccountTransactions::ADJUSTMENT();
+            $latest_collection = Collection::where('aysem',$aysem->aysem)->orderBy('created_at', 'desc')->first();
+            $parent_id = $latest_collection->id;
         }
 
-
         // insert entries in collectionb and enrollmentstatistics
-        $collection = Collection::create(['aysem'=>$aysem->aysem , 'amount' => $amount ]);
+        $collection = Collection::create([
+                'aysem'=>$aysem->aysem , 
+                'amount' => $amount,
+                'is_adjustment' => $is_adjustment,
+                'parent_id'=> $parent_id
+        ]);
+
         //insert statistics
         $statistics = $request->statistics;
         $success = $this->store_enrollment_statistics($statistics,$collection);
@@ -118,12 +156,33 @@ class CollectionController extends Controller
             return redirect()->action('CollectionController@index')->with('danger', 'No students recorded!');
         }
 
-        //compute allocations
-        $allocations = $this->computeAllocations($amount,$statistics); 
-        
+        //compute old and new allocations
+        if($is_adjustment){
+            $old_amount = $latest_collection->amount;
+            $old_statistics_obj = $latest_collection->enrolleeStatistics()->get();
+            $old_statistics=[];
+            foreach ($old_statistics_obj as $key => $obj) {
+                $old_statistics[$key+1]['undergraduate'] = $obj->undergraduate;
+                $old_statistics[$key+1]['graduate'] = $obj->graduate;
+            }
+            $old_allocations = $this->computeAllocations($old_amount,$old_statistics);
+            $allocations = $this->computeAllocations($amount,$statistics);
+            
+            foreach ($allocations as $dept_id => $value) {
+                $allocations[$dept_id] = $allocations[$dept_id] - $old_allocations[$dept_id];
+            }
+
+        }else{
+            $allocations = $this->computeAllocations($amount,$statistics); 
+        }
+     
         
         //insert allocation as transactions
 		foreach($allocations as $dept_id => $allocation){
+
+            if($allocation > -0.01 and $allocation < 0.01){
+                continue;       // do not insert if there's no significant change
+            }
 
             $department = \App\Department::find($dept_id);  
             $last_account_transaction = $department->last_account_transaction();

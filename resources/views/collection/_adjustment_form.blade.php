@@ -3,32 +3,40 @@
 		<div class="panel panel-info">
 			<div class="panel-heading">
 		 	<h3>
-		  		@if($is_first_collection)
-		  			New Collection
-	  			@else
-	  				Adjustments
-	  			@endif
-		  		 for {{  \App\Aysem::shortName( $current_aysem->aysem ) }}
-	  			
-	  		<h3></div>
+		  		Adjustments for {{  \App\Aysem::shortName( $current_aysem->aysem ) }}
+		  	</h3>
+		  	
+	  		</div>
 		  <div class="panel-body">
+		  	<h3>
+	  			Previous amount collected from Main Library: {{$last_collection['amount']}}
+			</h3>
 			{!! Form::open(['url' => 'collection' , 'class' => 'form']) !!}	
 				<div class="form-group">
-					{{Form::label('amount', 'Collected amount from Main Library')}} 
+					
+					{{Form::label('amount', 'Adjusted amount collected from Main Library:')}} 
+					
 					<strong><span id='amountcollected'></span></strong>
 	    			{{
-	    				Form::number('amount',null,['class'=>'form-control', 'min'=>0,'required'])
+	    				Form::number('amount',$last_collection['amount'],['class'=>'form-control', 'min'=>0,'required'])
 	    			}}
 
 	    		</div>
 	    	
 	    		<table class="table">
 					
+						<tr>
+							<td></td>
+							<th></th>
+							<th>Old amount</th>
+							<th>New amount</th>
+						</tr>
 					@foreach($depts_with_percent as $dept)
 						<tr>
 							<div class="form-group">
 								<td>{{ $dept->short_name}}</td>
 				    			<td>{{ $dept->percent_allocation }}%</td>
+				    			<td id='old-amount-{{$dept->id}}'>xxxx</td>
 				    			<td id='amount-{{$dept->id}}'>xxxx</td>
 				    		</div>
 						</tr>
@@ -46,29 +54,41 @@
 		    		<table class="table">
 						<tr>
 							<th>Department/Institute</th>
+							<th>Undegraduates (Previous)</th>
+							<th>Graduates (Previous)</th>
 							<th>Undegraduates</th>
 							<th>Graduates</th>
-							<th>Amount</th>
+							<th>Previous Amount</th>
+							<th>New Amount</th>
 						</tr>
 						@foreach($depts_with_collection as $dept)
 							<tr>
 								<div class="form-group">
 									<td>{{Form::label('amount', $dept->short_name)}}</td>
+	                                <td>{{  $last_collection['statistics'][$dept->id]['undergraduate']  }}</td>
+	                                <td>{{  $last_collection['statistics'][$dept->id]['graduate']  }}</td>
 					    			<td>{{Form::number(
 						    				'statistics['.$dept->id.']'.'[undergraduate]',
-						    				0,
+						    				$last_collection['statistics'][$dept->id]['undergraduate'],
 						    				['class'=>'form-control','min'=>0,'required', 
 						    					'id'=>'ug-'.$dept->id]
 					    				)}}
 					    			</td>
-					    			<td>{{Form::number('statistics['.$dept->id.']'.'[graduate]'			,0,['class'=>'form-control','min'=>0,'required','id'=>'g-'.$dept->id])}}</td>
+					    			<td>{{Form::number(
+					    				'statistics['.$dept->id.']'.'[graduate]'
+					    				,$last_collection['statistics'][$dept->id]['graduate']
+					    				,['class'=>'form-control','min'=>0,'required','id'=>'g-'.$dept->id])}}</td>
+
+					    			
+                                	<td>{{  number_format ( $last_collection['allocations'][$dept->id] ,  2 ,  "." ,  "," ) }}</td>
 					    			<td id='amount-{{$dept->id}}'>xxx</td>
+
 					    		</div>
 							</tr>
 		    			@endforeach
 					</table>
 				</div>
-				{{ Form::submit('Create collection',['class'=> 'form btn-primary btn']) }}
+				{{ Form::submit('Adjust collection',['class'=> 'form btn-primary btn']) }}
 	    		
 			{!! Form::close() !!}
 		  </div>
@@ -91,6 +111,7 @@
 	$(document).ready(function(){
 		$('input').change(compute_percent_allocation)
 		// $('input').keypress(compute_percent_allocation)
+		compute_percent_allocation()
 	})
 
 	depts_with_percent = {!! json_encode($depts_with_percent) !!}
@@ -100,6 +121,7 @@
 	function compute_percent_allocation(){
 		console.log('change')
 		amount = $('#amount').val()
+		prev_amount = {{$last_collection['amount']}}
 		console.log('amount :' + amount)
 		format_with_comma(amount)
 		
@@ -111,9 +133,12 @@
 			dept = depts_with_percent[ix]
 
 			allocation = amount * (dept['percent_allocation']/100)
+			old_allocation = prev_amount * (dept['percent_allocation']/100)
 			total_allocation_for_dept_percent += allocation
 			selector = '#amount-'+ dept['id']
+			old_selector = '#old-amount-'+ dept['id']
 			$(selector).html(format_with_comma(allocation))
+			$(old_selector).html(format_with_comma(old_allocation))
 		}
 
 		//compute amount to redistribute
@@ -132,13 +157,8 @@
 			
 			ug_form = parseInt($('#ug-'+dept['id']).val())
 			g_form = parseInt($('#g-'+dept['id']).val())
-
-			dept['dept_weight'] = (ug_form*UG_WEIGHT) + (g_form*G_WEIGHT)
+			dept['dept_weight'] = (ug_form * UG_WEIGHT) + (g_form * G_WEIGHT)
 			TOTAL_WEIGHT += dept['dept_weight']
-
-			console.log(dept['short_name'] + ug_form + ' ' + g_form)
-			console.log(dept['dept_weight'])
-
 		}
 
 		//compute allocations based on weights

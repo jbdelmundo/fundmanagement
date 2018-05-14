@@ -34,7 +34,7 @@
 		@else
 			@include('collection._collection_form', compact('active_aysem_str'))
 		@endif
-		@include('collection._collection_form', compact('active_aysem_str'))
+		
 		
 
 		
