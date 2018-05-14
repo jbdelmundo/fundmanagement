@@ -13,22 +13,31 @@
 
 		@include('layouts._alerts')
 
-		@if(count($collections)>0)
-			<ul class="list-group">
-			@foreach($collections as $collection)
-			    <li class="list-group-item">
-			  		<a href="{{url('collection',$collection)}}"> {{ \App\Aysem::shortName($collection)}} </a>
-			    </li>
-			  @endforeach
-			</ul>
-
-		@else
-			<!-- No collections found yet. -->
-		@endif
-
 		
 
+		@if(!$is_first_collection)
+			<div class="alert alert-warning" role="alert">
+				You already have collection data for this semester, if you wish to make
+			adjustments, select the semester you want to edit
+			</div>
+
+			@if(count($collections)>0)
+				<ul class="list-group">
+				@foreach($collections as $collection)
+				    <li class="list-group-item">
+				  		<a href="{{url('collection',$collection)}}"> {{ \App\Aysem::shortName($collection)}} </a>
+				    </li>
+				  @endforeach
+				</ul>
+
+			@endif
+		@else
+			@include('collection._collection_form', compact('active_aysem_str'))
+		@endif
 		@include('collection._collection_form', compact('active_aysem_str'))
+		
+
+		
 		</div>
 		
 	</div>

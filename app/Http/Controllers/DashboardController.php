@@ -38,7 +38,7 @@ class DashboardController extends Controller
 		
 		
         
-		$records_to_fetch = 20;
+		
         $current_aysem = $request->session()->get('active_aysem',Aysem::current()->aysem);
         $current_aysem = Aysem::where('aysem',$current_aysem)->first();
         $aysem = $current_aysem;
@@ -48,7 +48,7 @@ class DashboardController extends Controller
         $current_balance = $department->last_account_transaction()->balance;
 							
         
-		
+		$records_to_fetch = 20;
 		$transactions = AccountTransactions::where('department_id',$department->id)
 											-> where('aysem',$aysem->aysem)
 											-> orderby('created_at','desc')

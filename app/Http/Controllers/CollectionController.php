@@ -112,11 +112,15 @@ class CollectionController extends Controller
         $collection = Collection::create(['aysem'=>$aysem->aysem , 'amount' => $amount ]);
         //insert statistics
         $statistics = $request->statistics;
-        $this->store_enrollment_statistics($statistics,$collection);
+        $success = $this->store_enrollment_statistics($statistics,$collection);
+        if(!$success){
+            session()->flash('alert-danger', 'No students recorded!');
+            return redirect()->action('CollectionController@index')->with('danger', 'No students recorded!');
+        }
 
         //compute allocations
         $allocations = $this->computeAllocations($amount,$statistics); 
-
+        
         
         //insert allocation as transactions
 		foreach($allocations as $dept_id => $allocation){
@@ -142,6 +146,17 @@ class CollectionController extends Controller
     }
 
     private function store_enrollment_statistics($statistics,$collection){
+
+        //count # of students
+        $total_students = 0;
+        foreach($statistics as $department_id => $department){
+            $total_students += $department['undergraduate'];
+            $total_students += $department['graduate'];
+        }
+
+        if($total_students == 0){
+            return False;
+        }
          
         foreach($statistics as $department_id => $department){
             $input = [
@@ -153,6 +168,7 @@ class CollectionController extends Controller
             ];
             $dept_statistics = EnrolleeStatistics::create($input);
         }
+        return True;
     }
 
      /**
@@ -179,6 +195,10 @@ class CollectionController extends Controller
             ];
         }
 
+        if($total_weight == 0){
+            // No weights 
+            return $allocations;
+        }
         foreach ($weights as $department_id => $weight) {
             $allocations[$department_id] = $amount_reserved_to_divide * ($weight['ug'] + $weight['g']) / $total_weight;
         }
