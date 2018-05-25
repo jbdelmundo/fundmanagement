@@ -20,6 +20,7 @@ class CreateAccountTransactionsTable extends Migration
             $table->unsignedInteger('aysem');           
             $table->unsignedInteger('department_id');
             $table->unsignedInteger('request_id')->nullable();
+            $table->unsignedInteger('collection_id')->nullable();
             $table->char('transaction_type_id',1);
             $table->decimal('amount',12,2);
             $table->decimal('balance',12,2);
@@ -42,6 +43,10 @@ class CreateAccountTransactionsTable extends Migration
             
             $table->foreign('request_id')
                 ->references('id')->on('requests')
+                ->onUpdate('cascade');
+
+            $table->foreign('collection_id')
+                ->references('id')->on('collections')
                 ->onUpdate('cascade');
 
             $table->foreign('aysem')

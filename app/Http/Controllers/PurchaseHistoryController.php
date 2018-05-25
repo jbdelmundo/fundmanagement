@@ -45,7 +45,7 @@ class PurchaseHistoryController extends Controller
 
 			foreach ($all_requests_this_sem as $key => $value) {
 				// dd($value);
-				$purchased[$key] = $value->whereIn('status',[Requests::APPROVED , Requests::REFUNDED]);
+				$purchased[$key] = $value->whereIn('status',[Requests::APPROVED , Requests::DISCOUNTED]);
 			}
 
 		$subjects = RequestEndorsement::join('requests', 'requests.id', '=', 'request_endorsements.request_id')

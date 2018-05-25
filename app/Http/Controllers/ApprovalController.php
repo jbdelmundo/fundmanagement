@@ -48,8 +48,21 @@ class ApprovalController extends Controller
         foreach ($all_requests_this_sem as $key => $value) {
             $endorsements[$key] = $value->where('status',Requests::ENDORSED)->where('department_id',$active_department_id);   //filter only those that are endorsed
         }
+
+
+        $approved = [];
+        foreach ($all_requests_this_sem as $key => $value) {
+            $approved[$key] = $value->where('status',Requests::APPROVED)->where('department_id',$active_department_id);   //filter only those that are endorsed
+        }
+        
+        $rejects = [];
+        foreach ($all_requests_this_sem as $key => $value) {
+            $rejects[$key] = $value->where('status',Requests::REJECTED_APPROVE)->where('department_id',$active_department_id);   //filter only those that are endorsed
+        }
+
 		// dd($endorsements);
-    	return view('approval.index',compact('user','departments','department','aysem','endorsements','active_department_id'
+    	return view('approval.index',compact('user','departments','department','aysem','endorsements',
+            'approved','rejects','active_department_id'
             ));
     }
 	
@@ -79,7 +92,6 @@ class ApprovalController extends Controller
         $request_endorsement = RequestEndorsement::findOrFail($request_endorsement_id);
        
         //update request status to for purchase
-        // $request->status = Requests::FOR_PURCHASE;
         $request->status = Requests::APPROVED;
         $request->save();
 		
@@ -109,6 +121,34 @@ class ApprovalController extends Controller
         return redirect('approval');
     }
 
+    function reject(Request $formrequest){        
+
+        $request = Requests::findOrFail($formrequest->request_id);
+        
+        $category = $request->category_id;
+        $request->status = Requests::REJECTED_APPROVE;
+        $request->reject_reason = $formrequest->reject_reason;
+        $request->save();
+
+        // session()->flash('alert-warning', 'Request was rejected! Reason:'.$formrequest->reject_reason);
+        return 1;
+    }
+
+    function remove($request_id){       
+        
+        //update the status to endorsed
+        $request = Requests::find($request_id);
+        $request->status = Requests::ENDORSED;
+        $request->save();
+        
+        return redirect(url('approval'));
+    }
+
+    //verify if user is allowed to take action
+    private function verify_department(){
+        $active_department_id = $request->session()->get('active_dept_id',1) ; 
+        $department = Department::find($active_department_id);
+    }
 
     private function find_item($category, $item_id){
     	$category_name = [];

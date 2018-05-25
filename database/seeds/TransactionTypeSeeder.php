@@ -16,12 +16,12 @@ class TransactionTypeSeeder extends Seeder
     		[
     			'id' => 'C',
     			'transaction_type' => 'COLLECTION',
-    			'description' => 'Collection'
+    			'description' => 'Collection from main library'
     		],
     		[
     			'id' => 'P',
     			'transaction_type' => 'PURCHASE',
-    			'description' => 'Dedduction as a result of purchasing'
+    			'description' => 'Deduction as a result of a purchase'
     		],
     		[
     			'id' => 'A',
@@ -37,6 +37,11 @@ class TransactionTypeSeeder extends Seeder
                 'id' => 'I',
                 'transaction_type' => 'INITIAL',
                 'description' => 'Initial fund'
+            ],
+            [
+                'id' => 'M',
+                'transaction_type' => 'MANUAL',
+                'description' => 'Manual transaction made'
             ],
     	];
         DB::table('transaction_types')->insert($types);

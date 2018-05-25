@@ -42,10 +42,12 @@ Route::get('/switch_active_user/{id}','SessionController@switch_active_user');
 
 Route::get('/collection', 'CollectionController@index')->middleware('permit:1');
 Route::post('/collection', 'CollectionController@store')->middleware('permit:1');
+Route::get('/collection/view/{id}', 'CollectionController@view_individual')->middleware('permit:1');
 Route::get('/collection/{aysem}', 'CollectionController@show')->middleware('permit:1');
 
 Route::get('/endorsement', 'RequestEndorsementController@index')->middleware('permit:2');
 Route::post('/endorsement', 'RequestEndorsementController@create')->middleware('permit:2');
+Route::post('/endorsement/reject', 'RequestEndorsementController@reject')->middleware('permit:2');
 Route::get('/endorsement/remove/{request_id}', 'RequestEndorsementController@remove')->middleware('permit:2');
 
 Route::get('/requests', 'RequestsController@index')->middleware('permit:3');
@@ -53,6 +55,8 @@ Route::post('/requests', 'RequestsController@create')->middleware('permit:3');
 
 Route::get('/approval', 'ApprovalController@index')->middleware('permit:4');
 Route::post('/approval', 'ApprovalController@create')->middleware('permit:4');
+Route::post('/approval/reject', 'ApprovalController@reject')->middleware('permit:4');
+Route::get('/approval/remove/{request_id}', 'ApprovalController@remove')->middleware('permit:4');
 
 Route::get('/usermanagement', 'UserManagementController@index')->middleware('permit:5');
 Route::post('/usermanagement', 'UserManagementController@store')->middleware('permit:5');

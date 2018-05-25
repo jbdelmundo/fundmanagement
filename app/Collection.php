@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 class Collection extends Model
 {
     //
-    protected $fillable = ['aysem','amount','is_adjustment','parent_id'];
+    protected $fillable = ['aysem','amount','is_adjustment','parent_id','collection_id'];
 
 
 

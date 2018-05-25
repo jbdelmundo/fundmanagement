@@ -2,11 +2,7 @@
 
 @if(count($items)>0)
 
-<div class="panel panel-primary">
-    <div class="panel-heading">
-	  {{$heading}}  
-    </div>
-        
+
         
         
     	
@@ -54,7 +50,7 @@
         
    		
     
-</div>
+
 @endif
 
 <script type="text/javascript">

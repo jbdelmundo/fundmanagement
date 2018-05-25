@@ -255,4 +255,8 @@ class RequestsController extends Controller
         session()->flash('alert-success', 'Request recorded!');
         return redirect()->action('RequestsController@index' )->with('success', 'Request recorded!');
     }
+
+    public function delete($id){
+         $request_objv
+    }
 }

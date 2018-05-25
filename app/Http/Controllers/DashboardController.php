@@ -7,6 +7,11 @@ use App\Aysem;
 use App\Department;
 use App\AccountTransactions;
 
+use App\Account;
+use App\Book;
+use App\Magazine;
+use App\Eresource;
+use App\OtherMaterial;
 
 use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
@@ -54,6 +59,22 @@ class DashboardController extends Controller
 											-> orderby('created_at','desc')
                                             ->limit($records_to_fetch)
 											->get();
+        
+        $purchased_items = [];
+        $collection_data = [];
+        foreach ($transactions as $transaction) {
+            if(in_array( $transaction->transaction_type_id , ['P','R'])) {
+                $purchased_items[$transaction->id] = $this->view_purchase($transaction->id);
+            }elseif(in_array( $transaction->transaction_type_id , ['P','R'])) {
+                $collection_data[$transaction->id] = $this->view_purchase($transaction->id);
+            }
+        }
+
+        foreach ($transactions as $transaction) {
+            if(in_array( $transaction->transaction_type_id , ['P','R'])) {
+                $purchased_items[$transaction->id] = $this->view_purchase($transaction->id);
+            }
+        }
 		
 		$requests_this_sem = [
             \App\Requests::BOOK =>   $department->bookRequestsForSem($aysem),
@@ -72,11 +93,59 @@ class DashboardController extends Controller
             'P' => 'PURCHASE',
             'A' => 'COLLECTION ADJUSTMENT',
             'R' => 'REFUND',
-            'I' => 'INITIAL'
+            'I' => 'INITIAL',
+            'M' => 'MANUAL'
         ];
                 
-       return view('dashboard.dashboard',compact('requests_this_sem','active_department_id','departments','current_balance','transactions', 'department', 'user','current_aysem','aysem', 'types'));
+       return view('dashboard.dashboard',compact('requests_this_sem','active_department_id','departments','current_balance','transactions','purchased_items', 'department', 'user','current_aysem','aysem', 'types'));
        
+    }
+
+    private function view_collection(){
+        
+    }
+    private function view_purchase($transaction_id){
+        //
+        
+        $account_transaction = AccountTransactions::find($transaction_id);
+
+        if( !in_array( $account_transaction->transaction_type_id , ['P','R']) ) {
+            return;
+        }
+
+        $request = \App\Requests::find($account_transaction->request_id);
+
+        switch($request->category_id){
+            case 'B':               
+                $item = Book::find($request->item_id);
+                break;
+            case 'E':
+                $item = Book::find($request->item_id);
+                break;
+            case 'J':
+                $item = Magazine::find($request->item_id);
+                break;
+            case 'M':
+                $item = Magazine::find($request->item_id);
+                break;
+            case 'R':
+                $item = Eresource::find($request->item_id);
+                break;
+            case 'Q':
+                $item = OtherMaterial::find($request->item_id);
+                break;
+            case 'S':
+                $item = OtherMaterial::find($request->item_id);
+                break;
+            case 'O':
+                $item = OtherMaterial::find($request->item_id);
+                break;
+        }
+
+        $obj_merged = (object) array_merge((array) $request->toArray(), (array) $item->toArray());
+        // $obj_merged->request_id = $request->id;
+       
+        return $obj_merged;
     }
     
 }

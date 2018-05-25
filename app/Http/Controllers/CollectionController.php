@@ -101,6 +101,47 @@ class CollectionController extends Controller
                     'depts_with_collection', 'depts_with_percent','last_collection'));
     }
 
+    function view_individual($id){
+        
+        $collection_object = Collection::find($id);
+        $enrollee_statistics = $collection_object->enrolleeStatistics()->get();
+
+        $collection=[];
+        $statistics=[];
+        foreach($enrollee_statistics as $es){
+            $statistics[$es->department_id] = [
+                'graduate' => $es->graduate,
+                'undergraduate' => $es->undergraduate
+            ];                  
+        }
+
+        $allocations =  $this->computeAllocations($collection_object->amount,$statistics); 
+        $dept_ids = array_keys($allocations);
+        $departments = Department::find($dept_ids);
+
+        $collection_id = $collection_object->id;
+        $collection['amount'] = $collection_object->amount ;
+        $collection['allocations'] = $allocations ;
+        $collection['statistics'] = $statistics ;
+        // $collection['aysem'] = $aysem ;
+        $collection['is_adjustment'] = $collection_object->is_adjustment ;
+        $collection['created_at'] = $collection_object->created_at; 
+
+        $depts_with_percent = DB::table('departments')
+                                    ->where('is_from_book_fund',True)
+                                    ->where('is_percent_based',True)
+                                    ->get();
+
+        $depts_with_collection = DB::table('departments')
+                                    ->where('is_from_book_fund',True)
+                                    ->where('is_percent_based',False)
+                                    ->get();
+        $first_panel=True;
+
+        return view('collection._collection_view',compact('first_panel','collection_id', 'departments','current_aysem',
+                    'depts_with_collection', 'depts_with_percent','collection'));
+    }
+
     /**
     *	Creates a new collection
     */
@@ -193,6 +234,7 @@ class CollectionController extends Controller
 				'amount' => floatval($allocation),
                 'balance' => $last_account_transaction->balance + floatval($allocation),
                 'aysem' => Aysem::current()->aysem,
+                'collection_id' => $collection->id,
                 'parent_account_transaction_id'=>$last_account_transaction->id
 
 			];		

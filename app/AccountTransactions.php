@@ -9,7 +9,7 @@ class AccountTransactions extends Model
 {
     //
     protected $fillable = [
-      'aysem','department_id','account_id','request_id','transaction_type_id', 'amount', 'balance', 'remarks', 
+      'aysem','department_id','account_id','request_id','collection_id','transaction_type_id', 'amount', 'balance', 'remarks', 
       'transaction_details_id','parent_account_transaction_id'];
 
 

@@ -24,8 +24,7 @@
 		<thead>
 			<tr >
 				<th>Title</th>  	
-				<th >Type</th>								
-				<th >Remarks</th>
+				<th >Type</th>	
 				<th >Quantity</th>                
 				<th >Unit price</th>
 				<th>Subtotal</th> 
@@ -47,8 +46,7 @@
 						@else
 							<td>{{$request->title}}</td>
 						@endif
-						<td align="left">{{ $types[$type]}}</td>
-						<td>{{$request->remarks}}</td>
+						<td align="left">{{ $types[$type]}}</td>						
 						<td align="center">{{$request->total_quote_price/$request->unit_quote_price}}</td>
 						<td align="right ">{{$request->unit_quote_price}}</td>
 						<td align="right">{{$request->total_quote_price}}</td>
@@ -64,9 +62,14 @@
            	@endif
 	@endforeach
 			<tr>
-			<td align="right" colspan="5" style='font-weight:bold'>TOTAL</td>
-			<td align="right" style='font-weight:bold'>{{ number_format( $total_expense ,  2 ,  "." ,  "," ) }}</td>
-			<td colspan="1"></td>
+				<td align="left" colspan="3" style='font-weight:bold'>TOTAL</td>
+				<td align="right" style='font-weight:bold'>{{ number_format( $total_expense ,  2 ,  "." ,  "," ) }}</td>
+				<td colspan="2"></td>
+			</tr>
+			<tr>
+				<td align="left" colspan="1"style='font-weight:bold'>CURRENT BALANCE:   {{  $department->last_account_transaction()->balance  }}</td>
+
+				<td colspan="5"></td>
 			</tr>
 
 		</tbody>

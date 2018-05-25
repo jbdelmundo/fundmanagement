@@ -55,7 +55,7 @@ class RefundsController extends Controller
 		
         $refunded = [];
         foreach ($all_requests_this_sem as $key => $value) {
-            $refunded[$key] = $value->where('status',Requests::REFUNDED);   //filter only those that are endorsed
+            $refunded[$key] = $value->where('status',Requests::DISCOUNTED);   //filter only those that are endorsed
         }
     	
     	return view('refunds.index',compact('user','departments','department','aysem', 'requests_this_sem','purchased','refunded'));
@@ -71,7 +71,11 @@ class RefundsController extends Controller
 		
 		
         //update request status to refunded
-        $request->status = Requests::REFUNDED;
+        if($maxrefund == $request->total_quote_price){
+            $request->status = Requests::REFUNDED;          //full refund, item was not purchased
+        }else{
+            $request->status = Requests::DISCOUNTED;        //item received at a discount
+        }
         $request->total_bid_price = $request->total_quote_price - $formrequest->refund;
         $request->save();
 		
