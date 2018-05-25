@@ -87,4 +87,5 @@ Route::get('/manual_transactions/', 'ManualTransactionsController@index')->middl
 Route::post('/manual_transactions/add', 'ManualTransactionsController@add')->middleware('permit:12');
 Route::post('/manual_transactions/deduct', 'ManualTransactionsController@deduct')->middleware('permit:12');
 
+Route::get('/report_management/', 'ReportManagementController@index')->middleware('permit:13');
 

@@ -18,12 +18,12 @@
 {!! Form::select('issubscription', ['1' => 'Subscription', '0' => 'Perpetual'], '1',['class'=>'form-control','id'=>'issubscription' ]) !!}
 </div>
 
-{!! Form::hidden('iselectronic', 0,['class'=>'form-control' ]) !!}
+{!! Form::hidden('iselectronic', 1,['class'=>'form-control' ]) !!}
 
 
 <div class="form-group">
  
-    {!! Form::hidden('issubscription', 1,['class'=>'form-control' ]) !!}
+    
 </div>
 
 <div class="form-group">

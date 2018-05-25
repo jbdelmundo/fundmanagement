@@ -129,8 +129,8 @@ class RequestsController extends Controller
 
 
     function create(Request $request){
-        // dd($request);
-        if($request->category_id == Requests::ERESOURCE && $request->issubscription == 1){
+        if($request->category_id == Requests::ERESOURCE && $request->issubscription == '1'){
+        dd($request);
             $validation_rules = ['startdate'=>'required','enddate'=>'required|after:startdate'];
             $this->validate($request,$validation_rules);
         }
@@ -256,7 +256,5 @@ class RequestsController extends Controller
         return redirect()->action('RequestsController@index' )->with('success', 'Request recorded!');
     }
 
-    public function delete($id){
-         $request_objv
-    }
+    
 }

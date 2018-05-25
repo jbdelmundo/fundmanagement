@@ -121,7 +121,7 @@
 								<td>{{$request->unit_quote_price}}</td>
 								<td>{{$request->total_quote_price}}</td>
 								<td>
-									{{ Form::button('Preapprove',  
+									{{ Form::button('Approve',  
 					                    [   'class'=>'btn btn-success',
 					                        'id'=>'btn_approve_'.$request->request_id,
 					                        'data-toggle'=>'modal',

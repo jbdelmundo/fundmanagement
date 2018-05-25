@@ -83,6 +83,11 @@
                     <a href="{{url('manual_transactions')}}"><i class="fa fa-bar-chart-o fa-fw"></i> Manual Transactions</a>
                 </li>
             @endif
+            @if(in_array(14,$modules))
+                <li>
+                    <a href="{{url('report_management')}}"><i class="fa fa-bar-chart-o fa-fw"></i> Report Management</a>
+                </li>
+            @endif
             
         </ul>
         <!-- /#side-menu -->
