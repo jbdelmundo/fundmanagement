@@ -58,6 +58,18 @@ class ModuleSeeder extends Seeder
                 'id' => 11,
                 'module' => 'Eresource Usage Statistics Encoding',
             ],
+            [
+                'id' => 12,
+                'module' => 'Manual Transactions',
+            ],
+            [
+                'id' => 13,
+                'module' => 'Reports Generation',
+            ],
+            [
+                'id' => 14,
+                'module' => 'Email Notifications',
+            ],
         ];
         foreach ($modules as  $module) {
         	 Module::create($module);

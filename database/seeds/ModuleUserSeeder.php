@@ -19,6 +19,8 @@ class ModuleUserSeeder extends Seeder
                         2   //Endorsement                                                
                         ,7  //Purchase History
                         ,10 //E-resource Usage Statistics
+                        ,13 //Reports Generation
+                        ,14//Email Notifications
                         ];
 
         $lib_modules = [
@@ -30,6 +32,9 @@ class ModuleUserSeeder extends Seeder
                         ,8  //Refunds
                         ,10 //Eresource Statistics
                         ,11 //Eresource Statistics Encoding
+                        ,12 // Manual Transactions
+                        ,13 //Reports Generation
+                        ,14 //Email Notifications
                         ];
         
         $lib_modules[] = 2;

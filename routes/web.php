@@ -83,4 +83,8 @@ Route::get('/usagestatistics_encoding', 'UsageStatisticsController@encode')->mid
 Route::get('/usagestatistics_encoding/{id}','UsageStatisticsController@gotoform')->middleware('permit:11');
 Route::post('/usagestatistics_encoding/{id}', 'UsageStatisticsController@submitform')->middleware('permit:11');
 
+Route::get('/manual_transactions/', 'ManualTransactionsController@index')->middleware('permit:12');
+Route::post('/manual_transactions/add', 'ManualTransactionsController@add')->middleware('permit:12');
+Route::post('/manual_transactions/deduct', 'ManualTransactionsController@deduct')->middleware('permit:12');
+
 

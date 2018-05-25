@@ -74,14 +74,20 @@
 				</li>
 			@endif
 			@if(in_array(11,$modules))
-				<li>
-					<a href="{{url('usagestatistics_encoding')}}"><i class="fa fa-bar-chart-o fa-fw"></i> Usage Statistics Encoding</a>
-				</li>
-			@endif
+                <li>
+                    <a href="{{url('usagestatistics_encoding')}}"><i class="fa fa-bar-chart-o fa-fw"></i> Usage Statistics Encoding</a>
+                </li>
+            @endif
+            @if(in_array(12,$modules))
+                <li>
+                    <a href="{{url('manual_transactions')}}"><i class="fa fa-bar-chart-o fa-fw"></i> Manual Transactions</a>
+                </li>
+            @endif
             
         </ul>
         <!-- /#side-menu -->
     </div>
     <!-- /.sidebar-collapse -->
+    
 </nav>
             
