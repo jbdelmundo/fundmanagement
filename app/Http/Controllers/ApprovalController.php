@@ -52,7 +52,7 @@ class ApprovalController extends Controller
 
         $approved = [];
         foreach ($all_requests_this_sem as $key => $value) {
-            $approved[$key] = $value->where('status',Requests::APPROVED)->where('department_id',$active_department_id);   //filter only those that are endorsed
+            $approved[$key] = $value->whereIn('status',[Requests::APPROVED,Requests::REFUNDED,Requests::DISCOUNTED])->where('department_id',$active_department_id);   //filter only those that are approved, refunded (deducted already)
         }
         
         $rejects = [];
@@ -92,9 +92,17 @@ class ApprovalController extends Controller
         $request_endorsement = RequestEndorsement::findOrFail($request_endorsement_id);
        
         //update request status to for purchase
+
+        //check if already approved
+        if($request->status != Requests::ENDORSED){
+            session()->flash('alert-danger', 'Request is not available for approval. Your balance is not deducted');
+            return redirect('approval');
+        }
+
         $request->status = Requests::APPROVED;
         $request->save();
-		
+        
+
         //update request endorsement approved_by
         $request_endorsement->approved_by = Auth::user()->id; 
         $request_endorsement->save();

@@ -46,7 +46,35 @@ class ReportManagementController extends Controller
         // Total expenses
 
         // Coverage: Last Three semesters
-        return $this->get_expense_breakdown($aysem->aysem, $department->id);
+        $last_three_sems = Aysem::orderBy('aysem','desc')->limit(3)->get();
+
+        $sem_details = [];
+        $expenses = [];
+        $sem_details_labels = [
+            'starting_balance','collections','purchases','refunds','manual','ending_balance'
+        ];
+        $expenses_items = [
+            Requests::BOOK =>   'Books',
+            Requests::EBOOK =>   'E-books',
+            Requests::JOURNAL =>   'Journals',
+            Requests::MAGAZINE =>   'Magazines',
+            Requests::ERESOURCE =>   'E-Resources',
+            Requests::SUPPLIES =>   'Supplies',
+            Requests::EQUIPMENT =>   'Equipment',
+            Requests::OTHER =>   'Others'
+        ];
+
+        foreach($last_three_sems as $sem){
+
+            // echo($sem->short_name);
+            $sem_details[$sem->aysem] = $this->get_data($sem->aysem, $department->id);
+            $expenses[$sem->aysem] =  $this->get_expense_breakdown($sem->aysem, $department->id);
+        }
+
+        
+
+        return view('report_management.index',compact('sem_details','expenses','last_three_sems','sem_details_labels',
+                        'expenses_items','department'));
     }
 
     private function get_data($aysem,$department_id){
@@ -57,13 +85,12 @@ class ReportManagementController extends Controller
         ->whereIn('transaction_type_id',['C','A'])
         ->sum('amount');
 
-        //Manual
 
         //purchases
         $purchases = AccountTransactions::where('aysem',$aysem)
         ->where('department_id',$department_id)
         ->where('transaction_type_id','P')
-        ->sum('amount');
+        ->sum('amount') * -1;       // convert to positive
 
         //refunds
         $refunds = AccountTransactions::where('aysem',$aysem)
@@ -71,62 +98,54 @@ class ReportManagementController extends Controller
         ->where('transaction_type_id','R')
         ->sum('amount');
 
+        //Manual
         $manual = AccountTransactions::where('aysem',$aysem)
         ->where('department_id',$department_id)
         ->where('transaction_type_id','M')
-        ->get();
+        ->sum('amount');
 
         $first_transaction = AccountTransactions::where('aysem',$aysem)
         ->where('department_id',$department_id)->orderBy('parent_account_transaction_id','asc')
             ->first();
+        // dd(is_null($first_transaction));
+        if(is_null($first_transaction)){
 
-        $starting_balance = $first_transaction->balance - $first_transaction->amount;
+            $department_obj = Department::find($department_id);
+            $last_transaction = $department_obj->last_account_transaction();
+            $first_transaction = $last_transaction;
 
-        $ending_balance = AccountTransactions::where('aysem',$aysem)
-        ->where('department_id',$department_id)->orderBy('parent_account_transaction_id','desc')
-            ->first()->balance;
+            $ending_balance = AccountTransactions::where('department_id',$department_id)->orderBy('parent_account_transaction_id','desc')
+                ->first()->balance;
+        }else{
+            $ending_balance = AccountTransactions::where('aysem',$aysem)
+            ->where('department_id',$department_id)->orderBy('parent_account_transaction_id','desc')
+                ->first()->balance;
+            
+        }
+
+            $starting_balance = $first_transaction->balance - $first_transaction->amount;
+
+        
 
 
-        echo $collections;
-        echo '<hr>';
-        echo $purchases;
-        echo '<hr>';
-        echo $refunds;
-        echo '<hr>';
-        echo $starting_balance;
-        echo '<hr>';
-        echo $ending_balance;
-        // dd($purchases->toArray());
+
+        return compact('collections','purchases','refunds','manual','starting_balance','ending_balance');
     }
 
     private function get_expense_breakdown($aysem,$department_id){
 
-        $books = $this->get_total_quote_price_by_category($aysem,$department_id, Requests::BOOK);
-        $ebooks = $this->get_total_quote_price_by_category($aysem,$department_id, Requests::EBOOK);
-        $magazine = $this->get_total_quote_price_by_category($aysem,$department_id, Requests::MAGAZINE);
-        $journal = $this->get_total_quote_price_by_category($aysem,$department_id, Requests::JOURNAL);
-        $eresource = $this->get_total_quote_price_by_category($aysem,$department_id, Requests::ERESOURCE);
-        $equipment = $this->get_total_quote_price_by_category($aysem,$department_id, Requests::EQUIPMENT);
-        $supplies = $this->get_total_quote_price_by_category($aysem,$department_id, Requests::SUPPLIES);
-        $other = $this->get_total_quote_price_by_category($aysem,$department_id, Requests::OTHER);
+        $requests_this_sem = [
+            Requests::BOOK =>   $this->get_total_quote_price_by_category($aysem,$department_id, Requests::BOOK),
+            Requests::EBOOK =>   $this->get_total_quote_price_by_category($aysem,$department_id, Requests::EBOOK),
+            Requests::JOURNAL =>   $this->get_total_quote_price_by_category($aysem,$department_id, Requests::JOURNAL),
+            Requests::MAGAZINE =>   $this->get_total_quote_price_by_category($aysem,$department_id, Requests::MAGAZINE),
+            Requests::ERESOURCE =>   $this->get_total_quote_price_by_category($aysem,$department_id, Requests::ERESOURCE),
+            Requests::SUPPLIES =>   $this->get_total_quote_price_by_category($aysem,$department_id, Requests::SUPPLIES),
+            Requests::EQUIPMENT =>   $this->get_total_quote_price_by_category($aysem,$department_id, Requests::EQUIPMENT),
+            Requests::OTHER =>   $this->get_total_quote_price_by_category($aysem,$department_id, Requests::OTHER)
+        ];
 
-
-        echo $books;
-        echo '<hr>';
-        echo $ebooks;
-        echo '<hr>';
-        echo $magazine;
-        echo '<hr>';
-        echo $journal;
-        echo '<hr>';
-        echo $eresource;
-        echo '<hr>';
-        echo $equipment;
-        echo '<hr>';
-        echo $supplies;
-        echo '<hr>';
-        echo $other;
-        echo '<hr>';
+        return $requests_this_sem;
        
     }
 

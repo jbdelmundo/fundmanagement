@@ -71,7 +71,11 @@ class RequestEndorsementController extends Controller
         $request = Requests::findOrFail($formrequest->request_id);
         
         $category = $request->category_id;
-        
+
+        // only recorded status can be endorsed
+        if($request->status != Requests::RECORDED){
+            return 1;
+        }
 
         switch ($category) {
             case Requests::BOOK:
