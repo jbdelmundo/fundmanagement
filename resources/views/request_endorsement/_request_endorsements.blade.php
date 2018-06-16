@@ -67,7 +67,8 @@
 				<td colspan="2"></td>
 			</tr>
 			<tr>
-				<td align="left" colspan="1"style='font-weight:bold'>CURRENT BALANCE:   {{  $department->last_account_transaction()->balance  }}</td>
+				<td align="left" colspan="1"style='font-weight:bold'>CURRENT BALANCE:   
+					{{ number_format( (float)$department->last_account_transaction()->balance, 2,'.',',' )  }}</td>
 
 				<td colspan="5"></td>
 			</tr>

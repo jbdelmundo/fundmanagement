@@ -33,7 +33,7 @@
                     <tr>
                         <td style="text-align: left">{{strtoupper(str_replace("_"," ",$label))}}</td>
                         @foreach($sem_details as $aysem => $detail)
-                        <td style="text-align: right">{{$sem_details[$aysem][$label]  }}</td>
+                        <td style="text-align: right">{{number_format((float)$sem_details[$aysem][$label],2,'.',',')  }}</td>
                         @endforeach
                     </tr>
                     @endforeach
@@ -58,22 +58,28 @@
                 </thead>
                 <tbody>
                     <?php
-                        $total_expenses = 0;
+                        $total_expenses = [];
+                        foreach(array_keys($expenses) as $sem){
+                            $total_expenses[$sem] = 0;
+                        }
+
                     ?>
                     @foreach($expenses_items as $key => $label)                    
                     <tr>
                         <td style="text-align: left">{{strtoupper(str_replace("_"," ",$label))}}</td>
                         @foreach($expenses as $aysem => $detail)
-                        <td style="text-align: right">{{number_format((float)$expenses[$aysem][$key],2)  }}</td>
-                        <?php $total_expenses += (float)$expenses[$aysem][$key] ?>
+                        <td style="text-align: right">{{number_format((float)$expenses[$aysem][$key],2,'.',',')  }}</td>
+                        <?php $total_expenses[$aysem] += (float)$expenses[$aysem][$key] ?>
                         @endforeach
                     </tr>
                     @endforeach
                     <tr>
                         <td><strong>TOTAL:</strong></td>
+                        @foreach($total_expenses as $total)
                         <td style="text-align: right"><strong>
-                            {{number_format((float)$total_expenses, 2)}}
+                            {{number_format((float)$total, 2,'.',',')}}
                         </strong></td>
+                        @endforeach
                     </tr>
                 </tbody>
             </table>

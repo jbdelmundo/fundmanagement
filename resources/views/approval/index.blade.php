@@ -15,7 +15,7 @@
 	<div class="col-lg-12">
 	@include('layouts._alerts')
 		<div class="alert alert-info" role="alert">
-		<h3 >Current Balance: {{  $department->last_account_transaction()->balance  }}</h3>
+		<h3 >Current Balance: {{ number_format( (float)$department->last_account_transaction()->balance,2,'.',',')  }}</h3>
 	  		<h4>
 	        Upon approval of the request, the amount will be deducted to your current balance.</h4>
 	    </div>
